@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>펜션에 오신걸 환영합니다.</title>
 </head>
+<!-- test -->
 <%	//test develop
 	String boardType = "main";
 	MemberDAO dao = MemberDAO.getInstance();
