@@ -9,7 +9,8 @@
 <title>펜션에 오신걸 환영합니다.</title>
 </head>
 <!-- test -->
-<%	//test develop
+<!-- yj -->
+<%	//test develop 
 	String boardType = "main";
 	MemberDAO dao = MemberDAO.getInstance();
 	String sId = (String)session.getAttribute("sId");
