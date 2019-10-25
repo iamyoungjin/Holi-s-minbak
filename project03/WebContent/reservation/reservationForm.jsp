@@ -12,6 +12,9 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- <input type="text" name="daterange" value="11/01/2019 - 11/15/2019" />-->
+
+
+
 <script>
 $(function() {
 	
@@ -26,21 +29,37 @@ $(function() {
 </script>
 
 <h2> 유효성 검사 해야함 </h2>
+<% 
+	String sId = (String)session.getAttribute("sId");
+	if(sId == null){%>
+		<script>
+			alert("로그인을 먼저 해주세요");
+			window.location= '../login/loginForm.jsp';
+		</script>
+<% }%>
+
+<% String id = (String)session.getAttribute("sId");
+   String name = (String)session.getAttribute("sName");
+   String phonenum= (String)session.getAttribute("sPhonenum");
+   String email= (String)session.getAttribute("sEmail");
+%> 
+
+
 <center><h2> 예약 하기 </h2>
 <form action = "../reservation/payment.jsp" method="post" name = "form">
 	<table width="400" border="1" cellspacing="0" cellpadding="0" align="center">
 	<br/>
 	<tr>
-	<td align="center">아이디 :<input type="text" name="re_id" /></td>
+	<td align="center">아이디 :<input type="text" name="re_id" value=<%=id %>></td>
 	</tr>
 	<tr>
-	<td align="center">예약자 :<input type="text" name="re_name" /></td>
+	<td align="center">예약자 :<input type="text" name="re_name" value=<%=name %>></td>
 	</tr>
 	<tr>
-	<td align="center">핸드폰 :<input type="text" name="re_phone" /></td>
+	<td align="center">핸드폰 :<input type="text" name="re_phone" value=<%=phonenum %>></td>
 	</tr>
 	<tr>
-	<td align="center">E-mail:<input type="text" name="re_email" placeholder="team03@gmail.com"/></td>
+	<td align="center">E-mail:<input type="text" name="re_email" value=<%= email%>></td>
 	</tr>
 	<tr>
 	<td align="center">예약할 방 선택 :<select id="mySel" onchange="sel()" name="roomname" value="sel()">
@@ -100,3 +119,4 @@ $(function() {
 	
 </form>
 </center>
+

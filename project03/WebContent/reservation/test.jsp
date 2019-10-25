@@ -12,29 +12,11 @@
 
 <%
 String startday= "2019/10/24";
-String endday = "2019/10/27";
+String endday = "2019/10/30";
 ReservationVO vo = new ReservationVO();
 List dates = vo.middate(startday,endday);
-List totalprice = new ArrayList();
-int tot =0;
-
+List arr = new ArrayList();
 for(int i=0;i<dates.size();i++){
-	//성수기 가격 측정 
-	//System.out.println(dates.get(i));
-	if(vo.getday(dates.get(i).toString()).equals("토")||vo.getday(dates.get(i).toString()).equals("일") ){
-		//주말가격 가져와서 list 에 저장 
-		int k1 = 1;
-		totalprice.add(k1);
-		//System.out.println("주말");
-	}else{
-		int k2 = 2;
-		totalprice.add(k2);
-		//일반가격 가져오기 list에 저장 
-		//System.out.println("주말아님");
-	}
+	System.out.println(dates.get(i).toString());
 }
-	for(int j =0;j<totalprice.size();j++){
-		tot += Integer.parseInt(totalprice.get(j).toString());
-	}
-	System.out.println("총 숫자합 : "+tot);
 %>

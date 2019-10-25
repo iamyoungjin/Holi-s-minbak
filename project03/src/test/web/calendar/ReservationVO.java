@@ -62,7 +62,7 @@ public class ReservationVO {
 }
 		
 	//중간날짜 구해주는 함수 
-	public List middate(String startday, String endday) throws ParseException {
+	public List<String> middate(String startday, String endday) throws ParseException {
 	    final String DATE_PATTERN = "yyyy/MM/dd";
 	    String inputStartDate = startday;
 	    String inputEndDate = endday;

@@ -81,7 +81,10 @@
 	//중복 체크 
 	//방 이름이 같고 지정한 날짜 범위에서 하루라도 겹치면 예약 불가 
 	ReservationDAO dao = new ReservationDAO();
-	if(dao.roomchk(startday, endday,roomname)){
+	System.out.println(startday);
+	System.out.println(endday);
+	System.out.println(roomname);
+		if(dao.roomchk(startday, endday,roomname)){
 %>
 	<script>
 		alert("예약한 날짜에 해당 방을 예약할 수 없습니다 ");
