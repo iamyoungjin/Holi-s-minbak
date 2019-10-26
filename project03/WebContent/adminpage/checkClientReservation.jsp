@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <title>예약 정보</title>
 <script>
-	function updateRoom(userinput,num){
+	function update(userinput,num){
 		if(!document.getElementById("num"+num).value){
 			alert("방번호를 입력해주세요");
 			return false;
@@ -60,19 +60,19 @@
 	}
 	
 	function deleteRoom(userinput,num){
-		if(!confirm("객실을 삭제 하겠습니까?") ){
+		if(!confirm("예약을 강제 삭제 하겠습니까?") ){
 			return;
 		}
 		if(!document.getElementById("num"+num).value){
 			alert("문제가 발생했으니 다시 시도해주세요.");
 		}
-		userinput.action="checkRoomPro.jsp?type=delete"
+		userinput.action="checkClientReservationPro.jsp?type=delete"
 			+"&num="+document.getElementById("num"+num).value;
 		userinput.submit();
 	}
 
 	
-	function insertRoom(userinput){
+	function insert(userinput){
 		if(!userinput.newnum.value){
 			alert("방 번호를 입력해주세요");
 			return false;
@@ -135,6 +135,9 @@
 	<form name="roomForm" method="post">
 		<table border="1">
 			<tr>
+				<td colspan="12" text-align="center"><b>예약 현황</b></td>
+			</tr>
+			<tr>
 				<td>예약 번호</td>
 				<td>예약 ID</td>
 				<td>예약자명</td>
@@ -153,9 +156,9 @@
 			%>
 				<tr>
 					<td><input type="text" id="roomnumber<%=i%>" name="roomnumber<%=i%>" value="<%=vo.getRoomnumber()%>" readonly/></td>
-					<td><input type="text" id="re_id<%=i%>" name="re_id<%=i%>" value="<%=vo.getRe_id()%>"/></td>
-					<td><input type="text" id="re_name<%=i%>" name="re_name<%=i%>" value="<%=vo.getRe_name()%>"/></td>
-					<td><input type="text" id="usepeople<%=i%>" name="usepeople<%=i%>" value="<%=vo.getUsepeople()%>"/></td>
+					<td><input type="text" id="re_id<%=i%>" name="re_id<%=i%>" value="<%=vo.getRe_id()%>" readonly/></td>
+					<td><input type="text" id="re_name<%=i%>" name="re_name<%=i%>" value="<%=vo.getRe_name()%>" readonly/></td>
+					<td><input type="text" id="usepeople<%=i%>" name="usepeople<%=i%>" value="<%=vo.getUsepeople()%>" /></td>
 					<td><input type="text" id="price<%=i%>" name="price<%=i%>" value="<%=vo.getPrice()%>"/></td>
 					<td><input type="text" id="daterange<%=i%>" name="daterange<%=i%>" value="<%=vo.getDaterange()%>"/></td>
 					<td><input type="text" id="usingday<%=i%>" name="usingday<%=i%>" value="<%=vo.getUsingday()%>"/></td>
@@ -166,17 +169,51 @@
 					<td><input type="text" id="chkpayment<%=i%>" name="chkpayment<%=i%>" value="<%=vo.getChkpayment()%>"/></td>
 					
 					<td>
-						<input type="button" value="객실 수정" onclick="updateRoom(this.form,<%=i%>)"/>
-						<input type="button" value="객실 삭제" onclick="deleteRoom(this.form,<%=i%>)"/>
+						<input type="button" value="예약 정보 수정" onclick="update(this.form,<%=i%>)"/>
+						<input type="button" value="예약 강제 삭제" onclick="delete(this.form,<%=i%>)"/>
 					</td>
 				</tr>
 			<%}%>
 		</table>
 	</form>
+	<br/>
+	<br/>
 	<form>
 		<table border="1">
 			<tr>
-				<td colspan="9" text-align="center"><b>객실 추가</b></td>
+				<td colspan="9" text-align="center"><b>예약 추가</b></td>
+			</tr>
+			<tr>
+				<td>객실 번호</td>
+				<td>객실 이름</td>
+				<td>기준 인원수</td>
+				<td>최대 인원수</td>
+				<td>추가 금액</td>
+				<td>주중 가격</td>
+				<td>주말 가격</td>
+				<td>성수기 가격</td>
+				<td>추가</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="newnum"/></td>
+				<td><input type="text" name="newrname"/></td>
+				<td><input type="text" name="newdpeople"/></td>
+				<td><input type="text" name="newmaxpeople"/></td>
+				<td><input type="text" name="newaddtionalcost"/></td>
+				<td><input type="text" name="newweekday_price"/></td>
+				<td><input type="text" name="newweekend_price"/></td>
+				<td><input type="text" name="newpeakseason_price"/></td>
+				<td><input type="button" value="예약 추가" onclick="insertRoom(this.form)" /></td>
+			</tr>
+		</table>
+	</form>
+	
+		<br/>
+	<br/>
+	<form>
+		<table border="1">
+			<tr>
+				<td colspan="9" text-align="center"><b>예약 검색</b></td>
 			</tr>
 			<tr>
 				<td>객실 번호</td>
@@ -202,6 +239,7 @@
 			</tr>
 		</table>
 	</form>
+	
 	<input type="button" value="돌아가기" onclick="window.location.href='adminpage.jsp'"/>			
 	<%}
 %>

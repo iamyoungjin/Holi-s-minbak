@@ -2,7 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "test.web.calendar.ReservationVO" %>
-<%@ page import = "test.web.calendar.ReservationDAO" %>   
+<%@ page import = "test.web.calendar.ReservationDAO" %>  
+<%@ page import = "test.web.project03.MemberDAO" %> 
+<%@ page import = "test.web.project03.MemberDTO" %> 
 <script src= https://code.jquery.com/jquery-3.4.1.min.js></script>    
 
 <%//jQuery datepicker UI를 사용하여 날짜 입력 받기 %>
@@ -42,6 +44,10 @@ $(function() {
    String name = (String)session.getAttribute("sName");
    String phonenum= (String)session.getAttribute("sPhonenum");
    String email= (String)session.getAttribute("sEmail");
+   MemberDAO dao = MemberDAO.getInstance();
+   MemberDTO getInformation = dao.getMember(id);
+   String phone = getInformation.getPhonenum();
+   String e_mail = getInformation.getEmail();
 %> 
 
 
@@ -56,10 +62,10 @@ $(function() {
 	<td align="center">예약자 :<input type="text" name="re_name" value=<%=name %>></td>
 	</tr>
 	<tr>
-	<td align="center">핸드폰 :<input type="text" name="re_phone" value=<%=phonenum %>></td>
+	<td align="center">핸드폰 :<input type="text" name="re_phone" value=<%=phone %>></td>
 	</tr>
 	<tr>
-	<td align="center">E-mail:<input type="text" name="re_email" value=<%= email%>></td>
+	<td align="center">E-mail:<input type="text" name="re_email" value=<%= e_mail%>></td>
 	</tr>
 	<tr>
 	<td align="center">예약할 방 선택 :<select id="mySel" onchange="sel()" name="roomname" value="sel()">
