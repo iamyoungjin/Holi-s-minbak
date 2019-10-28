@@ -238,7 +238,6 @@ public class ReservationDAO {
 				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
 				if(conn != null) try {conn.close();}catch(SQLException e) {}
 			}
-			System.out.println(chk);
 			return chk;
 		}
 		
@@ -291,10 +290,11 @@ public class ReservationDAO {
 
 				while(rs.next()) {
 					ReservationVO vo = new ReservationVO();
-	
+					vo.setRoomnumber(rs.getInt("roomnumber"));
 					vo.setRoomname(rs.getString("roomname"));
 					vo.setRe_id(rs.getString("re_id"));	
 					vo.setRe_name(rs.getString("re_name"));	
+					vo.setRe_phone(rs.getString("re_phone"));
 					vo.setUsepeople(rs.getInt("usepeople"));	
 					vo.setPrice(rs.getInt("price"));	
 					vo.setDaterange(rs.getString("daterange"));	
