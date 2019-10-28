@@ -317,20 +317,15 @@ public class ReservationDAO {
 			return list;
 		}
 		
-		
-		/////////작업중/////////
-		
-		//아이디 & 예약자 & 방이름 & 핸드폰 & 미결 로 예약 정보 검색 
-		public List reservation_search(String method , String val){
-			List list_id = new ArrayList();
+
+		public List reservation_user(String sId) {
+			List list = null;
 			try {
 				conn = getConnection();
-				String sql = "select * from reservation_table where ?=? ";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, method);
-				pstmt.setString(2, val);
+				pstmt = conn.prepareStatement("select * from reservation_table where re_id=? order by reg_date desc");
+				pstmt.setString(1, sId);
 				rs = pstmt.executeQuery();
-
+				list = new ArrayList();
 				while(rs.next()) {
 					ReservationVO vo = new ReservationVO();
 					vo.setRoomnumber(rs.getInt("roomnumber"));
@@ -348,7 +343,7 @@ public class ReservationDAO {
 					vo.setReg_date(rs.getTimestamp("reg_date"));
 					vo.setPaymentmethod(rs.getString("paymentmethod"));
 					vo.setChkpayment(rs.getString("chkpayment"));
-					list_id.add(vo);
+					list.add(vo);
 				}
 			}catch(Exception e){
 				e.printStackTrace();
@@ -357,8 +352,34 @@ public class ReservationDAO {
 				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
 				if(conn != null) try {conn.close();}catch(SQLException e) {}
 			}
-			return list_id;
+			return list;
 		}
-	
 		
+		//마이페이지에서 지우는 함
+		public boolean cancleReservation(String re_id, int roomnumber){
+			boolean chk = false;
+			try {
+				conn = getConnection();
+				pstmt = conn.prepareStatement("select * from reservation_table where re_id=? and roomnumber=? ");
+				pstmt.setString(1, re_id);
+				pstmt.setInt(2, roomnumber);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					pstmt = conn.prepareStatement("delete from reservation_table where re_id=? and roomnumber=?");
+					pstmt.setString(1, re_id);
+					pstmt.setInt(2, roomnumber);
+					int x = pstmt.executeUpdate();
+					if(x==1){
+						chk=true;
+					}
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return chk;
+		}		
 }

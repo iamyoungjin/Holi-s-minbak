@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,14 +13,55 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
 	var check = false;
-	function chkall(){
-		var chk = document.getElementsByName("chkpost");
-		if(check==false){
-			check = true;
-			for(var i=0; i<chk.length;i++){
-				chk[i].checked = true;
+	$(function(){
+		$("#checkall").click(function(){
+			if($("#checkall").prop("checked")){
+				$("input[type=checkbox]").prop("checked",true);
+			}else{
+				$("input[type=checkbox]").prop("checked",false);
+			}
+		})
+	})
+	
+	function oneCheckFunc(obj){
+		var allObj = $("[name=checkall]");
+		var objName = $(obj).attr("name");
+	
+		if($(obj).prop("checked")){
+			checkBoxLength = $("[name="+ objName +"]").length;
+			checkedLength = $("[name="+ objName +"]:checked").length;
+	
+			if(checkBoxLength == checkedLength){
+				allObj.prop("checked", true);
+			}else{
+				allObj.prop("checked", false);
 			}
 		}else{
+			allObj.prop("checked", false);
+		}
+	}
+	
+	$(function(){
+		$("[name=checkall]").click(function(){
+			allCheckFunc( this );
+		});
+		$("[name=chkpost]").each(function(){
+			$(this).click(function(){
+				oneCheckFunc( $(this) );
+			});
+		});
+	});
+	
+	function cancleChk(){
+		var chk = document.getElementsByName("chkpost");
+		if(check==false){
+			document.getElementById("checkall").checked = false;
+			check = true;
+			for(var i=0; i<chk.length;i++){
+				chk[i].checked = false;
+			}
+		}else{
+			document.getElementById("checkall").checked = false;
 			check = false;
 			for(var i=0; i<chk.length;i++){
 				chk[i].checked = false;
@@ -71,11 +113,18 @@
 	history.go(-1);
 	</script>
 	<%}else{
+		
+		String search = request.getParameter("search");
+		String keyword = request.getParameter("keyword");
+		
 		int pageSize = 10;
 		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
 		String pageNum = request.getParameter("pageNum");
 		if(pageNum == null){
 			pageNum = "1";
+		}
+		if(search == null){
+			search = "0";
 		}
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = (currentPage -1) * pageSize +1;
@@ -86,9 +135,9 @@
 		
 		List postList = null;
 		BoardDAO bdao = BoardDAO.getInstance();
-		count = bdao.getPostCount();
+		count = bdao.getPostCount(search, keyword);
 		if(count>0){
-			postList = bdao.getPosts(startRow,endRow); 
+			postList = bdao.getPosts(startRow,endRow,search, keyword); 
 		}
 		number = count - (currentPage-1)*pageSize;
 %>
@@ -150,22 +199,38 @@
 			endPage = pageCount;
 		}
 		if(startPage>10){%>
-		<a href="boardList.jsp?pageNum=<%=startPage-10 %>">[이전]</a>
+		<a href="checkBoard.jsp?pageNum=<%=startPage-10 %>">[이전]</a>
 <%		}
 		for(int i=startPage; i<= endPage; i++){%>
-		<a href="boardList.jsp?pageNum=<%=i%>">[<%=i%>]</a>
+		<a href="checkBoard.jsp?pageNum=<%=i%>">[<%=i%>]</a>
 <%		}
 		if(endPage<pageCount){%>
-		<a href="boardList.jsp?pageNum=<%=startPage+10 %>">[다음]</a>		
+		<a href="checkBoard.jsp?pageNum=<%=startPage+10 %>">[다음]</a>		
 <%
 		}
 	}
 %>
 <br/>
 <input type="button" value="선택 삭제" onclick="selectDel()"/>
-<input type="button" value="체크 해제"/>
+<input type="button" value="체크 해제" onclick="cancleChk()"/>
 <input type="button" value="게시판 설정" />
 <input type="button" value="돌아가기" onclick="location.href='adminpage.jsp'"/>
+</form>
+<form name="searchForm">
+<table>
+	<tr>
+		<td>
+		<select name = "search">
+			<option value="0">전체 </option>
+			<option value="1">제목</option>
+			<option value="2">내용</option>
+			<option value="3">작성자</option>
+		</select>
+		</td>
+		<td><input type="text" name="keyword" value=""/></td>
+		<td><input type="submit" value="검색" /></td>
+	</tr>
+</table>
 </form>
 
 </body>

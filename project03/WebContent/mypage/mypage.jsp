@@ -22,7 +22,7 @@
 	<table>
 		<tr><td colspan="4"><%=name %>님의 마이페이지	</tr>
 		<tr>
-			<td><a href="">예약 확인</a></td>
+			<td><a href="showreservation.jsp">예약 확인</a></td>
 			<td><a href="modifyForm.jsp">회원 정보 수정</a></td>
 			<td><a href="deleteForm.jsp">회원 탈퇴</a></td>
 			<td><a href="../main/main.jsp">메인으로</a></td>

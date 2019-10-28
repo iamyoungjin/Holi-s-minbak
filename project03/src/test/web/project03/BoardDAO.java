@@ -30,11 +30,27 @@ public class BoardDAO {
 		return ds.getConnection();
 	}
 	
-	public int getPostCount() {
+	public int getPostCount(String search, String keyword) {
 		int count = 0;
+		String sql = "";
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select count(*) from board_table");
+			if(search.equals("0")) {
+				sql = "select count(*) from board_table"; 
+				pstmt = conn.prepareStatement(sql);
+			}else if(search.equals("1")) {
+				sql = "select count(*) from board_table where subject like ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+			}else if(search.equals("2")) {
+				sql = "select count(*) from board_table where content like ?"; 
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+			}else if(search.equals("3")) {
+				sql = "select count(*) from board_table where name like ?"; 
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+			}
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				count = rs.getInt(1);
@@ -54,18 +70,60 @@ public class BoardDAO {
 	 * @param end
 	 * @return
 	 */
-	public List getPosts(int start, int end) {
+	public List getPosts(int start, int end, String search, String keyword) {
 		List list = null;
 		try {
 			conn = getConnection();
-			String sql = "select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category,r from"
-					+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category, rownum r from"
-					+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category from board_table order by ref desc, re_step asc)"
-					+ "order by ref desc, re_step asc)"
-					+ "where r>=? and r<=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			
+			if(search.equals("0")) {
+				String sql = "select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category,r from"
+						+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category, rownum r from"
+						+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category from "
+						+ "board_table order by ref desc, re_step asc)"
+						+ "order by ref desc, re_step asc)"
+						+ "where r>=? and r<=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+				
+			}else if(search.equals("1")) {
+				String sql = "select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category,r from"
+						+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category, rownum r from"
+						+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category from "
+						+ "board_table order by ref desc, re_step asc)"
+						+ "where subject like ? order by ref desc, re_step asc)"
+						+ "where r>=? and r<=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				
+			}else if(search.equals("2")) {
+				String sql = "select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category,r from"
+						+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category, rownum r from"
+						+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category from "
+						+ "board_table order by ref desc, re_step asc)"
+						+ "where content like ? order by ref desc, re_step asc)"
+						+ "where r>=? and r<=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+				
+			}else if(search.equals("3")) {
+				String sql = "select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category,r from"
+						+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category, rownum r from"
+						+ "(select boardnum,name,id,pw,subject,content,reg_date,readcount,fileroot,ref,re_step,re_level,category from "
+						+ "board_table order by ref desc, re_step asc)"
+						+ "where name like ? order by ref desc, re_step asc)"
+						+ "where r>=? and r<=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+			}
+			
+			
 			rs = pstmt.executeQuery();
 			list = new ArrayList();
 			while(rs.next()) {

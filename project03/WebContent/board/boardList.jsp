@@ -4,6 +4,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,12 +23,18 @@
 	String sName = (String)session.getAttribute("sName"); 
 	String boardType = "board";
 	
+	String search = request.getParameter("search");
+	String keyword = request.getParameter("keyword");
+	
 	int pageSize = 10;
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
 	
 	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null){
 		pageNum = "1";
+	}
+	if(search == null){
+		search = "0";
 	}
 	int currentPage = Integer.parseInt(pageNum);
 	int startRow = (currentPage -1) * pageSize +1;
@@ -37,9 +44,9 @@
 	
 	List postList = null;
 	BoardDAO bdao = BoardDAO.getInstance();
-	count = bdao.getPostCount();
+	count = bdao.getPostCount(search, keyword);
 	if(count>0){
-		postList = bdao.getPosts(startRow,endRow); 
+		postList = bdao.getPosts(startRow,endRow,search,keyword); 
 	}
 	number = count - (currentPage-1)*pageSize;
 	
@@ -135,8 +142,23 @@
 <%
 		}
 	}
-
-
 %>
+<form name="searchForm">
+<table>
+	<tr>
+		<td>
+		<select name = "search">
+			<option value="0">전체 </option>
+			<option value="1">제목</option>
+			<option value="2">내용</option>
+			<option value="3">작성자</option>
+		</select>
+		</td>
+		<td><input type="text" name="keyword" value=""/></td>
+		<td><input type="submit" value="검색" /></td>
+	</tr>
+</table>
+</form>
+
 </body>
 </html>
