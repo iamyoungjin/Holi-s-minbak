@@ -28,7 +28,8 @@
 					alert("방 번호나 방의 이름이 중복되었습니다.");
 					history.go(-1);
 				</script>
-			<%}else{response.sendRedirect("checkRoomData.jsp");}
+			<%}else{response.sendRedirect("checkRoomData.jsp");
+			}
 		}else if(type.equals("update")){
 			dao.updateRoom(dto);
 			response.sendRedirect("checkRoomData.jsp");
