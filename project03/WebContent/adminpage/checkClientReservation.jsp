@@ -1,121 +1,117 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@page import="java.util.*" %>
 <%@page import="test.web.project03.RoomDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="test.web.project03.RoomDAO"%>
 <%@page import="test.web.calendar.ReservationVO"%>
 <%@page import="test.web.calendar.ReservationDAO"%>
 <!DOCTYPE html>
-<title>예약 관리 페이지</title>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>예약 정보</title>
 <script>
-	function update(userinput,num){
-		if(!document.getElementById("num"+num).value){
+
+	function updateReservation(userinput,roomnumber){
+		if(!document.getElementById("roomnumber"+roomnumber).value){
 			alert("방번호를 입력해주세요");
 			return false;
 		}
-		if(!document.getElementById("rname"+num).value){
-			alert("방 이름을 입력해주세요");
+		if(!document.getElementById("re_id"+roomnumber).value){
+			alert("예약자 아이디를 입력해주세요");
 			return false;
 		}
-		if(!document.getElementById("dpeople"+num).value){
+		if(!document.getElementById("re_name"+roomnumber).value){
 			alert("기준 인원수를 입력해주세요");
 			return false;
 		}
-		if(!document.getElementById("maxpeople"+num).value){
-			alert("최대 인원수를 입력해주세요");
+		if(!document.getElementById("re_name"+roomnumber).value){
+			alert("핸드폰 번호를 입력해주세요");
 			return false;
 		}
-		if(!document.getElementById("addtionalcost"+num).value){
+		if(!document.getElementById("usepeople"+roomnumber).value){
+			alert("사용 인원을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("price"+roomnumber).value){
 			alert("추가 금액을 입력해주세요");
 			return false;
 		}
-		if(!document.getElementById("weekday_price"+num).value){
-			alert("주중 가격을 입력해주세요");
+		if(!document.getElementById("daterange"+roomnumber).value){
+			alert("사용 기간을 입력해주세요");
 			return false;
 		}
-		if(!document.getElementById("weekend_price"+num).value){
-			alert("주말 가격을 입력해주세요");
+		if(!document.getElementById("usingday"+roomnumber).value){
+			alert("숙박일 수 입력해주세요");
 			return false;
 		}
-		if(!document.getElementById("peakseason_price"+num).value){
-			alert("성수기 가격을 입력해주세요");
+		if(!document.getElementById("roomname"+roomnumber).value){
+			alert("방 이름을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("startday"+roomnumber).value){
+			alert("시작 날짜를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("endday"+roomnumber).value){
+			alert("종료 날짜를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("reg_date"+roomnumber).value){
+			alert("등록 날짜를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("paymentmethod"+roomnumber).value){
+			alert("결제 방식을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("chkpayment"+roomnumber).value){
+			alert("결제 여부를 입력해주세요");
 			return false;
 		}
 		
-		userinput.action="checkRoomPro.jsp?type=update"
-			+"&num="+document.getElementById("num"+num).value
-			+"&rname="+encodeURI(document.getElementById("rname"+num).value)
-			+"&dpeople="+document.getElementById("dpeople"+num).value
-			+"&maxpeople="+document.getElementById("maxpeople"+num).value
-			+"&addtionalcost="+document.getElementById("addtionalcost"+num).value
-			+"&weekday_price="+document.getElementById("weekday_price"+num).value
-			+"&weekend_price="+document.getElementById("weekend_price"+num).value
-			+"&peakseason_price="+document.getElementById("peakseason_price"+num).value ;
+		userinput.action="checkClientReservationPro.jsp?type=update"
+			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
+			+"&re_id="+document.getElementById("re_id"+roomnumber).value
+			+"&re_name="+document.getElementById("re_name"+roomnumber).value
+			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
+			+"&usepeople="+document.getElementById("usepeople"+roomnumber).value
+			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&price="+document.getElementById("price"+roomnumber).value
+			+"&daterange="+document.getElementById("daterange"+roomnumber).value
+			+"&usingday="+document.getElementById("usingday"+roomnumber).value
+			+"&startday="+document.getElementById("startday"+roomnumber).value 
+			+"&endday="+document.getElementById("endday"+roomnumber).value 
+			//+"&reg_date="+document.getElementById("reg_date"+roomnumber).value 
+			+"&paymentmethod="+document.getElementById("paymentmethod"+roomnumber).value 
+			+"&chkpayment="+document.getElementById("chkpayment"+roomnumber).value 
+			+"&re_email="+document.getElementById("re_email"+roomnumber).value 
+			+"&year="+document.getElementById("year"+roomnumber).value 
+			+"&month="+document.getElementById("month"+roomnumber).value 
+			+"&day="+document.getElementById("day"+roomnumber).value 
+			
 		userinput.submit();
 	}
 	
-	function deleteRoom(userinput,num){
+	function deleteReservation(userinput,roonumber){
 		if(!confirm("예약을 강제 삭제 하겠습니까?") ){
-			return;
+			x=true;
 		}
-		if(!document.getElementById("num"+num).value){
+		if(!document.getElementById("roomnumber"+roomnumber).value){
 			alert("문제가 발생했으니 다시 시도해주세요.");
 		}
-		userinput.action="checkClientReservationPro.jsp?type=delete"
-			+"&num="+document.getElementById("num"+num).value;
-		userinput.submit();
+			userinput.action="checkClientReservationPro.jsp?type=delete"
+				+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
+				+"&re_id="+document.getElementById("re_id"+roomnumber).value
+				+"&re_name="+document.getElementById("re_name"+roomnumber).value
+				+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
+				+"&usepeople="+document.getElementById("usepeople"+roomnumber).value
+				+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			userinput.submit();
 	}
 
 	
-	function insert(userinput){
-		if(!userinput.newnum.value){
-			alert("방 번호를 입력해주세요");
-			return false;
-		}
-		if(!userinput.newrname.value){
-			alert("방 이름을 입력해주세요");
-			return false;
-		}
-		if(!userinput.newdpeople.value){
-			alert("기준 인원수를 입력해주세요");
-			return false;
-		}
-		if(!userinput.newmaxpeople.value){
-			alert("최대 인원수를 입력해주세요");
-			return false;
-		}
-		if(!userinput.newaddtionalcost.value){
-			alert("추가 금액을 입력해주세요");
-			return false;
-		}
-		if(!userinput.newweekday_price.value){
-			alert("주중 가격을 입력해주세요");
-			return false;
-		}
-		if(!userinput.newweekend_price.value){
-			alert("주말 가격을 입력해주세요");
-			return false;
-		}
-		if(!userinput.newpeakseason_price.value){
-			alert("성수기 가격을 입력해주세요");
-			return false;
-		}
-		userinput.action="checkRoomPro.jsp?type=insert"
-						+"&num="+userinput.newnum.value
-						+"&rname="+encodeURI(userinput.newrname.value)
-						+"&dpeople="+userinput.newdpeople.value
-						+"&maxpeople="+userinput.newmaxpeople.value
-						+"&addtionalcost="+userinput.newaddtionalcost.value
-						+"&weekday_price="+userinput.newweekday_price.value
-						+"&weekend_price="+userinput.newweekend_price.value
-						+"&peakseason_price="+userinput.newpeakseason_price.value
-		userinput.submit();
-	}
 
 </script>
 
@@ -141,7 +137,15 @@
 				<td>예약 번호</td>
 				<td>예약 ID</td>
 				<td>예약자명</td>
+				<td>핸드폰번호 </td>
+				<td>e-mail </td>
+				<td>년도</td>
+				<td>월 </td>
+				<td>일 </td>
+				
+				
 				<td>사용 인원</td>
+				<td>방 이름</td>
 				<td>총 가격</td>
 				<td>사용 기간</td>
 				<td>숙박 일수</td>
@@ -158,7 +162,15 @@
 					<td><input type="text" id="roomnumber<%=i%>" name="roomnumber<%=i%>" value="<%=vo.getRoomnumber()%>" readonly/></td>
 					<td><input type="text" id="re_id<%=i%>" name="re_id<%=i%>" value="<%=vo.getRe_id()%>" readonly/></td>
 					<td><input type="text" id="re_name<%=i%>" name="re_name<%=i%>" value="<%=vo.getRe_name()%>" readonly/></td>
+					<td><input type="text" id="re_phone<%=i%>" name="re_phone<%=i%>" value="<%=vo.getRe_phone()%>" readonly/></td>
+					<td><input type="text" id="re_email<%=i%>" name="re_email<%=i%>" value="<%=vo.getRe_email()%>" readonly/></td>
+					<td><input type="hidden" id="year<%=i%>" name="year<%=i%>" value="<%=vo.getYear()%>" readonly/></td>
+					<td><input type="hidden" id="month<%=i%>" name="month<%=i%>" value="<%=vo.getMonth()%>" readonly/></td>
+					<td><input type="hidden" id="day<%=i%>" name="day<%=i%>" value="<%=vo.getDay()%>" readonly/></td>
+
+					
 					<td><input type="text" id="usepeople<%=i%>" name="usepeople<%=i%>" value="<%=vo.getUsepeople()%>" /></td>
+					<td><input type="text" id="roomname<%=i%>" name="roomname<%=i%>" value="<%=vo.getRoomname()%>" /></td>
 					<td><input type="text" id="price<%=i%>" name="price<%=i%>" value="<%=vo.getPrice()%>"/></td>
 					<td><input type="text" id="daterange<%=i%>" name="daterange<%=i%>" value="<%=vo.getDaterange()%>"/></td>
 					<td><input type="text" id="usingday<%=i%>" name="usingday<%=i%>" value="<%=vo.getUsingday()%>"/></td>
@@ -169,13 +181,15 @@
 					<td><input type="text" id="chkpayment<%=i%>" name="chkpayment<%=i%>" value="<%=vo.getChkpayment()%>"/></td>
 					
 					<td>
-						<input type="button" value="예약 정보 수정" onclick="update(this.form,<%=i%>)"/>
-						<input type="button" value="예약 강제 삭제" onclick="delete(this.form,<%=i%>)"/>
+						<input type="button" value="결제 확인" onclick="updateReservation(this.form,<%=i%>)"/>
+						<input type="button" value="예약 강제 삭제" onclick="deleteReservation(this.form,<%=i%>)"/>
 					</td>
 				</tr>
 			<%}%>
 		</table>
 	</form>
+	
+	
 	<br/>
 	<br/>
 	<form>
