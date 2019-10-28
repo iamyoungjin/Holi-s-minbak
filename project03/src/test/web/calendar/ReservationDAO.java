@@ -315,4 +315,67 @@ public class ReservationDAO {
 			}
 			return list;
 		}
+		
+		public List reservation_user(String sId) {
+			List list = null;
+			try {
+				conn = getConnection();
+				pstmt = conn.prepareStatement("select * from reservation_table where re_id=? order by reg_date desc");
+				pstmt.setString(1, sId);
+				rs = pstmt.executeQuery();
+				list = new ArrayList();
+				while(rs.next()) {
+					ReservationVO vo = new ReservationVO();
+					vo.setRoomnumber(rs.getInt("roomnumber"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setRe_id(rs.getString("re_id"));	
+					vo.setRe_name(rs.getString("re_name"));	
+					vo.setUsepeople(rs.getInt("usepeople"));	
+					vo.setPrice(rs.getInt("price"));	
+					vo.setDaterange(rs.getString("daterange"));	
+					vo.setUsingday(rs.getInt("usingday"));
+					vo.setStartday(rs.getString("startday"));
+					vo.setEndday(rs.getString("endday"));
+					vo.setReg_date(rs.getTimestamp("reg_date"));
+					vo.setPaymentmethod(rs.getString("paymentmethod"));
+					vo.setChkpayment(rs.getString("chkpayment"));
+					list.add(vo);
+				}
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return list;
+		}
+		
+		public boolean cancleReservation(String re_id, int roomnumber) {
+			boolean chk = false;
+			try {
+				conn = getConnection();
+				pstmt = conn.prepareStatement("select * from reservation_table where re_id=? and roomnumber=? ");
+				pstmt.setString(1, re_id);
+				pstmt.setInt(2, roomnumber);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					pstmt = conn.prepareStatement("delete from reservation_table where re_id=? and roomnumber=?");
+					pstmt.setString(1, re_id);
+					pstmt.setInt(2, roomnumber);
+					int x = pstmt.executeUpdate();
+					if(x==1){
+						chk=true;
+					}
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return chk;
+		}		
 }
