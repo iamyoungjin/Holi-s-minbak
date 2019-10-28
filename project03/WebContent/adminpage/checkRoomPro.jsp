@@ -21,6 +21,7 @@
 <%	}else{
 		RoomDAO dao = RoomDAO.getInstance();
 		String type = request.getParameter("type");
+		
 		if(type.equals("insert")){
 			boolean chk = dao.insertRoom(dto);
 			if(chk == false){%>

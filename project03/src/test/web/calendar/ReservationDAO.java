@@ -265,9 +265,9 @@ public class ReservationDAO {
 				conn = getConnection();
 				String sql="delete from reservation_table where re_name =? and re_phone=? and roomname=?";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, re_name);
-				pstmt.setString(2, re_phone);
-				pstmt.setString(3, roomname);
+				pstmt.setString(1, re_name);				
+				pstmt.setString(2, re_phone);				
+				pstmt.setString(3, roomname);				
 				pstmt.executeUpdate();
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -294,6 +294,7 @@ public class ReservationDAO {
 					vo.setRoomname(rs.getString("roomname"));
 					vo.setRe_id(rs.getString("re_id"));	
 					vo.setRe_name(rs.getString("re_name"));	
+					vo.setRe_email(rs.getString("re_email"));
 					vo.setRe_phone(rs.getString("re_phone"));
 					vo.setUsepeople(rs.getInt("usepeople"));	
 					vo.setPrice(rs.getInt("price"));	
@@ -315,4 +316,49 @@ public class ReservationDAO {
 			}
 			return list;
 		}
+		
+		
+		/////////작업중/////////
+		
+		//아이디 & 예약자 & 방이름 & 핸드폰 & 미결 로 예약 정보 검색 
+		public List reservation_search(String method , String val){
+			List list_id = new ArrayList();
+			try {
+				conn = getConnection();
+				String sql = "select * from reservation_table where ?=? ";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, method);
+				pstmt.setString(2, val);
+				rs = pstmt.executeQuery();
+
+				while(rs.next()) {
+					ReservationVO vo = new ReservationVO();
+					vo.setRoomnumber(rs.getInt("roomnumber"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setRe_id(rs.getString("re_id"));	
+					vo.setRe_name(rs.getString("re_name"));	
+					vo.setRe_email(rs.getString("re_email"));
+					vo.setRe_phone(rs.getString("re_phone"));
+					vo.setUsepeople(rs.getInt("usepeople"));	
+					vo.setPrice(rs.getInt("price"));	
+					vo.setDaterange(rs.getString("daterange"));	
+					vo.setUsingday(rs.getInt("usingday"));
+					vo.setStartday(rs.getString("startday"));
+					vo.setEndday(rs.getString("endday"));
+					vo.setReg_date(rs.getTimestamp("reg_date"));
+					vo.setPaymentmethod(rs.getString("paymentmethod"));
+					vo.setChkpayment(rs.getString("chkpayment"));
+					list_id.add(vo);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return list_id;
+		}
+	
+		
 }

@@ -1,4 +1,5 @@
 
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "test.web.calendar.ReservationVO" %>
@@ -30,7 +31,6 @@ $(function() {
 
 </script>
 
-<h2> 유효성 검사 해야함 </h2>
 <% 
 	String sId = (String)session.getAttribute("sId");
 	if(sId == null){%>
@@ -56,16 +56,16 @@ $(function() {
 	<table width="400" border="1" cellspacing="0" cellpadding="0" align="center">
 	<br/>
 	<tr>
-	<td align="center">아이디 :<input type="text" name="re_id" value=<%=id %>></td>
+	<td align="center">아이디 :<input type="text" name="re_id" value=<%=id %> readonly></td>
 	</tr>
 	<tr>
-	<td align="center">예약자 :<input type="text" name="re_name" value=<%=name %>></td>
+	<td align="center">예약자 :<input type="text" name="re_name" value=<%=name %> readonly></td>
 	</tr>
 	<tr>
-	<td align="center">핸드폰 :<input type="text" name="re_phone" value=<%=phone %>></td>
+	<td align="center">핸드폰 :<input type="text" name="re_phone" value=<%=phone %> readonly></td>
 	</tr>
 	<tr>
-	<td align="center">E-mail:<input type="text" name="re_email" value=<%= e_mail%>></td>
+	<td align="center">E-mail:<input type="text" name="re_email" value=<%= e_mail%> readonly></td>
 	</tr>
 	<tr>
 	<td align="center">예약할 방 선택 :<select id="mySel" onchange="sel()" name="roomname" value="sel()">
