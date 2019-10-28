@@ -1,7 +1,14 @@
+<%@page import="test.web.project03.BoardDAO"%>
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="java.awt.Graphics2D"%>
+<%@page import="javax.media.jai.JAI"%>
+<%@page import="javax.media.jai.RenderedOp"%>
+<%@page import="java.awt.image.renderable.ParameterBlock"%>
+<%@page import="java.awt.image.RenderedImage"%>
+<%@page import="java.awt.image.BufferedImage"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="java.io.File"%>
-<%@page import="test.web.project03.BoardDAO"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.awt.Image"%>
 
@@ -50,7 +57,18 @@
 			}
 			String sys = mr.getFilesystemName("save");
 			dto.setFileroot(sys);
+			ParameterBlock pb = new ParameterBlock();
+			pb.add(path+"/"+sys);
+			RenderedOp rOp =  JAI.create("fileload", pb);
+			BufferedImage bi = rOp.getAsBufferedImage();
+			BufferedImage thumb = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g = thumb.createGraphics();
+			g.drawImage(bi, 0, 0, 50, 50, null);
+			File file = new File(path+ "/thum_" + sys);
+			ImageIO.write(thumb, "jpg", file);
 		}
+		
+		
 		int boardnum = Integer.parseInt(mr.getParameter("boardnum"));
 		int ref = Integer.parseInt(mr.getParameter("ref"));
 		int re_step = Integer.parseInt(mr.getParameter("re_step"));

@@ -4,12 +4,17 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
+
+<script>
+	
+
+</script>
+
 </head>
 <%
 	String sId = (String)session.getAttribute("sId");
@@ -95,7 +100,8 @@
 				if(dto.getRe_level()>0){
 					wid = 10 * (dto.getRe_level());%>
 				<b>└</b>
-			<%}%>
+			<%}
+			if(dto.getFileroot()!=null){%><img src="/project03/image/thum_<%=dto.getFileroot()%>"/><%}%>
 			<a href ="content.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=currentPage%>"><%=dto.getSubject() %></a>
 			</td>
 			<td><%=dto.getName() %></td>
@@ -105,7 +111,10 @@
 	}
 %>
 	</table>
+	
 <%}%>
+
+
 <%
 	if(count >0){
 		int pageCount = count / pageSize + (count % pageSize == 0? 0 : 1);
@@ -126,6 +135,8 @@
 <%
 		}
 	}
+
+
 %>
 </body>
 </html>

@@ -324,5 +324,29 @@ public class BoardDAO {
 		return chk;
 	}
 	
+	public boolean selectDel(List<Integer> list) {
+		boolean chk = false;
+		try {
+			if(list != null){
+				conn = getConnection();
+				for(int i=0; i<list.size(); i++) {
+					if(list.get(i) != null) {
+						pstmt = conn.prepareStatement("delete from board_table where boardnum=?");
+						pstmt.setInt(1, list.get(i));
+						pstmt.executeUpdate();
+						chk = true;
+					}else {
+						chk = false;
+					}
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt!=null) {try{pstmt.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(conn!=null) {try{conn.close();}catch(SQLException s) {s.printStackTrace();}}
+		}
+		return chk;
+	}
 
 }
