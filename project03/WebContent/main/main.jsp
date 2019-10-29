@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>펜션에 오신걸 환영합니다.</title>
 
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -84,7 +85,7 @@
          About호리네민박
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../etc/introRoom.jsp">방 소개</a>
+          <a class="dropdown-item" href="../introduce/roomlist.jsp">방 소개</a>
           <a class="dropdown-item" href="../etc/directions.jsp">찾아오시는 길</a>
         </div>
       </li>
@@ -109,7 +110,7 @@
 		<li><a href="../login/loginForm.jsp">로그인</a></li>
 		<li><a href="../reservation/reservationCalendar.jsp">예약</a></li>
 		<li><a href="../board/boardList.jsp">게시판</a></li>
-		<li><a href="../etc/introRoom.jsp">방 소개</a></li>
+		<li><a href="../introduce/roomlist.jsp">방 소개</a></li>
 		<li><a href="../etc/directions.jsp">찾아오는 길</a></li>
 	</ul>
 <%	}else if(session.getAttribute("sId")!=null){
@@ -128,7 +129,7 @@
 		>
 		<li><a href="../reservation/reservationCalendar.jsp">예약</a></li>
 		<li><a href="../board/boardList.jsp">게시판</a></li>
-		<li><a href="../etc/introRoom.jsp">방 소개</a></li>
+		<li><a href="../introduce/roomlist.jsp">방 소개</a></li>
 		<li><a href="../etc/directions.jsp">찾아오는 길</a></li>
 	</ul>
 <%	}else if(session.getAttribute("sAdmin")!= null){ %>
@@ -138,10 +139,9 @@
 		<li><a href="../login/logout.jsp?boardType=<%=boardType%>">로그아웃</a></li>
 		<li><a href="../reservation/reservationCalendar.jsp">예약</a></li>
 		<li><a href="../board/boardList.jsp">게시판</a></li>
-		<li><a href="../etc/introRoom.jsp">방 소개</a></li>
+		<li><a href="../introduce/roomlist.jsp">방 소개</a></li>
 		<li><a href="../etc/directions.jsp">찾아오는 길</a></li>
 	</ul>
-<%	}
-%>
+<%	}%>
 </body>
 </html>

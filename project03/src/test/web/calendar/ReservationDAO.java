@@ -224,7 +224,7 @@ public class ReservationDAO {
 						list.add(rn);
 					}
 					for(int q =0;q<list.size();q++) {
-						String k=list.get(i).toString();
+						String k=list.get(q).toString();
 						if(k.equals(rname)) {
 							chk=true;
 							break;
@@ -267,7 +267,8 @@ public class ReservationDAO {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, re_name);				
 				pstmt.setString(2, re_phone);				
-				pstmt.setString(3, roomname);				
+				pstmt.setString(3, roomname);		
+				//pstmt.setInt(4, roomnumber);	
 				pstmt.executeUpdate();
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -382,4 +383,124 @@ public class ReservationDAO {
 			}
 			return chk;
 		}		
+		
+		//예약 정보 서치 
+		public List reservation_search(String method, String val){
+			List list = new ArrayList();
+			String text= "select * from reservation_table where "+method;
+			try {
+				conn = getConnection();
+				String sql = text+"="+ val;
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					ReservationVO vo = new ReservationVO();
+					vo.setRoomnumber(rs.getInt("roomnumber"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setRe_id(rs.getString("re_id"));
+					vo.setRe_name(rs.getString("re_name"));
+					vo.setRe_phone(rs.getString("re_phone"));
+					vo.setRe_email(rs.getString("re_email"));
+					vo.setUsepeople(rs.getInt("usepeople"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setPrice(rs.getInt("price"));
+					vo.setDaterange(rs.getString("daterange"));
+					vo.setUsingday(rs.getInt("usingday"));
+					vo.setStartday(rs.getString("startday"));
+					vo.setEndday(rs.getString("endday"));
+					vo.setPaymentmethod(rs.getString("paymentmethod"));
+					vo.setChkpayment(rs.getString("chkpayment"));
+					vo.setReg_date(rs.getTimestamp("reg_date"));
+					
+					list.add(vo);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return list;
+		}
+		
+		//오늘 예약 입실자 현황 보여주기
+		public List cometoday_list(String today){
+			List list = new ArrayList();
+			System.out.println(today);
+			try {
+				conn = getConnection();
+				String sql = "select * from reservation_table where startday= ? and chkpayment = 'check'";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, today);
+				rs = pstmt.executeQuery();
+
+				while(rs.next()) {
+					ReservationVO vo = new ReservationVO();
+					vo.setRoomnumber(rs.getInt("roomnumber"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setRe_id(rs.getString("re_id"));	
+					vo.setRe_name(rs.getString("re_name"));	
+					vo.setRe_email(rs.getString("re_email"));
+					vo.setRe_phone(rs.getString("re_phone"));
+					vo.setUsepeople(rs.getInt("usepeople"));	
+					vo.setPrice(rs.getInt("price"));	
+					vo.setDaterange(rs.getString("daterange"));	
+					vo.setUsingday(rs.getInt("usingday"));
+					vo.setStartday(rs.getString("startday"));
+					vo.setEndday(rs.getString("endday"));
+					vo.setReg_date(rs.getTimestamp("reg_date"));
+					vo.setPaymentmethod(rs.getString("paymentmethod"));
+					vo.setChkpayment(rs.getString("chkpayment"));
+					list.add(vo);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return list;
+		}
+		
+		public List leavetoday_list(String today){
+			List list = new ArrayList();
+			System.out.println(today);
+			try {
+				conn = getConnection();
+				String sql = "select * from reservation_table where endday= ? and chkpayment = 'check'";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, today);
+				rs = pstmt.executeQuery();
+
+				while(rs.next()) {
+					ReservationVO vo = new ReservationVO();
+					vo.setRoomnumber(rs.getInt("roomnumber"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setRe_id(rs.getString("re_id"));	
+					vo.setRe_name(rs.getString("re_name"));	
+					vo.setRe_email(rs.getString("re_email"));
+					vo.setRe_phone(rs.getString("re_phone"));
+					vo.setUsepeople(rs.getInt("usepeople"));	
+					vo.setPrice(rs.getInt("price"));	
+					vo.setDaterange(rs.getString("daterange"));	
+					vo.setUsingday(rs.getInt("usingday"));
+					vo.setStartday(rs.getString("startday"));
+					vo.setEndday(rs.getString("endday"));
+					vo.setReg_date(rs.getTimestamp("reg_date"));
+					vo.setPaymentmethod(rs.getString("paymentmethod"));
+					vo.setChkpayment(rs.getString("chkpayment"));
+					list.add(vo);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return list;
+		}
 }

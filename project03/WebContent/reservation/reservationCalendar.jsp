@@ -176,8 +176,20 @@ if(request.getParameter("action") == null) {
 					List roomtoday = dao.roomtoday(startday, endday);
 					
 					for(int i=0;i<roomtoday.size();i++){  
-						ReservationVO vooo=(ReservationVO)roomtoday.get(i);%>
-						<%=vooo.getRoomname() %><br/>
+						ReservationVO vooo=(ReservationVO)roomtoday.get(i);//
+						if(vooo.getRoomname().toString().equals("소나무방")){%>
+							<a href="../introduce/soo.jsp"><%} %>
+						<%if(vooo.getRoomname().toString().equals("산들방")){%>
+							<a href="../introduce/san.jsp"><%} %>
+						<%if(vooo.getRoomname().toString().equals("매화방")){%>
+							<a href="../introduce/mae.jsp"><%} %>
+						<%if(vooo.getRoomname().toString().equals("들꽃방")){%>
+							<a href="../introduce/wild.jsp"><%} %>
+						<%if(vooo.getRoomname().toString().equals("해뜰방")){%>
+							<a href="../introduce/hae.jsp"><%} %>
+						<%if(vooo.getRoomname().toString().equals("민들레방")){%>
+							<a href="../introduce/min.jsp"><%} %>
+						<%=vooo.getRoomname() %></a><br/>
 					  <%}%></td>  
 					  <% count+=1;
 	          			 dispDay +=1;	         			  
@@ -193,7 +205,7 @@ if(request.getParameter("action") == null) {
      </td>
      </tr>
   </table>
-
+ <button onclick="window.location.href = '../main/main.jsp'"> 메인으로 가기 </button>
  <button onclick="window.location.href = '../reservation/reservationForm.jsp'"> 예약하러 가기 </button>
 </body>
 </html>

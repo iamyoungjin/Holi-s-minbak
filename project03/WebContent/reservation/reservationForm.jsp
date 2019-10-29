@@ -15,7 +15,11 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- <input type="text" name="daterange" value="11/01/2019 - 11/15/2019" />-->
-
+<script>
+url="reservationCalendar.jsp";
+window.open(url, "reservationCalendar", "toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizeable=no, width=300, height=200");
+// url = 주소, confirm 타이틀, resizeable 사이즈조절, scrollbars 스크롤
+</script>
 
 
 <script>
@@ -31,6 +35,46 @@ $(function() {
 
 </script>
 
+<script>
+function formcheck(){
+		if(!document.getElementById("re_id").value){
+			alert("아이디를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("re_name").value){
+			alert("예약자를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("re_phone").value){
+			alert("연락처를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("re_email").value){
+			alert("이메일을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("mySel").value){
+			alert("방을 선택해주세요");
+			return false;
+		}
+		if(!document.getElementById("dr").value){
+			alert("사용 기간을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("usepeople").value){
+			alert("숙박 인원을 입력해 주세요");
+			return false;
+		}
+		
+		if(!document.getElementById("paymentmethod"+roomnumber).value){
+			alert("결제 방식을 선택해주세요");
+			return false;
+		}
+}
+	</script>
+
+
+
 <% 
 	String sId = (String)session.getAttribute("sId");
 	if(sId == null){%>
@@ -38,7 +82,7 @@ $(function() {
 			alert("로그인을 먼저 해주세요");
 			window.location= '../login/loginForm.jsp';
 		</script>
-<% }%>
+<% }else{%>
 
 <% String id = (String)session.getAttribute("sId");
    String name = (String)session.getAttribute("sName");
@@ -51,21 +95,22 @@ $(function() {
 %> 
 
 
-<center><h2> 예약 하기 </h2>
-<form action = "../reservation/payment.jsp" method="post" name = "form">
+<center>
+<h2> 예약 하기 </h2>
+<form action = "../reservation/payment.jsp" method="post" name = "form" onsubmit="return formcheck()">
 	<table width="400" border="1" cellspacing="0" cellpadding="0" align="center">
 	<br/>
 	<tr>
-	<td align="center">아이디 :<input type="text" name="re_id" value=<%=id %> readonly></td>
+	<td align="center">아이디 :<input type="text" id="re_id" name="re_id" value=<%=id %> readonly></td>
 	</tr>
 	<tr>
-	<td align="center">예약자 :<input type="text" name="re_name" value=<%=name %> readonly></td>
+	<td align="center">예약자 :<input type="text" id="re_name" name="re_name" value=<%=name %> readonly></td>
 	</tr>
 	<tr>
-	<td align="center">핸드폰 :<input type="text" name="re_phone" value=<%=phone %> readonly></td>
+	<td align="center">핸드폰 :<input type="text" id="re_phone" name="re_phone" value=<%=phone %> readonly></td>
 	</tr>
 	<tr>
-	<td align="center">E-mail:<input type="text" name="re_email" value=<%= e_mail%> readonly></td>
+	<td align="center">E-mail:<input type="text" id="re_email" name="re_email" value=<%= e_mail%> readonly></td>
 	</tr>
 	<tr>
 	<td align="center">예약할 방 선택 :<select id="mySel" onchange="sel()" name="roomname" value="sel()">
@@ -82,7 +127,7 @@ $(function() {
 	<td align="center">이용 기간 :<input type="text" id = "dr" name="daterange" onchange="sel()"></td>
 	</tr>
 	<tr>
-    <td align="center">숙박 인원 :<input type="text" name="usepeople" /></td>
+    <td align="center">숙박 인원 :<input type="text" id="usepeople" name="usepeople" /></td>
     </tr>
 	<input type="hidden"  id = "picprice" name ="price" /><br/>
 	<tr>
@@ -119,10 +164,11 @@ $(function() {
 	<br/>
 	<h2>선택 정보</h2>
 	<h3><div id="show"></div></h3>
-	<h3><div id = "rprice"></div><br/></h3>
+	<h3><div id = "rprice"></div><br/></h3> 
 	<h3><div id = "dr"></div><br/></h3>
 	<input type="submit" value=" 결제하러가기" >
 	
 </form>
 </center>
+<%} %>
 

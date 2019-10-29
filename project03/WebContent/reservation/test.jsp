@@ -11,12 +11,20 @@
 <h2>코드 테스트용 페이지</h2>
 
 <%
-String startday= "2019/10/24";
-String endday = "2019/10/30";
-ReservationVO vo = new ReservationVO();
-List dates = vo.middate(startday,endday);
-List arr = new ArrayList();
-for(int i=0;i<dates.size();i++){
-	System.out.println(dates.get(i).toString());
+Calendar c = Calendar.getInstance();
+String year = String.valueOf(c.get(Calendar.YEAR));
+String month=null;
+String day = null;
+if(c.get(Calendar.MONTH)<10){
+	month = "0"+String.valueOf(c.get(Calendar.MONTH));
+}else{
+	month = String.valueOf(c.get(Calendar.MONTH));
 }
+if(c.get(Calendar.DAY_OF_MONTH)<10){
+	day = "0"+String.valueOf(c.get(Calendar.DAY_OF_MONTH));	
+}else{
+	day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));	
+}
+String today =year+"/"+month+"/"+day;
+System.out.println(today);
 %>
