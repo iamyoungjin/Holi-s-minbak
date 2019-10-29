@@ -69,7 +69,7 @@
 			<td>아이디 : <input type="text" name="id"/><button type="button" onclick="return confirmId(this.form)">중복검사</button></td>
 		</tr>
 		<tr>
-			<td>이메일 : <input type="text" name="email"/></td>
+			<td>이메일 : <input type="email" name="email"/></td>
 		</tr>
 		<tr>
 			<td>비밀번호 : <input type="password" name="pw"/></td>

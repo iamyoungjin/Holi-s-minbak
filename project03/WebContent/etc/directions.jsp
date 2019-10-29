@@ -25,7 +25,7 @@
 		
 		marker.setMap(map);
 		
-		var iwContent = '<div style="padding:5px;">외똔집펜션 <br><a href="https://map.kakao.com/link/map/Hello World!,37.5209411, 127.6618429" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		var iwContent = '<div style="padding:5px;">외똔집펜션 <br><a href="https://map.kakao.com/link/map/Hello World!,37.5209411, 127.6618429" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/외똔집,37.5209411, 127.6618429" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 			iwPosition = new kakao.maps.LatLng(37.5209411, 127.6618429);
 		
 		var infowindow = new kakao.maps.InfoWindow({

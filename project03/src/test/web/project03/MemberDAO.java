@@ -224,6 +224,8 @@ public class MemberDAO {
 				dto.setPhonenum(rs.getString("phonenum"));
 				dto.setBirthdate(rs.getString("birthdate"));
 				dto.setReg(rs.getTimestamp("reg_date"));
+				dto.setUser_type(rs.getInt("user_type"));
+				dto.setPw(rs.getString("pw"));
 				list.add(dto);
 			}
 		}catch(Exception e) {

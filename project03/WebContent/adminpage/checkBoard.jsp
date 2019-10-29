@@ -178,7 +178,7 @@
 				<b>└</b>
 			<%}
 			if(dto.getFileroot()!=null){%><img src="/project03/image/thum_<%=dto.getFileroot()%>"/><%}%>
-			<a href ="content.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=currentPage%>"><%=dto.getSubject() %></a>
+			<a href ="../board/content.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=currentPage%>"><%=dto.getSubject() %></a>
 			</td>
 			<td><%=dto.getName() %>(<%=dto.getId()%>)</td>
 			<td><%=sdf.format(dto.getReg_date()) %></td>
