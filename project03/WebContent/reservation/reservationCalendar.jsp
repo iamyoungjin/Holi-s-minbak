@@ -30,7 +30,6 @@ if(request.getParameter("action") == null) {
    	//액션 이 있을 때 날짜 파라미터로 초기화 
      if(request.getParameter("action") != null){
           currMonth = Integer.parseInt(request.getParameter("month"));
-          System.out.println(currMonth);
           currYear = Integer.parseInt(request.getParameter("year"));
          //액션(1) 다음달로 넘어갈 때 다음달 파라미터로 변경 
           if(Integer.parseInt(request.getParameter("action"))==1) {
@@ -38,7 +37,7 @@ if(request.getParameter("action") == null) {
                //cal.add(Calendar.MONTH, 1); // 달 하나 증가 
                currMonth = cal.get(Calendar.MONTH); //증가한 값으로 현재 달 설정 
                currYear = cal.get(Calendar.YEAR); //현재 년 설정
-               System.out.println(cal.get(Calendar.MONTH));
+               
           //액션(-1) 전달로 넘어갈 때    
           } else {              
                cal.set(currYear, currMonth, 1); //현재 년 현재 월에 1일 로 셋팅 

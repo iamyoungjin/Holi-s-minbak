@@ -20,6 +20,7 @@
 			<li><a href="checkBoard.jsp">게시판 관리 페이지</a></li>
 			<li><a href="checkRoomData.jsp">객실 관리 페이지</a></li>
 			<li><a href="checkClientReservation.jsp">예약 관리 페이지</a></li>
+			<li><a href="accounting.jsp">수입 관리 페이지</a></li>
 			<li><a href="../main/main.jsp">메인으로</a></li>
 		</ul>
 		

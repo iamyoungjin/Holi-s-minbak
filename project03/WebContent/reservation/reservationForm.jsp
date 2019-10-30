@@ -17,7 +17,7 @@
 <!-- <input type="text" name="daterange" value="11/01/2019 - 11/15/2019" />-->
 <script>
 url="reservationCalendar.jsp";
-window.open(url, "reservationCalendar", "toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizeable=no, width=300, height=200");
+window.open(url, "reservationCalendar", "toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizeable=no, width=50, height=50");
 // url = 주소, confirm 타이틀, resizeable 사이즈조절, scrollbars 스크롤
 </script>
 

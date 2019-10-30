@@ -203,7 +203,7 @@ public class ReservationDAO {
 		
 		
 		
-		//방 중복 예약 체크 (다시)
+		//방 중복 예약 체크
 		public boolean roomchk(String startday, String endday, String rname) {
 			boolean chk =false;
 			ReservationVO vo = new ReservationVO();
@@ -356,7 +356,7 @@ public class ReservationDAO {
 			return list;
 		}
 		
-		//마이페이지에서 지우는 함
+		//마이페이지에서 지우는 함수
 		public boolean cancleReservation(String re_id, int roomnumber){
 			boolean chk = false;
 			try {
@@ -465,6 +465,7 @@ public class ReservationDAO {
 			return list;
 		}
 		
+		//예약 퇴실날짜 가져오는 함수
 		public List leavetoday_list(String today){
 			List list = new ArrayList();
 			System.out.println(today);

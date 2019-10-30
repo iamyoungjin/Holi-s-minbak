@@ -19,7 +19,7 @@
 <%	}else{
 		ReservationDAO dao = new ReservationDAO();
 		String type = request.getParameter("type");
-		System.out.println(type);
+		
 		//insert 
 		if(type.equals("update")){
 			dao.paycheck(vo.getRe_name(),vo.getRe_phone(),vo.getRoomname());//String re_name, String re_phone, String roomname

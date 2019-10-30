@@ -16,8 +16,6 @@
 
 </head>
 
-<!-- test -->
-<!-- yj -->
 <%	//test develop 
 	String boardType = "main";
 	MemberDAO dao = MemberDAO.getInstance();
