@@ -8,7 +8,7 @@
 </head>
 <body>
 	
-	소개소개소개소개
+	소개소개소개소개cccc
 	
 	<input type="button" value="메인으로" onclick="window.location.href='../main/main.jsp'"/>
 	
