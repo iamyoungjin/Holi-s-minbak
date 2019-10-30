@@ -208,11 +208,19 @@ public class MemberDAO {
 		}
 		return res;
 	}
-	public List showMember() {
+	public List showMember(String search, String keyword) {
 		List list = null;
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select * from member_table where num!=1");
+			if(search.equals("0")) {
+				pstmt = conn.prepareStatement("select * from member_table where num!=1 order by num");
+			}else if(search.equals("1")) {
+				pstmt = conn.prepareStatement("select * from member_table where num!=1 and id like ? order by num");
+				pstmt.setString(1, "%"+keyword+"%");
+			}else if(search.equals("2")) {
+				pstmt = conn.prepareStatement("select * from member_table where num!=1 and name like ? order by num");
+				pstmt.setString(1, "%"+keyword+"%");
+			}
 			rs = pstmt.executeQuery();
 			list = new ArrayList();
 			while(rs.next()) {

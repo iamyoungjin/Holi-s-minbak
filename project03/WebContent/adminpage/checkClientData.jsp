@@ -61,7 +61,12 @@
 		</script>
 <%	}else{
 		MemberDAO dao = MemberDAO.getInstance();
-		List list = dao.showMember();
+		String search = request.getParameter("search");
+		String keyword = request.getParameter("keyword");
+		if(search == null){
+			search = "0";
+		}
+		List list = dao.showMember(search, keyword);
 		if(list==null){
 		%> <h1>가입한 사용자가 없습니다.</h1> <%			
 		}else{
@@ -102,7 +107,24 @@
 			<%} %>
 		</table>
 	</form>
+	<form name="searchForm">
+	<table>
+		<tr>
+			<td>
+			<select name = "search">
+				<option value="0">전체 </option>
+				<option value="1">아이디</option>
+				<option value="2">이름</option>
+			</select>
+			</td>
+			<td><input type="text" name="keyword" value=""/></td>
+			<td><input type="submit" value="검색" /></td>
+		</tr>
+	</table>
+	</form>
+	
 			<input type="button" value="돌아가기" onclick="window.location.href='adminpage.jsp'"/>
+			
 <%
 		}
 	}
