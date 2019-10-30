@@ -21,7 +21,7 @@
 	<%}else{
 		ReservationDAO dao = new ReservationDAO();
 		List list = dao.reservation_user(sId);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		String currentTime = sdf.format(new Date());
 		
 		
@@ -58,7 +58,7 @@
 				</tr>
 					<%if(vo.getChkpayment().equals("waiting") && vo.getPaymentmethod().equals("bank")){%>
 					<tr>
-						<td colspan="7" text-align="center"> (신한)110-351-111123</td>
+						<td colspan="7" text-align="center"> (신한)110-351-111123 으로 입금 바랍니다. </td>
 					</tr>
 					<%}%>
 				<%}%>

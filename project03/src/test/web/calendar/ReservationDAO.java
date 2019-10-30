@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -366,12 +367,12 @@ public class ReservationDAO {
 				pstmt.setInt(2, roomnumber);
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
-					String sDay = rs.getString("startday");
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					String sDay = rs.getString("startday") +" 00:00";
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 					long dif = sdf.parse(sDay).getTime() - sdf.parse(currentTime).getTime();
 					dif /= (60*1000);
 					if(dif>1440) {
-						pstmt = conn.prepareStatement("delete from reservation_table where re_id=? and roomnumber=?");
+						pstmt = conn.prepareStatement("update reservation_table set chkpayment='cancle' where re_id=? and roomnumber=?");
 						pstmt.setString(1, re_id);
 						pstmt.setInt(2, roomnumber);
 						int x = pstmt.executeUpdate();

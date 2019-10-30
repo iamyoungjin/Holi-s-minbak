@@ -71,7 +71,7 @@ if(request.getParameter("action") == null) {
           currYear = Integer.parseInt(request.getParameter("year"));
          //액션(1) 다음달로 넘어갈 때 다음달 파라미터로 변경 
           if(Integer.parseInt(request.getParameter("action"))==1) {
-               cal.set(currYear, currMonth, 1); //현재 년 현재 월에 1일 로 셋팅 
+               cal.set(currYear, currMonth, 1); //현재 년 현재 월에 1일 로 셋팅                                                                                                                                                                                                                                                                                                                                                                                                                                            
                //cal.add(Calendar.MONTH, 1); // 달 하나 증가 
                currMonth = cal.get(Calendar.MONTH); //증가한 값으로 현재 달 설정 
                currYear = cal.get(Calendar.YEAR); //현재 년 설정
