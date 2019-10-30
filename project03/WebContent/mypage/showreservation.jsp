@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="test.web.calendar.ReservationVO"%>
 <%@page import="test.web.calendar.ReservationDAO"%>
@@ -19,6 +21,9 @@
 	<%}else{
 		ReservationDAO dao = new ReservationDAO();
 		List list = dao.reservation_user(sId);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String currentTime = sdf.format(new Date());
+		
 		
 		if(list == null){
 			out.print("예약 내역이 없습니다.");
@@ -47,7 +52,8 @@
 					<td><%= vo.getPaymentmethod() %></td>
 					<td><%= vo.getChkpayment() %></td>
 					<%if(vo.getChkpayment().equals("waiting") && vo.getPaymentmethod().equals("bank")){%>
-					<td><input type="button" value="예약취소" onclick="location.href='showReservationPro.jsp?roomnumber=<%=vo.getRoomnumber()%>&re_id=<%=vo.getRe_id()%>'"/></td>
+					<td><input type="button" value="예약취소" onclick="location.href=
+					'showReservationPro.jsp?roomnumber=<%=vo.getRoomnumber()%>&re_id=<%=vo.getRe_id()%>&currentTime=<%=currentTime%>'"/></td>
 					<%} %>
 				</tr>
 					<%if(vo.getChkpayment().equals("waiting") && vo.getPaymentmethod().equals("bank")){%>

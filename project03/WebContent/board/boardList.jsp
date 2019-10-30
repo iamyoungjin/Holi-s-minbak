@@ -1,3 +1,5 @@
+<%@page import="test.web.project03.SettingDTO"%>
+<%@page import="test.web.project03.SettingDAO"%>
 <%@page import="test.web.project03.BoardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="test.web.project03.BoardDAO"%>
@@ -22,11 +24,14 @@
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	String sName = (String)session.getAttribute("sName"); 
 	String boardType = "board";
-	
+		
 	String search = request.getParameter("search");
 	String keyword = request.getParameter("keyword");
 	
-	int pageSize = 10;
+	SettingDAO stdao = SettingDAO.getInstance();
+	SettingDTO stdto = stdao.getSetting();
+	
+	int pageSize = stdto.getPagesize();
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
 	
 	String pageNum = request.getParameter("pageNum");

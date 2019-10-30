@@ -213,7 +213,7 @@
 <br/>
 <input type="button" value="선택 삭제" onclick="selectDel()"/>
 <input type="button" value="체크 해제" onclick="cancleChk()"/>
-<input type="button" value="게시판 설정" />
+<input type="button" value="게시판 설정" onclick="window.open('boardSetting.jsp','게시판설정','height=300, weight=200')" />
 <input type="button" value="돌아가기" onclick="location.href='adminpage.jsp'"/>
 </form>
 <form name="searchForm">

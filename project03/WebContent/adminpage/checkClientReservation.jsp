@@ -98,10 +98,10 @@
 		userinput.action="checkClientReservationPro.jsp?type=update"
 			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
 			+"&re_id="+document.getElementById("re_id"+roomnumber).value
-			+"&re_name="+document.getElementById("re_name"+roomnumber).value
+			+"&re_name="+encodeURI(document.getElementById("re_name"+roomnumber).value)
 			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
 			+"&usepeople="+document.getElementById("usepeople"+roomnumber).value
-			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&roomname="+encodeURI(document.getElementById("roomname"+roomnumber).value)
 			+"&price="+document.getElementById("price"+roomnumber).value
 			+"&daterange="+document.getElementById("daterange"+roomnumber).value
 			+"&usingday="+document.getElementById("usingday"+roomnumber).value

@@ -357,8 +357,8 @@ public class ReservationDAO {
 		}
 		
 		//마이페이지에서 지우는 함수
-		public boolean cancleReservation(String re_id, int roomnumber){
-			boolean chk = false;
+		public int cancleReservation(String re_id, int roomnumber, String currentTime){
+			int res = 0;
 			try {
 				conn = getConnection();
 				pstmt = conn.prepareStatement("select * from reservation_table where re_id=? and roomnumber=? ");
@@ -366,12 +366,25 @@ public class ReservationDAO {
 				pstmt.setInt(2, roomnumber);
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
-					pstmt = conn.prepareStatement("delete from reservation_table where re_id=? and roomnumber=?");
-					pstmt.setString(1, re_id);
-					pstmt.setInt(2, roomnumber);
-					int x = pstmt.executeUpdate();
-					if(x==1){
-						chk=true;
+					String sDay = rs.getString("startday");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					long dif = sdf.parse(sDay).getTime() - sdf.parse(currentTime).getTime();
+					dif /= (60*1000);
+					if(dif>1440) {
+						pstmt = conn.prepareStatement("delete from reservation_table where re_id=? and roomnumber=?");
+						pstmt.setString(1, re_id);
+						pstmt.setInt(2, roomnumber);
+						int x = pstmt.executeUpdate();
+						if(x==1){
+							res = 1;
+							// 성공적으로 지워짐
+						}else{
+							res = 0;
+							// 삭제 실패(쿼리 작동 에러)
+						}
+					}else {
+						res = 2;
+						// dif (예약취소시간과 예약일의 차이)가 1440(1일) 보다 크면 취소 불가
 					}
 				}
 			}catch(Exception e){
@@ -381,8 +394,8 @@ public class ReservationDAO {
 				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
 				if(conn != null) try {conn.close();}catch(SQLException e) {}
 			}
-			return chk;
-		}		
+			return res;
+		}			
 		
 		//예약 정보 서치 
 		public List reservation_search(String method, String val){
