@@ -19,7 +19,7 @@
 <!-- yj -->
 <%	//test develop 
 	String boardType = "main";
-	MemberDAO dao = MemberDAO.getInstance();
+	MemberDAO memdao = MemberDAO.getInstance();
 	String sId = (String)session.getAttribute("sId");
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	if(session.getAttribute("sId") == null && session.getAttribute("sAdmin") == null ){
@@ -36,7 +36,7 @@
 			response.sendRedirect("../login/loginPro/jsp");
 		}
 	}else if(session.getAttribute("sId")!=null){
-		if(dao.chkInfoSnsLogin(sId)){%>
+		if(memdao.chkInfoSnsLogin(sId)){%>
 			<script>
 				alert("개인 정보를 입력해주세요!");
 				window.location.href="../mypage/modifyForm.jsp";
@@ -103,7 +103,7 @@
          About호리네민박
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../etc/introRoom.jsp">방 소개</a>
+          <a class="dropdown-item" href="../introduce/roomIntro.jsp">방 소개</a>
           <a class="dropdown-item" href="../etc/directions.jsp">찾아오시는 길</a>
         </div>
       </li>
@@ -114,7 +114,7 @@
       
       if(sId != null){%>
       <li class="nav-item">
-      		<%= dao.searchName(sId) %>님 환영합니다.
+      		<%= memdao.searchName(sId) %>님 환영합니다.
       </li>
       <%} %>
 

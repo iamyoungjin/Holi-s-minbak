@@ -133,7 +133,82 @@ public class RoomDAO {
 		}
 		
 	}
+	public RoomDTO getRoomData(int roomnum) {
+		RoomDTO dto = null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select * from room_table where num=?");
+			pstmt.setInt(1, roomnum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new RoomDTO();
+				dto.setNum(rs.getInt("num"));
+				dto.setRname(rs.getString("rname"));
+				dto.setDpeople(rs.getInt("dpeople"));
+				dto.setMaxpeople(rs.getInt("maxpeople"));
+				dto.setAddtionalcost(rs.getInt("addtionalcost"));
+				dto.setWeekday_price(rs.getInt("weekday_price"));
+				dto.setWeekend_price(rs.getInt("weekend_price"));
+				dto.setPeakseason_price(rs.getInt("peakseason_price"));
+				dto.setRoom_img(rs.getString("room_img"));
+				dto.setIntro(rs.getString("intro"));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			if(rs!=null){try {rs.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(pstmt!=null){try {pstmt.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(conn!=null){try {conn.close();}catch(SQLException s) {s.printStackTrace();}}
+		}
+		return dto;
+	}
 	
+	public boolean updateIntro(int roomnum, RoomDTO dto) {
+		boolean chk = false;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select * from room_table where num=?");
+			pstmt.setInt(1, roomnum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				pstmt = conn.prepareStatement("update room_table set room_img=?, intro=? where num=?");
+				pstmt.setString(1, dto.getRoom_img());
+				pstmt.setString(2, dto.getIntro());
+				pstmt.setInt(3, roomnum);
+				int res = pstmt.executeUpdate();
+				if(res == 1) {
+					chk = true;
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			if(rs!=null){try {rs.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(pstmt!=null){try {pstmt.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(conn!=null){try {conn.close();}catch(SQLException s) {s.printStackTrace();}}
+		}
+		return chk;
+	}
+	
+	public List getRoomList() {
+		List list = null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select rname from room_table");
+			rs = pstmt.executeQuery();
+			list = new ArrayList();
+			while(rs.next()) {
+				list.add(rs.getString("rname"));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			if(rs!=null){try {rs.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(pstmt!=null){try {pstmt.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(conn!=null){try {conn.close();}catch(SQLException s) {s.printStackTrace();}}
+		}
+		return list;
+	}
 	
 
 }

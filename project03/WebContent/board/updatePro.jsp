@@ -65,6 +65,7 @@
 			}
 			String sys = mr.getFilesystemName("save");
 			dto.setFileroot(sys);
+			// 여기서부터 썸네일
 			ParameterBlock pb = new ParameterBlock();
 			pb.add(path+"/"+sys);
 			RenderedOp rOp =  JAI.create("fileload", pb);
