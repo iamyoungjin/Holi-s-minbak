@@ -1,5 +1,5 @@
-<%@page import="test.web.calendar.SettingDTO"%>
-<%@page import="test.web.calendar.SettingDAO"%>
+<%@page import="test.web.calendar.SetDTO"%>
+<%@page import="test.web.calendar.SetDAO"%>
 <%@page import="test.web.project03.BoardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="test.web.project03.BoardDAO"%>
@@ -28,8 +28,8 @@
 	String search = request.getParameter("search");
 	String keyword = request.getParameter("keyword");
 	
-	SettingDAO stdao = SettingDAO.getInstance();
-	SettingDTO stdto = stdao.getSetting();
+	SetDAO stdao = SetDAO.getInstance();
+	SetDTO stdto = stdao.getSetting();
 	
 	int pageSize = stdto.getPagesize();
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
