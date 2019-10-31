@@ -10,6 +10,7 @@
 <title>방 소개</title>
 </head>
 <body>
+<!-- 방 소개 페이지 -->
 <header>
 	<%@ include file="../main/header.jsp" %>
 </header>

@@ -7,7 +7,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- 방 추가 페이지 -->
 <%
+
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
 		<script>

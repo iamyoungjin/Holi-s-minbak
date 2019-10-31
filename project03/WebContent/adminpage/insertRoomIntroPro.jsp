@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>방 정보 수정</title>
+<!-- 방 추가 처리페이지 -->
 </head>
 <jsp:useBean id="dto" class="test.web.project03.RoomDTO"/>
 <body>

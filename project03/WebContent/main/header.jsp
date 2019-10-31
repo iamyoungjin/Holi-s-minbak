@@ -15,8 +15,7 @@
 
 </head>
 
-<!-- test -->
-<!-- yj -->
+<!-- 헤더페이지 -->
 <%	//test develop 
 	String boardType = "main";
 	MemberDAO memdao = MemberDAO.getInstance();

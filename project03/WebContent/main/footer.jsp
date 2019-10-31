@@ -16,6 +16,7 @@
 </head>
 <body>
 <footer>
+<!-- footer페이지  -->
 <table border="1">
 	<tr>
 		<td align="center">호리네민박</td>

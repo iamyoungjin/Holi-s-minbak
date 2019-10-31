@@ -1,6 +1,7 @@
 package test.web.project03;
 
 public class SettingDTO {
+	// 게시판 설정을 위한 DTO
 	private String boardtype;
 	private int pagesize;
 	private int imgsize;
