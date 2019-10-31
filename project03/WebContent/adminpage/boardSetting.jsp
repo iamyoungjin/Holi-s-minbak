@@ -1,5 +1,5 @@
-<%@page import="test.web.calendar.SettingDTO"%>
-<%@page import="test.web.calendar.SettingDAO"%>
+<%@page import="test.web.calendar.SetDTO"%>
+<%@page import="test.web.calendar.SetDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8");%>
@@ -40,8 +40,8 @@
 		</script>
 		<%
 	}else{
-		SettingDAO dao = SettingDAO.getInstance();
-		SettingDTO dto = dao.getSetting();
+		SetDAO dao = SetDAO.getInstance();
+		SetDTO dto = dao.getSetting();
 		%>
 		<form name="settingForm" action="boardSettingPro.jsp" method="post" onsubmit="return chkSize()">
 		<table>

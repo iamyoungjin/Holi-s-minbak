@@ -1,4 +1,4 @@
-<%@page import="test.web.calendar.SettingDAO"%>
+<%@page import="test.web.calendar.SetDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8");%>
@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:useBean id="dto" class="test.web.calendar.SettingDTO"/>
+<jsp:useBean id="dto" class="test.web.calendar.SetDTO"/>
 
 <%
 	int pageSize = Integer.parseInt(request.getParameter("pageSize"));
@@ -22,7 +22,7 @@
 			history.go(-1);
 		</script>
 	<%}else{
-		SettingDAO dao = SettingDAO.getInstance();
+		SetDAO dao = SetDAO.getInstance();
 		boolean chk = dao.sizeSetting(pageSize, imgSize);
 		if(chk){%>
 			<script>
