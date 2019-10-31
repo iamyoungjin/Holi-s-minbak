@@ -15,7 +15,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<h5>계산 다시할것!!!! 쿼리로</h5>
 <%
 	//오늘 날짜 
 	Calendar c = Calendar.getInstance();

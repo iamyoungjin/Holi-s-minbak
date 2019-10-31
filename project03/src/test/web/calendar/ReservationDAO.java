@@ -442,7 +442,7 @@ public class ReservationDAO {
 		//오늘 예약 입실자 현황 보여주기
 		public List cometoday_list(String today){
 			List list = new ArrayList();
-			System.out.println(today);
+			
 			try {
 				conn = getConnection();
 				String sql = "select * from reservation_table where startday= ? and chkpayment = 'check'";
@@ -482,7 +482,7 @@ public class ReservationDAO {
 		//예약 퇴실날짜 가져오는 함수
 		public List leavetoday_list(String today){
 			List list = new ArrayList();
-			System.out.println(today);
+			
 			try {
 				conn = getConnection();
 				String sql = "select * from reservation_table where endday= ? and chkpayment = 'check'";
@@ -507,6 +507,91 @@ public class ReservationDAO {
 					vo.setReg_date(rs.getTimestamp("reg_date"));
 					vo.setPaymentmethod(rs.getString("paymentmethod"));
 					vo.setChkpayment(rs.getString("chkpayment"));
+					list.add(vo);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return list;
+		}
+		
+		
+
+		//달 별 건수 가져오기
+		//오늘 예약 건수 가져오기
+		public List countchkmonth(String month,String val){
+			List list = new ArrayList();
+			try {
+			conn = getConnection();
+			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  = (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? and chkpayment=?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, month);
+			pstmt.setString(2, val);
+			rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					ReservationVO vo = new ReservationVO();
+					vo.setRoomnumber(rs.getInt("roomnumber"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setRe_id(rs.getString("re_id"));
+					vo.setRe_name(rs.getString("re_name"));
+					vo.setRe_phone(rs.getString("re_phone"));
+					vo.setRe_email(rs.getString("re_email"));
+					vo.setUsepeople(rs.getInt("usepeople"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setPrice(rs.getInt("price"));
+					vo.setDaterange(rs.getString("daterange"));
+					vo.setUsingday(rs.getInt("usingday"));
+					vo.setStartday(rs.getString("startday"));
+					vo.setEndday(rs.getString("endday"));
+					vo.setPaymentmethod(rs.getString("paymentmethod"));
+					vo.setChkpayment(rs.getString("chkpayment"));
+					vo.setReg_date(rs.getTimestamp("reg_date"));
+					list.add(vo);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return list;
+		}
+		
+		//오늘 예약 건수 가져오기
+		public List countchktoday(String today,String val){
+			List list = new ArrayList();
+			try {
+			conn = getConnection();
+			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  = (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM/dd') = ? and chkpayment=?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, today);
+			pstmt.setString(2, val);
+			rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					ReservationVO vo = new ReservationVO();
+					vo.setRoomnumber(rs.getInt("roomnumber"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setRe_id(rs.getString("re_id"));
+					vo.setRe_name(rs.getString("re_name"));
+					vo.setRe_phone(rs.getString("re_phone"));
+					vo.setRe_email(rs.getString("re_email"));
+					vo.setUsepeople(rs.getInt("usepeople"));
+					vo.setRoomname(rs.getString("roomname"));
+					vo.setPrice(rs.getInt("price"));
+					vo.setDaterange(rs.getString("daterange"));
+					vo.setUsingday(rs.getInt("usingday"));
+					vo.setStartday(rs.getString("startday"));
+					vo.setEndday(rs.getString("endday"));
+					vo.setPaymentmethod(rs.getString("paymentmethod"));
+					vo.setChkpayment(rs.getString("chkpayment"));
+					vo.setReg_date(rs.getTimestamp("reg_date"));
 					list.add(vo);
 				}
 			}catch(Exception e){

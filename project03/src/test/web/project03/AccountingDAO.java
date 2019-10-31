@@ -49,7 +49,7 @@ public class AccountingDAO {
 		}
 		return list;
 	}
-	
+	//방 월별 
 	public List room_month_income(int year, int month, String roomname){
 		List list = new ArrayList();
 		try {
@@ -84,7 +84,7 @@ public class AccountingDAO {
 		List list = new ArrayList();
 		try {
 			conn = getConnection();
-			String sql="select price from reservation_table where reg_date=? and chkpayment='check'";
+			String sql="select re_id, price, to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM/dd')='?'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, today);
 			rs = pstmt.executeQuery();
