@@ -11,7 +11,7 @@
 
 <section id="content">
 	<img src="../image/main.png"/>
-	<h2>SKT 화이팅</h2>
+	<h2>펜션에 어서오세요</h2>
 </section>
 <jsp:include page="footer.jsp"/>
 </body>

@@ -40,22 +40,27 @@
 	}
 	RoomDTO dto = dao.getRoomData(Integer.parseInt(roomnum));
 %>
-	<table>
+	<table border="1">
 		<tr>
 			<td colspan="3"><img src="../image/<%=dto.getRoom_img()%>"/>  </td>
 		</tr>
 		<tr>
 			<td colspan="3"><pre><%=dto.getIntro() %></pre></td>
 		</tr>
+	</table>
+	<table>
 		<tr>
 			<td colspan="3"><%=dto.getRname() %></td>
 		</tr>
-		<tr>
+		<tr >
 			<td>기준인원 <%=dto.getDpeople()%><br/>
 				최대인원 <%=dto.getMaxpeople() %>
 			</td>
-			<td>객식 요금표 <br/>
-				<table>
+			<td>
+				<table style="width:150px; height:100px">
+					<tr>
+						<td colspan="2">객실 요금표</td>
+					</tr>
 					<tr>
 						<td>주중</td>
 						<td><%=dto.getWeekday_price() %></td>
