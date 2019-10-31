@@ -347,6 +347,9 @@
 					<td><input type="text" id="reg_date<%=i%>" name="reg_date<%=i%>" value="<%=vo.getReg_date()%>" readolny/></td>
 					<td><input type="text" id="paymentmethod<%=i%>" name="paymentmethod<%=i%>" value="<%=vo.getPaymentmethod()%>" readonly/></td>
 					<td><input type="text" id="chkpayment<%=i%>" name="chkpayment<%=i%>" value="<%=vo.getChkpayment()%>"/></td>
+					<%if(vo.getCancel_date()!=null){ %>
+					<td><input type="text" id="cancel_date<%=i%>" name="cancel_date<%=i%>" value="<%=vo.getCancel_date()%>"/></td>
+					<%} %>
 					
 					<td>
 						<input type="button" value="결제 확인" onclick="updateReservation(this.form,<%=i%>)"/>

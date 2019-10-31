@@ -28,7 +28,7 @@
 			</script>
 		<%}else{
 			ReservationDAO dao = new ReservationDAO();
-			int res = dao.cancleReservation(re_id, roomnumber,currentTime);
+			int res = dao.cancelReservation(re_id, roomnumber,currentTime);
 			if(res==1){%>
 				<script>
 					alert("예약이 취소되었습니다.");

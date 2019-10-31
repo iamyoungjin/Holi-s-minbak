@@ -35,12 +35,12 @@
 		alert("글쓰기는 로그인 후 사용할 수 있습니다.");
 		history.go(-1);
 	</script>
-	<%}else if(!id.equals(sId) && !id.equals(sAdmin)){%>
+	<%}else if(!id.equals(sId) && sAdmin == null){%>
 	<script>
 		alert("작성자만 수정 할 수 있습니다.");
 		history.go(-1);
 	</script>
-	<%}else if(sId.equals(id) || sAdmin.equals(id)){
+	<%}else if(sAdmin != null || id.equals(sId)){
 		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 		String pageNum = request.getParameter("pageNum");
 		try{

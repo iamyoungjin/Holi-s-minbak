@@ -1,3 +1,5 @@
+<%@page import="test.web.project03.RoomDTO"%>
+<%@page import="test.web.project03.RoomDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
@@ -173,27 +175,23 @@ if(request.getParameter("action") == null) {
 					String startday= (String)(year_t+"/"+month_t+"/"+date_t);
 					String endday= startday;
 					List roomtoday = dao.roomtoday(startday, endday);
-					
-					for(int i=0;i<roomtoday.size();i++){  
-						ReservationVO vooo=(ReservationVO)roomtoday.get(i);//
-						if(vooo.getRoomname().toString().equals("소나무방")){%>
-							<a href="../introduce/soo.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("산들방")){%>
-							<a href="../introduce/san.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("매화방")){%>
-							<a href="../introduce/mae.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("들꽃방")){%>
-							<a href="../introduce/wild.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("해뜰방")){%>
-							<a href="../introduce/hae.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("민들레방")){%>
-							<a href="../introduce/min.jsp"><%} %>
-						<%=vooo.getRoomname() %></a><br/>
-					  <%}%></td>  
-					  <% count+=1;
-	          			 dispDay +=1;	         			  
-	                }
-	            	else{%>  
+					for(int i=0; i<roomtoday.size();i++){
+						String roomname = (String)roomtoday.get(i);
+						RoomDAO roomdao = RoomDAO.getInstance();
+						List roomList = roomdao.showRoom();
+						for(int j=0; j<roomList.size(); j++){
+							RoomDTO roomdto = (RoomDTO)roomList.get(j);
+							if(roomname.equals(roomdto.getRname())){%>
+								<a href="../introduce/roomIntro.jsp?num=<%=roomdto.getNum()%>">
+							<%}
+							
+						}%>
+						<%=roomtoday.get(i) %></a><br/>
+					<%}%>
+					</td>  
+					 <% count+=1;
+	          			dispDay +=1;	         			  
+	                }else{%>  
 	   					<td class="empty"></td>
 					<%}  
 	               }

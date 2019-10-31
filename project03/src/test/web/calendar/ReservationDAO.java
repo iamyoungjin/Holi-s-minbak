@@ -105,6 +105,7 @@ public class ReservationDAO {
 		}
 		
 		//  당일 해당하는 방 가져오기  
+		// 19/10/31 18:30 메서드 변경(list에 DTO를 담지 않고, 그냥 String 변수 담는다)
 		public List roomtoday(String startday, String endday) {
 			List list = new ArrayList();
 			try {
@@ -118,9 +119,7 @@ public class ReservationDAO {
 				rs = pstmt.executeQuery();
 				//달을 넘기면 rs 에 들어오는 값이 왜 없는가 
 				while(rs.next()) {
-					ReservationVO vo = new ReservationVO();
-					vo.setRoomname(rs.getString("roomname"));
-					list.add(vo);
+					list.add(rs.getString("roomname"));
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -358,7 +357,8 @@ public class ReservationDAO {
 		}
 		
 		//마이페이지에서 지우는 함수
-		public int cancleReservation(String re_id, int roomnumber, String currentTime){
+		// 19/10/31 18:30 오타 수정 및 취소일 기록
+		public int cancelReservation(String re_id, int roomnumber, String currentTime){
 			int res = 0;
 			try {
 				conn = getConnection();
@@ -372,7 +372,7 @@ public class ReservationDAO {
 					long dif = sdf.parse(sDay).getTime() - sdf.parse(currentTime).getTime();
 					dif /= (60*1000);
 					if(dif>1440) {
-						pstmt = conn.prepareStatement("update reservation_table set chkpayment='cancle' where re_id=? and roomnumber=?");
+						pstmt = conn.prepareStatement("update reservation_table set cancel_date=sysdate, chkpayment='cancel' where re_id=? and roomnumber=?");
 						pstmt.setString(1, re_id);
 						pstmt.setInt(2, roomnumber);
 						int x = pstmt.executeUpdate();
