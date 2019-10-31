@@ -41,7 +41,7 @@
 					success: function(res) {
 						console.log(res);
 						var userID = "kakao_" + res.id;
-						var loginURL = "http://127.0.0.1:8080/project01/sign/kakaoSignUpPro.jsp?id="+encodeURI(userID);
+						var loginURL = "http://localhost:8080/project01/sign/kakaoSignUpPro.jsp?id="+encodeURI(userID);
 						window.location.replace(loginURL);
 					},
 					fail: function(error) {
@@ -63,7 +63,7 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "MOf0l_qoj5M7p4rLoe4B",
-				callbackUrl: "http://127.0.0.1/project01/sign/naverSignUp.jsp",
+				callbackUrl: "http://localhost:8080/project01/sign/naverSignUp.jsp",
 				isPopup: false, /* 팝업을 통한 연동처리 여부 */
 				loginButton: {color: "green", type: 3, height: 48} /* 로그인 버튼의 타입을 지정 */
 			}
@@ -86,7 +86,7 @@
         var googleEmail = profile.getEmail();
         
         /*
-        var loginURL = "http://127.0.0.1:8080/project01/sign/googleSignUpPro.jsp?id="+encodeURI(googleId)+"&email="+encodeURI(googleEmail);
+        var loginURL = "http://localhost:8080/project01/sign/googleSignUpPro.jsp?id="+encodeURI(googleId)+"&email="+encodeURI(googleEmail);
 		window.location.replace(loginURL);
 		*/
         
