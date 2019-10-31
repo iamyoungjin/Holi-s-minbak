@@ -1,5 +1,5 @@
-<%@page import="test.web.project03.SettingDTO"%>
-<%@page import="test.web.project03.SettingDAO"%>
+<%@page import="test.web.calendar.SettingDTO"%>
+<%@page import="test.web.calendar.SettingDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8");%>

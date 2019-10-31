@@ -1,4 +1,4 @@
-<%@page import="test.web.project03.SettingDAO"%>
+<%@page import="test.web.calendar.SettingDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8");%>
@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:useBean id="dto" class="test.web.project03.SettingDTO"/>
+<jsp:useBean id="dto" class="test.web.calendar.SettingDTO"/>
 
 <%
 	int pageSize = Integer.parseInt(request.getParameter("pageSize"));

@@ -1,4 +1,4 @@
-package test.web.project03;
+package test.web.calendar;
 
 public class SettingDTO {
 	// 게시판 설정을 위한 DTO

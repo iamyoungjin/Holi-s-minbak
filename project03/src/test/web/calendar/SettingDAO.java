@@ -1,4 +1,4 @@
-package test.web.project03;
+package test.web.calendar;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

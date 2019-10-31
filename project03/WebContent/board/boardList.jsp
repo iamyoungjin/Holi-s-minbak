@@ -1,5 +1,5 @@
-<%@page import="test.web.project03.SettingDTO"%>
-<%@page import="test.web.project03.SettingDAO"%>
+<%@page import="test.web.calendar.SettingDTO"%>
+<%@page import="test.web.calendar.SettingDAO"%>
 <%@page import="test.web.project03.BoardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="test.web.project03.BoardDAO"%>
