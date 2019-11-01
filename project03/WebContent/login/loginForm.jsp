@@ -19,8 +19,12 @@
 
 
 <body>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String boardType = request.getParameter("boardType");
+	boardType = request.getParameter("boardType");
 	if(session.getAttribute("sId") != null || session.getAttribute("sAdmin") != null){%>
 		<script>
 			alert("이미 로그인 한 상태입니다.");
@@ -122,5 +126,8 @@
       }
     </script>
 
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

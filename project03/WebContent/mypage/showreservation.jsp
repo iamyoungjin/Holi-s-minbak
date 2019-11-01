@@ -11,8 +11,12 @@
 <meta charset="UTF-8">
 <title>예약확인 페이지</title>
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String sId = (String)session.getAttribute("sId");
+	sId = (String)session.getAttribute("sId");
 	if(sId == null){%>
 		<script>
 			alert("잘못된 접근입니다.");
@@ -51,7 +55,7 @@
 					<td><%= vo.getReg_date() %></td>
 					<td><%= vo.getPaymentmethod() %></td>
 					<td><%= vo.getChkpayment() %></td>
-					<%if(vo.getChkpayment().equals("waiting") && vo.getPaymentmethod().equals("bank")){%>
+					<%if(dao.checkCanclePossible(vo) == 1 ){%>
 					<td><input type="button" value="예약취소" onclick="location.href=
 					'showReservationPro.jsp?roomnumber=<%=vo.getRoomnumber()%>&re_id=<%=vo.getRe_id()%>&currentTime=<%=currentTime%>'"/></td>
 					<%} %>
@@ -69,6 +73,9 @@
 	<%}
 %>
 <body>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 
 </body>
 </html>

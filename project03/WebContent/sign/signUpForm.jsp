@@ -63,6 +63,10 @@
 </script>
 </head>
 <body>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <form name="signUpForm" action="signUpPro.jsp" method="post" onsubmit="return chkForm()">
 	<table>
 		<tr>
@@ -86,10 +90,17 @@
 		<tr>
 			<td>생년월일 : <input type="text" name="birthdate"/></td>
 		</tr>
+		<tr>
+		<td>
+			<input type="submit" value="제출하기"/>
+			<button type="button" onclick="window.location.href='signUpMain.jsp'">돌아가기</button>
+		</td>
+		</tr>
 	</table>
-	<input type="submit" value="제출하기"/>
-	<button type="button" onclick="window.location.href='signUpMain.jsp'">돌아가기</button>
 </form>
 
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

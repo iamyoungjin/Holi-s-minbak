@@ -22,9 +22,13 @@
 		}
 	}
 </script>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 </head>
 <%
-	String sId = (String)session.getAttribute("sId");
+	sId = (String)session.getAttribute("sId");
 	if(sId == null){%>
 		<script>
 			alert("잘못된 접근입니다");
@@ -44,4 +48,7 @@
 </body>
 	<%}
 %>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </html>

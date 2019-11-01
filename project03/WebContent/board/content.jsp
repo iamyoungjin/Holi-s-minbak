@@ -11,8 +11,6 @@
 <!DOCTYPE html>
 <html>
 <%
-	String sId = (String)session.getAttribute("sId");
-	String sAdmin = (String)session.getAttribute("sAdmin");
 	int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 	String pageNum = request.getParameter("pageNum");
 %>
@@ -57,8 +55,14 @@
 
 
 <head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <meta charset="UTF-8">
 <%
+	sId = (String)session.getAttribute("sId");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	MemberDAO mdao = MemberDAO.getInstance();
 	try{	
@@ -149,6 +153,9 @@
 	</table>
 </form>
 </body>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 		<%
 	}catch(Exception e){}
 %>

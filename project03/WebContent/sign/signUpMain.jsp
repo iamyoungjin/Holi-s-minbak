@@ -17,10 +17,13 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="320557608369-9srdo4fso2icfd704v837fql0jnh10cl.apps.googleusercontent.com">
 
-
-
 </head>
 <body>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
+
 	<input type="button" value="회원가입" onclick="window.location.href='signUpForm.jsp'">
 	<input type="button" value="메인으로" onclick="window.location.href='../main/main.jsp'"><br/>
 	
@@ -97,5 +100,8 @@
       
       }
     </script>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

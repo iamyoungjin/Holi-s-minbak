@@ -41,9 +41,13 @@
 	}
 
 </script>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 </head>
 <%
-	String sId = (String)session.getAttribute("sId");
+	sId = (String)session.getAttribute("sId");
 	MemberDAO dao = MemberDAO.getInstance();
  	if(sId == null){%>
  		<script>
@@ -83,5 +87,8 @@
  	<%	}
 	}
 %>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

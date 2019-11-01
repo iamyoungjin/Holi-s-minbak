@@ -7,8 +7,12 @@
 <meta charset="UTF-8">
 <title>마이 페이지</title>
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String sId = (String)session.getAttribute("sId");
+	sId = (String)session.getAttribute("sId");
 	if(sId == null){%>
 		<script>
 			alert("잘못된 접근입니다.");
@@ -28,6 +32,9 @@
 			<td><a href="../main/main.jsp">메인으로</a></td>
 		</tr>
 	</table>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 	<%}
 %>

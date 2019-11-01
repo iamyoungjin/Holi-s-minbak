@@ -19,11 +19,15 @@
 </script>
 
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String sId = (String)session.getAttribute("sId");
-	String sAdmin = (String)session.getAttribute("sAdmin");
+	sId = (String)session.getAttribute("sId");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	String sName = (String)session.getAttribute("sName"); 
-	String boardType = "board";
+	boardType = "board";
 		
 	String search = request.getParameter("search");
 	String keyword = request.getParameter("keyword");
@@ -58,18 +62,7 @@
 %>
 <body>
 <center><b>글 목록 (전체 글 : <%=count %>)</b></center>
-<table>
-	<tr align="right">
-		<%if((String)session.getAttribute("sId") == null && (String)session.getAttribute("sAdmin") == null){ %>
-		<td><a href="../login/loginForm.jsp?boardType=<%=boardType%>">로그인</a>
-		<%}else{ %>
-		<td><%if( sName != null){out.print(sName);}%>님 안녕하세요
-			<a href="../login/logout.jsp?boardType=<%=boardType%>">로그아웃</a>
-		<%}%>
-		<td><a href="../main/main.jsp">돌아가기</a></td>
-		<td><a href="writeForm.jsp">글쓰기</a></td>
-	</tr>
-</table>
+
 <%
 	if(count == 0){
 %>
@@ -123,6 +116,9 @@
 	}
 %>
 	</table>
+	<input type="button" value="돌아가기" onclick="window.location.href='../main/main.jsp'"/>
+	<input type="button" value="글쓰기" onclick="window.location.href='writeForm.jsp'"/>
+	<br/>
 	
 <%}%>
 
@@ -165,5 +161,8 @@
 </table>
 </form>
 
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

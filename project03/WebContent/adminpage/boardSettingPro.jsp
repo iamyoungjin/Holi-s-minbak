@@ -15,7 +15,7 @@
 	int pageSize = Integer.parseInt(request.getParameter("pageSize"));
 	int imgSize = Integer.parseInt(request.getParameter("imgSize"));
 	
-	String sAdmin = (String)session.getAttribute("UTF-8");
+	String sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
 		<script>
 			alert("잘못된 접근입니다.");

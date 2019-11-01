@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.naming.Context;
@@ -359,46 +360,55 @@ public class ReservationDAO {
 		}
 		
 		//마이페이지에서 지우는 함수
-		// 19/10/31 18:30 오타 수정 및 취소일 기록
-		public int cancelReservation(String re_id, int roomnumber, String currentTime){
-			int res = 0;
-			try {
-				conn = getConnection();
-				pstmt = conn.prepareStatement("select * from reservation_table where re_id=? and roomnumber=? ");
-				pstmt.setString(1, re_id);
-				pstmt.setInt(2, roomnumber);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					String sDay = rs.getString("startday") +" 00:00";
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-					long dif = sdf.parse(sDay).getTime() - sdf.parse(currentTime).getTime();
-					dif /= (60*1000);
-					if(dif>1440) {
-						pstmt = conn.prepareStatement("update reservation_table set cancel_date=sysdate, chkpayment='cancel' where re_id=? and roomnumber=?");
+				// 19/10/31 18:30 오타 수정 및 취소일 기록
+				public int cancelReservation(String re_id, int roomnumber, String currentTime){
+					int res = 0;
+					try {
+						conn = getConnection();
+						pstmt = conn.prepareStatement("select * from reservation_table where re_id=? and roomnumber=? ");
 						pstmt.setString(1, re_id);
 						pstmt.setInt(2, roomnumber);
-						int x = pstmt.executeUpdate();
-						if(x==1){
-							res = 1;
-							// 성공적으로 지워짐
-						}else{
-							res = 0;
-							// 삭제 실패(쿼리 작동 에러)
+						rs = pstmt.executeQuery();
+						if(rs.next()) {
+							String sDay = rs.getString("startday") +" 00:00";
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+							long dif = sdf.parse(sDay).getTime() - sdf.parse(currentTime).getTime();
+							dif /= (60*1000);
+							
+							if(dif>1440) {
+								int x = 0;
+								if(rs.getString("chkpayment").equals("waiting")) {
+									pstmt = conn.prepareStatement("update reservation_table set cancel_date=sysdate, chkpayment='cancel' where re_id=? and roomnumber=?");
+									pstmt.setString(1, re_id);
+									pstmt.setInt(2, roomnumber);
+									x = pstmt.executeUpdate();
+								}else if(rs.getString("chkpayment").equals("check")) {
+									pstmt = conn.prepareStatement("update reservation_table set cancel_date=sysdate, chkpayment='refund' where re_id=? and roomnumber=?");
+									pstmt.setString(1, re_id);
+									pstmt.setInt(2, roomnumber);
+									x = pstmt.executeUpdate();
+								}
+								if(x==1){
+									res = 1;
+									// 성공적으로 지워짐
+								}else{
+									res = 0;
+									// 삭제 실패(쿼리 작동 에러)
+								}
+							}else{
+								res = 2;
+								// dif (예약취소시간과 예약일의 차이)가 1440(1일) 보다 크면 취소 불가
+							}
 						}
-					}else {
-						res = 2;
-						// dif (예약취소시간과 예약일의 차이)가 1440(1일) 보다 크면 취소 불가
+					}catch(Exception e){
+						e.printStackTrace();
+					}finally {
+						if(rs != null) try {rs.close();}catch(SQLException e) {}
+						if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+						if(conn != null) try {conn.close();}catch(SQLException e) {}
 					}
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-			}finally {
-				if(rs != null) try {rs.close();}catch(SQLException e) {}
-				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
-				if(conn != null) try {conn.close();}catch(SQLException e) {}
-			}
-			return res;
-		}			
+					return res;
+				}		
 		
 		//예약 정보 서치 
 		public List reservation_search(String method, String val){
@@ -645,6 +655,30 @@ public class ReservationDAO {
 				if(conn != null) try {conn.close();}catch(SQLException e) {}
 			}
 			return list;
+		}
+		// 예약 취소를 검사하기 위한 메서드. 1일시 마이페이지-예약페이지에서 [예약취소] 가 생긴다.
+		public int checkCanclePossible(ReservationVO vo) {
+			int chk = 0;
+			try {
+				String type = vo.getChkpayment();
+				String endday = vo.getEndday();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				Date currentday = new Date();
+				Date eday = sdf.parse(endday);
+				int compare = currentday.compareTo(eday);
+				if(type.equals("waiting")) {
+					chk = 1;
+				}else if(type.equals("check")) {
+					if(compare<0){
+						chk = 1;
+					}
+				}else {
+					chk = 0;
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return chk;
 		}
 		
 }

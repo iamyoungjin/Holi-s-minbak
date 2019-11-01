@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-  table {
+  #footertable {
     width: 800px;
     height: 100px;
     margin-left: auto;
@@ -15,9 +15,11 @@
 </style>
 </head>
 <body>
-<footer>
+
 <!-- footer페이지  -->
-<table border="1">
+<br/>
+
+<table border="1" id="footertable">
 	<tr>
 		<td align="center">호리네민박</td>
 		<td align="center">연락처</td>
@@ -40,6 +42,6 @@
 		<td><input type="button" value="예약하기" onclick="window.location.href='../reservation/reservationCalendar.jsp'"/> </td>
 	</tr>
 </table>
-</footer>
+
 </body>
 </html>

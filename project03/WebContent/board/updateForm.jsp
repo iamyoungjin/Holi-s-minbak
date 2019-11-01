@@ -26,9 +26,13 @@
 	 }   
 </script>
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String sId = (String)session.getAttribute("sId");
-	String sAdmin = (String)session.getAttribute("sAdmin");
+	sId = (String)session.getAttribute("sId");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	String id = request.getParameter("id");
 	if(session.getAttribute("sId") == null && session.getAttribute("sAdmin") == null){%>
 	<script>
@@ -77,6 +81,9 @@
 			</tr>
 		</table>
 	</form>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 		<%}catch(Exception e){}
 	}
