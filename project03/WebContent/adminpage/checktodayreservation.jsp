@@ -96,6 +96,7 @@
 			+"&re_name="+document.getElementById("re_name"+roomnumber).value
 			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
 			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
 		userinput.submit();
 	}
 </script>
@@ -120,7 +121,7 @@
 	ReservationDAO dao = new ReservationDAO();
 	//오늘 예약 /취소 건수 보여주기 
 	List list = dao.countchktoday(today,"check");%>
-	
+	<form name="roomForm" method="post">
 			<table border="1">
 			<tr>
 				<td colspan="15" text-align="center"><b>오늘 예약요청 리스트</b></td>
@@ -172,4 +173,5 @@
 		}else{%>
 				<td colspan="15">오늘 예약한 사람이 없습니다</td>
 		</table>
+		</form>
 	<%} %>

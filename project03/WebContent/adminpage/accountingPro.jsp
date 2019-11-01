@@ -12,6 +12,7 @@
 	List list = new ArrayList();
 	
 	
+	
 	if(method.equals("blacklistcancel")){
 		list = dao.blacklist_c("cancel");
 		if(list.size()!= 0){

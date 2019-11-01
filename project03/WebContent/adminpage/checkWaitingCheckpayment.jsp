@@ -96,6 +96,7 @@
 			+"&re_name="+document.getElementById("re_name"+roomnumber).value
 			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
 			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
 		userinput.submit();
 	}
 </script>
@@ -103,7 +104,7 @@
 	ReservationDAO dao = new ReservationDAO();
 	List list = dao.reservation_search("chkpayment", "'waiting'");
 %>   	
-		
+		<form name="roomForm" method="post">
 		<table border="1">
 		<tr>
 			<td colspan="15" text-align="center"><b>입금 대기 명단</b></td>
@@ -155,4 +156,5 @@
 	}else{%>
 			<td colspan="15">입금 대기자가 없습니다</td>
 	</table>
+	</form>
 <%} %>

@@ -100,6 +100,7 @@
 			+"&re_name="+document.getElementById("re_name"+roomnumber).value
 			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
 			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
 		userinput.submit();
 	}
 </script>

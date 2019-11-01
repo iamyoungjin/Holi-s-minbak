@@ -245,14 +245,13 @@ public class ReservationDAO {
 		}
 		
 		//결제된 예약 체크 표시하기 
-		public void paycheck(String re_name, String re_phone, String roomname){
+		public void paycheck(int roomnumber,String re_name){
 			try {
 				conn = getConnection();
-				String sql="update reservation_table set chkpayment='check' where re_name =? and re_phone=? and roomname=? ";
+				String sql="update reservation_table set chkpayment='check' where roomnumber=? and re_name =?  and chkpayment= 'waiting'";
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, re_name);
-				pstmt.setString(2, re_phone);
-				pstmt.setString(3, roomname);
+				pstmt.setInt(1, roomnumber);
+				pstmt.setString(2, re_name);
 				pstmt.executeUpdate();
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -271,7 +270,6 @@ public class ReservationDAO {
 				pstmt.setString(1, re_name);				
 				pstmt.setString(2, re_phone);				
 				pstmt.setString(3, roomname);		
-				//pstmt.setInt(4, roomnumber);	
 				pstmt.executeUpdate();
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -539,7 +537,7 @@ public class ReservationDAO {
 			List list = new ArrayList();
 			try {
 			conn = getConnection();
-			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  = (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? and chkpayment=?)";
+			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  IN (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? and chkpayment=?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, month);
 			pstmt.setString(2, val);
@@ -580,7 +578,7 @@ public class ReservationDAO {
 			List list = new ArrayList();
 			try {
 			conn = getConnection();
-			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  = (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM/dd') = ? and chkpayment=?)";
+			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  IN (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM/dd') = ? and chkpayment=?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, today);
 			pstmt.setString(2, val);
@@ -621,7 +619,7 @@ public class ReservationDAO {
 			List list = new ArrayList();
 			try {
 			conn = getConnection();
-			String sql= "select * from reservation_table where to_char(cancel_date, 'yyyy/MM/dd')  = (select to_char(ca_date, 'yyyy/MM/dd') day from reservation_table where to_char(cancel_date,'yyyy/MM/dd') = ? and chkpayment=?)";
+			String sql= "select * from reservation_table where to_char(cancel_date, 'yyyy/MM/dd')  IN (select to_char(cancel_date, 'yyyy/MM/dd') day from reservation_table where to_char(cancel_date,'yyyy/MM/dd') = ? and chkpayment=?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, today);
 			pstmt.setString(2, val);
@@ -681,4 +679,23 @@ public class ReservationDAO {
 			return chk;
 		}
 		
+		
+		//강제 삭제 = paycancel 
+		public void remove(int roomnumber, String re_name){
+			try {
+				conn = getConnection();
+				String sql="delete from reservation_table where roomnumber =? and re_name=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, roomnumber);		
+				System.out.println(roomnumber);
+				pstmt.setString(2, re_name);				
+				pstmt.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+		}
 }

@@ -22,10 +22,10 @@
 		
 		//insert 
 		if(type.equals("update")){
-			dao.paycheck(vo.getRe_name(),vo.getRe_phone(),vo.getRoomname());//String re_name, String re_phone, String roomname
+			dao.paycheck(vo.getRoomnumber(),vo.getRe_name());
 			response.sendRedirect("checkClientReservation.jsp");
 		}else if(type.equals("delete")){
-			dao.paycancel(vo.getRe_name(),vo.getRe_phone(),vo.getRoomname());//String re_name, String re_phone, String roomname
+			dao.remove(vo.getRoomnumber(),vo.getRe_name());
 			response.sendRedirect("checkClientReservation.jsp");
 		}else{%>
 			<script>
