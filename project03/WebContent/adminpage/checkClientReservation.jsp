@@ -147,9 +147,13 @@
 		String yearmonth = year.toString()+"/"+month.toString();
 		int m_count_cancel = dao.countchkmonth(yearmonth,"cancel").size();
 		int m_count_check = dao.countchkmonth(yearmonth,"check").size();
+		
 		//오늘 예약 /취소 건수 계산 
-		int d_count_cancel = dao.countchktoday(today,"cancel").size();
+		int d_count_cancel = dao.countcanceltoday(today,"cancel").size();
 		int d_count_check = dao.countchktoday(today,"check").size();
+		
+		//미입금자 수 건수 계산
+		int count_waiting= dao.reservation_search("chkpayment","'waiting'").size();
 		%>
 		<table border="1">
 		<tr>
@@ -157,6 +161,7 @@
 			<td text-align="center"><h5>이번 달 예약 취소 <br><%=m_count_cancel%></h5></td>
 			<td text-align="center"><a href="../adminpage/checktodayreservation.jsp"><h5>오늘 예약 건수<br><%=d_count_check %></h5></a></td>
 			<td text-align="center"><a href="../adminpage/checktodaycancel.jsp"><h5>오늘 예약 취소<br><%=d_count_cancel %></h5></a></td>
+			<td text-align="center"><a href="../adminpage/checkWaitingCheckpayment.jsp"><h5>입금 대기자 수 <br><%=count_waiting %></h5></a></td>
 			
 	<td>	
 	<div id="searchForm">
@@ -167,7 +172,7 @@
 				<select id="selectmethod" onchange="select()" name="selectmethod" value="select()">
 					<option value=""> 탐색 기준 </option>
 					<option value="startday">입실 날짜로 검색</option>
-					<option value="endday">종료 날짜로 검색</option>
+					<option value="endday">퇴실 날짜로 검색</option>
 					<option value="re_id">아이디로 검색 </option>
 					<option value="re_name">예약자로 검색</option>
 					<option value="roomname">방 이름으로 검색</option>
@@ -186,11 +191,11 @@
 		</tr>
 		</table>
 		<br/>
-		<br/>
+
 	
 		
 	<div id = "tester"></div>
-======================================================================
+========================================================================================================================
 		<table border="1">
 			<tr>
 				<td colspan="15" text-align="center"><b>오늘 입실 리스트</b></td>
@@ -389,10 +394,6 @@ function select(){
 }
 </script>
 
-------------------------------------------------------------------------------
-
-		
-<Br>
 	<input type="button" value="돌아가기" onclick="window.location.href='adminpage.jsp'"/>			
 	<%}%>
 		

@@ -111,6 +111,7 @@ if(request.getParameter("action") == null) {
 			Calendar cc = Calendar.getInstance();
 			AccountingDAO dao = new AccountingDAO();
 			List lst = new ArrayList();
+			
 			int tot=0;
 			lst = dao.month_income(currYear,currMonth+1);
 			//lst = dao.month_income(cc.get(Calendar.YEAR),(cc.get(Calendar.MONTH)+1));
@@ -123,7 +124,7 @@ if(request.getParameter("action") == null) {
 
 		<table border="1">
 			<tr>
-				<td colspan="15" text-align="center"><b><%=cc.get(Calendar.MONTH)+1%>월 입금액 계산</b></td>
+				<td colspan="15" text-align="center"><b><%=vo.getTitle(cal)%>월 입금액 계산</b></td>
 			</tr>
 			<tr>
 				<td>총 수입 </td>
@@ -158,7 +159,7 @@ function search(){
 
 	$.ajax({
 		type: "post",
-		url : "searchAccounting.jsp",
+		url : "accountingPro.jsp",
 
 		data : {method:x},
 		success:function(data){
@@ -175,15 +176,12 @@ function search(){
 	<div id="searchForm">
 		<table border="1">
 			<tr>
-			<td colspan="9" text-align="center"><b>주차별 검색</b></td>
+			<td colspan="9" text-align="center"><b>블랙리스트 관리</b></td>
 			<td>
 				<select id="searchacc" onchange="search()" name="selectmethod" value="search()">
-					<option value=""> 탐색 기준 </option>
-					<option value="week1">1주차 입금액 </option>
-					<option value="week2">2주차 입금액 </option>
-					<option value="week3">3주차 입금액 </option>
-					<option value="week4">4주차 입금액 </option>
-					<option value="week5">5주차 입금액 </option>
+					<option value=""> 블랙 리스트 검색 </option>
+					<option value="blacklistcancel">취소 3회이상 </option>
+					<option value="blacklistwaiting">미입금 3회이상 </option>
 				</select>
 			</td>
 			</tr>

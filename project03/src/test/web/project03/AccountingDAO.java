@@ -103,6 +103,31 @@ public class AccountingDAO {
 		}
 		return list;
 	}
+	
+	//블랙 리스트 검색 취소 횟수 많은 사람불러오기 
+	public List blacklist_c(String chk){
+		List list = new ArrayList();
+		try {
+		conn = getConnection();
+		String sql= "select re_id,count(*) count from reservation_table where chkpayment=? group by re_id";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, chk);
+		rs = pstmt.executeQuery();
+			while(rs.next()) {
+				AccountingVO avo = new AccountingVO();
+				avo.setRe_id(rs.getString("re_id"));
+				avo.setCnt(rs.getInt("count"));
+				list.add(avo);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			if(rs != null) try {rs.close();}catch(SQLException e) {}
+			if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+			if(conn != null) try {conn.close();}catch(SQLException e) {}
+		}
+		return list;
+	}
 
 		
 }

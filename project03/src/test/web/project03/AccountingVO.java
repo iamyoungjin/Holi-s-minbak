@@ -96,6 +96,30 @@ public class AccountingVO {
 	public void setRoom6_w_income(int room6_w_income) {
 		Room6_w_income = room6_w_income;
 	}
+		
+		public String getRe_id() {
+			return re_id;
+		}
+
+
+
+		public void setRe_id(String re_id) {
+			this.re_id = re_id;
+		}
+
+
+
+		public int getCnt() {
+			return cnt;
+		}
+
+
+
+		public void setCnt(int cnt) {
+			this.cnt = cnt;
+		}
+
+		
 		private int Room1_M_income;
 		private int Room1_W_income;
 		private int Room2_M_income;
@@ -108,4 +132,6 @@ public class AccountingVO {
 		private int Room5_W_income;
 		private int Room6_M_income;
 		private int Room6_w_income;
+		private String re_id;
+		private int cnt;
 }

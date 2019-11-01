@@ -113,25 +113,15 @@
       
       if(sId != null){%>
       <li class="nav-item">
-      		<%= memdao.searchName(sId) %>님 환영합니다.
+      		<a class="nav-link"><%= memdao.searchName(sId) %>님 환영합니다.</a>
       </li>
       <%} %>
 
       
     </ul>
-    
-    
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+
   </div>
 </nav>
-
-
-
-
-	
 
 </body>
 </html>

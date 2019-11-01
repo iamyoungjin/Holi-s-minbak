@@ -6,7 +6,99 @@
 <%@page import="test.web.project03.RoomDAO"%>
 <%@page import="test.web.calendar.ReservationVO"%>
 <%@page import="test.web.calendar.ReservationDAO"%>
+<script>
 
+	function updateReservation(userinput,roomnumber){
+		if(!document.getElementById("roomnumber"+roomnumber).value){
+			alert("방번호를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("re_id"+roomnumber).value){
+			alert("예약자 아이디를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("re_name"+roomnumber).value){
+			alert("기준 인원수를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("re_name"+roomnumber).value){
+			alert("핸드폰 번호를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("usepeople"+roomnumber).value){
+			alert("사용 인원을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("price"+roomnumber).value){
+			alert("추가 금액을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("daterange"+roomnumber).value){
+			alert("사용 기간을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("usingday"+roomnumber).value){
+			alert("숙박일 수 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("roomname"+roomnumber).value){
+			alert("방 이름을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("startday"+roomnumber).value){
+			alert("시작 날짜를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("endday"+roomnumber).value){
+			alert("종료 날짜를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("reg_date"+roomnumber).value){
+			alert("등록 날짜를 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("paymentmethod"+roomnumber).value){
+			alert("결제 방식을 입력해주세요");
+			return false;
+		}
+		if(!document.getElementById("chkpayment"+roomnumber).value){
+			alert("결제 여부를 입력해주세요");
+			return false;
+		}
+		
+		userinput.action="checkClientReservationPro.jsp?type=update"
+			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
+			+"&re_id="+document.getElementById("re_id"+roomnumber).value
+			+"&re_name="+encodeURI(document.getElementById("re_name"+roomnumber).value)
+			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
+			+"&usepeople="+document.getElementById("usepeople"+roomnumber).value
+			+"&roomname="+encodeURI(document.getElementById("roomname"+roomnumber).value)
+			+"&price="+document.getElementById("price"+roomnumber).value
+			+"&daterange="+document.getElementById("daterange"+roomnumber).value
+			+"&usingday="+document.getElementById("usingday"+roomnumber).value
+			+"&startday="+document.getElementById("startday"+roomnumber).value 
+			+"&endday="+document.getElementById("endday"+roomnumber).value 
+			+"&paymentmethod="+document.getElementById("paymentmethod"+roomnumber).value 
+			+"&chkpayment="+document.getElementById("chkpayment"+roomnumber).value 
+			+"&re_email="+document.getElementById("re_email"+roomnumber).value 
+			
+		userinput.submit();
+	}
+	
+	function deleteReservation(userinput,roomnumber){
+		if(!confirm("예약을 삭제 하겠습니까?") ){
+			return;
+		}
+		if(!document.getElementById("roomnumber"+roomnumber).value){
+			alert("문제가 발생했으니 다시 시도해주세요.");
+		}
+		userinput.action="checkClientReservationPro.jsp?type=delete"
+			+"&re_name="+document.getElementById("re_name"+roomnumber).value
+			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
+			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+		userinput.submit();
+	}
+</script>
 <%
 	//오늘 날짜 
 	Calendar c = Calendar.getInstance();
@@ -27,11 +119,11 @@
 
 	ReservationDAO dao = new ReservationDAO();
 	//오늘 예약 /취소 건수 보여주기 
-	List list = dao.countchktoday(today,"cancel");%>
+	List list = dao.countcanceltoday(today,"cancel");%>
 	
 			<table border="1">
 			<tr>
-				<td colspan="15" text-align="center"><b>오늘 입실 리스트</b></td>
+				<td colspan="15" text-align="center"><b>오늘 예약 취소 요청 리스트</b></td>
 			</tr>
 			<tr>
 				<td>예약 번호</td>
