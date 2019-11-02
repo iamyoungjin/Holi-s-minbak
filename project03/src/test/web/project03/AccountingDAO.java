@@ -26,14 +26,14 @@ public class AccountingDAO {
 	}
 	
 	//월별 총 수입 가져오기 
-	public List month_income(int year, int month){
+	public List month_income(String yearmonth){
 		List list = new ArrayList();
 		try {
 			conn = getConnection();
-			String sql="select price from reservation_table where year=? and month =? and chkpayment='check'";
+			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  IN (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? and chkpayment='check')";
+			//String sql="select price from reservation_table where year=? and month =? and chkpayment='check'";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, year);
-			pstmt.setInt(2, month);
+			pstmt.setString(1, yearmonth);
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
@@ -49,16 +49,17 @@ public class AccountingDAO {
 		}
 		return list;
 	}
+	
 	//방 월별 
-	public List room_month_income(int year, int month, String roomname){
+	public List room_month_income(String yearmonth, String roomname){
 		List list = new ArrayList();
 		try {
 			conn = getConnection();
-			String sql="select price from reservation_table where year=? and month =? and roomname=? and chkpayment='check'";
+			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  IN (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? and roomname=? and chkpayment='check')";
+			//String sql="select price from reservation_table where year=? and month =? and roomname=? and chkpayment='check'";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, year);
-			pstmt.setInt(2, month);
-			pstmt.setString(3, roomname);
+			pstmt.setString(1, yearmonth);
+			pstmt.setString(2, roomname);
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {

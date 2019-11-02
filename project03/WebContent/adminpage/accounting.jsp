@@ -15,7 +15,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<h5>계산 다시할것!!!! 쿼리로</h5>
 <%
 	//오늘 날짜 
 	Calendar c = Calendar.getInstance();
@@ -33,7 +32,6 @@
 		day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));	
 	}
 	String today =year+"/"+month+"/"+day;
-	System.out.println(today);
 %>
 
 </head>
@@ -111,10 +109,12 @@ if(request.getParameter("action") == null) {
 			Calendar cc = Calendar.getInstance();
 			AccountingDAO dao = new AccountingDAO();
 			List lst = new ArrayList();
-			
+			String yearmonth= currYear+"/"+(currMonth+1);
+			System.out.println(yearmonth);
 			int tot=0;
-			lst = dao.month_income(currYear,currMonth+1);
+			//lst = dao.month_income(currYear,currMonth+1);
 			//lst = dao.month_income(cc.get(Calendar.YEAR),(cc.get(Calendar.MONTH)+1));
+			lst = dao.month_income(yearmonth);
 			for(int i=0;i<lst.size();i++){
 				tot+=Integer.parseInt(lst.get(i).toString());
 			}
@@ -137,13 +137,12 @@ if(request.getParameter("action") == null) {
 			</tr>
 			<tr>
 				<td><%= tot %>원</td>
-				<td><%= dto.room_totprice("산들방",currYear,currMonth+1)%>원</td>
-				<td><%= dto.room_totprice("매화방",currYear,currMonth+1)%>원</td>
-				<td><%= dto.room_totprice("들꽃방",currYear,currMonth+1)%>원</td>
-				<td><%= dto.room_totprice("소나무방",currYear,currMonth+1)%>원</td>
-				<td><%= dto.room_totprice("해뜰방",currYear,currMonth+1)%>원</td>
-				<td><%= dto.room_totprice("민들레방",currYear,currMonth+1)%>원</td>
-				
+				<td><%= dto.room_totprice(yearmonth,"산들방")%>원</td>
+				<td><%= dto.room_totprice(yearmonth,"매화방")%>원</td>
+				<td><%= dto.room_totprice(yearmonth,"들꽃방")%>원</td>
+				<td><%= dto.room_totprice(yearmonth,"소나무방")%>원</td>
+				<td><%= dto.room_totprice(yearmonth,"해뜰방")%>원</td>
+				<td><%= dto.room_totprice(yearmonth,"민들레방")%>원</td>
 				
 			</tr>
 		</table>

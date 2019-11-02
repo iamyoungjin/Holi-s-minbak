@@ -9,20 +9,18 @@ import test.web.project03.AccountingDAO;
 import test.web.calendar.ReservationVO;
 import test.web.calendar.ReservationDAO;
 public class AccountingVO {
-	public int room_totprice(String rname, int currYear, int currMonth){
+	public int room_totprice(String yearmonth,String roomname){
 		Calendar cc = Calendar.getInstance();
 		int rp=0;
 		List lst2 = new ArrayList();
 		AccountingDAO dao = new AccountingDAO();
-		lst2 = dao.room_month_income(currYear,currMonth,rname);
+		lst2 = dao.room_month_income(yearmonth,roomname);
 		//st2 = dao.room_month_income(cc.get(Calendar.YEAR),(cc.get(Calendar.MONTH)+1),rname);
 		for(int i=0;i<lst2.size();i++){
 			rp+=Integer.parseInt(lst2.get(i).toString());
 			}
 		return rp;
 		}
-	
-	
 	
 	public int getRoom1_M_income() {
 		return Room1_M_income;

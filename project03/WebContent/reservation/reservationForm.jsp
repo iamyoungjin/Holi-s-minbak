@@ -66,7 +66,7 @@ function formcheck(){
 			return false;
 		}
 		
-		if(!document.getElementById("paymentmethod"+roomnumber).value){
+		if(!document.getElementById("paymentmethod").value){
 			alert("결제 방식을 선택해주세요");
 			return false;
 		}
