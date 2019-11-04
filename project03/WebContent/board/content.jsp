@@ -33,14 +33,14 @@
 				+"&comment_content="+userinput.newcomment_content.value;
 		userinput.submit();
 	}
-	function deleteComment(userinput){
+	function deleteComment(userinput, num){
 		if(!confirm("덧글을 삭제하시겠습니까?")){
 			return;
 		}
 		userinput.action="commentPro.jsp?type=delete"
-				+"&pageNum"+pageNum
+				+"&pageNum="+pageNum
 				+"&boardnum="+boardnum
-				+"&commentnum"+document.getElementById("commentnum"+num).value;
+				+"&commentnum="+document.getElementById("commentnum"+num).value;
 		userinput.submit();
 		
 	}
@@ -126,12 +126,12 @@
 				CommentDTO cdto = (CommentDTO)commentList.get(i);
 			%>
 			<tr>
-				<input type="hidden" id="commentnum<%=i%>" name="commentnum<%=i%>" value="cdto.getCommentnum()"/>
+				<input type="hidden" id="commentnum<%=i%>" name="commentnum<%=i%>" value="<%=cdto.getCommentnum()%>"/>
 				<td><%=cdto.getName() %></td>
 				<td><%=cdto.getComment_content() %></td>
 				<td><%= sdf.format(cdto.getReg()) %></td>
 				<!-- 덧글 삭제 -->
-				<td><%if(cdto.getId().equals(sId) || session.getAttribute("sAdmin") != null){%><input type="button" value="x" onclick="deleteComment(this.form)"/></td><%} %>
+				<td><%if(cdto.getId().equals(sId) || session.getAttribute("sAdmin") != null){%><input type="button" value="x" onclick="deleteComment(this.form, <%=i%>)"/></td><%} %>
 			</tr>
 			<%	}
 		}

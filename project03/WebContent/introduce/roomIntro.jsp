@@ -77,7 +77,8 @@
 				</table>
 			</td>
 			<td>예약 안내<br/>
-				<input type="button" value="예약하기" onclick="window.location.href='../reservation/reservationCalendar.jsp'"/>	
+				<input type="button" value="예약하기" onclick="window.location.href='../reservation/reservationForm.jsp?roomname=<%=dto.getRname()%>'"/>
+				<% //window.location.href='../reservation/reservationForm.jsp' %>	
 			</td>
 		</tr>
 	</table>

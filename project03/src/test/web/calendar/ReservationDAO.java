@@ -698,4 +698,32 @@ public class ReservationDAO {
 				if(conn != null) try {conn.close();}catch(SQLException e) {}
 			}
 		}
+		
+		// 카카오페이 api 사용을 위한 메서드
+		// DAO의 payCheck 메서드를 사용하기 위함 + 카카오 페이로 예약한 유저의 데이터 값을 뽑아오기 위함
+		// 가능하면 더 좋은 방법으로 사용해야함.
+		public int getReservationNum(ReservationVO vo){
+			int x = 0;
+			try {
+				conn = getConnection();
+				String sql = "select roomnumber from reservation_table where "
+						+ "re_id=? and re_name=? and daterange=? and roomname=? order by reg_date desc";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getRe_id());
+				pstmt.setString(2, vo.getRe_name());
+				pstmt.setString(3, vo.getDaterange());
+				pstmt.setString(4, vo.getRoomname());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					x = rs.getInt("roomnumber");
+				}
+			}catch(Exception e) {
+				
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return x;
+		}
 }

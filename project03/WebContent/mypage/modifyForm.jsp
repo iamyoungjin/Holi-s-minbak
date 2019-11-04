@@ -62,7 +62,7 @@
 <body>
 		<form name="modifyForm" action="modifyPro.jsp" method="post" onsubmit="return chkForm()">
 			아이디 : <input type="text" name="id" value="<%=dto.getId() %>" readonly/><br/>
-			이메일 : <input type="text" name="email" value="<%=dto.getEmail()%>"/> <br/>
+			이메일 : <input type="email" name="email" value="<%=dto.getEmail()%>"/> <br/>
 			비밀번호 : <input type="password" name="pw" value="<%=dto.getPw()%>"/> <br/>
 			비밀번호 확인 : <input type="password" name="pw2" value="<%=dto.getPw()%>"/> <br/> 
 			이름 : <input type="text" name="name" value="<%=dto.getName()%>"/> <br/>

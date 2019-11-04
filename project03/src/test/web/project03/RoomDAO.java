@@ -69,7 +69,7 @@ public class RoomDAO {
 			if(rs.next()) {
 				chk=false;
 			}else{	
-				pstmt = conn.prepareStatement("insert into room_table values(?,?,?,?,?,?,?,?)");
+				pstmt = conn.prepareStatement("insert into room_table values(?,?,?,?,?,?,?,?,'','없음')");
 				pstmt.setInt(1, dto.getNum());
 				pstmt.setString(2, dto.getRname());
 				pstmt.setInt(3, dto.getDpeople());

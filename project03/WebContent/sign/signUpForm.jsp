@@ -20,7 +20,7 @@
 	var idChk =false;
 	var idStr ="";
 	function chkId(){
-		if(document.signupform.id.value!=idStr){
+		if(document.signUpForm.id.value != idStr){
 			idChk=false;
 		}
 		if(idChk==false){
@@ -28,6 +28,7 @@
 			return false;
 		}
 	}
+	
 
 	function chkForm(){
 		var ui = eval("document.signUpForm");

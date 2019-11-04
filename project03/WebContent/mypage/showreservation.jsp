@@ -27,11 +27,9 @@
 		List list = dao.reservation_user(sId);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		String currentTime = sdf.format(new Date());
-		
-		
-		if(list == null){
+		if(list.size()==0){
 			out.print("예약 내역이 없습니다.");
-		}else if(list != null){%>
+		}else if(list.size()>0){%>
 			<form>
 			<table border="1">
 				<tr>

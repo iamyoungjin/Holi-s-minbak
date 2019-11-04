@@ -15,6 +15,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <%
 	//오늘 날짜 
 	Calendar c = Calendar.getInstance();
@@ -35,6 +36,7 @@
 %>
 
 </head>
+
 <%
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
@@ -196,4 +198,7 @@ function search(){
 <body>
 
 </body>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </html>

@@ -25,10 +25,10 @@
 		String id = null, pw = null, auto = null;
 		Cookie [] coo = request.getCookies();
 		if(coo!=null){
-			for(Cookie c : coo){
-				if(c.getName().equals("cId")) id= c.getValue();
-				if(c.getName().equals("cPw")) pw= c.getValue();
-				if(c.getName().equals("cAuto")) auto= c.getValue();
+			for(Cookie ck : coo){
+				if(ck.getName().equals("cId")) id= ck.getValue();
+				if(ck.getName().equals("cPw")) pw= ck.getValue();
+				if(ck.getName().equals("cAuto")) auto= ck.getValue();
 			}
 		}
 		if(id!=null && pw!=null && auto!=null){

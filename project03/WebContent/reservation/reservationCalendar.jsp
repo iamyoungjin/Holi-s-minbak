@@ -103,6 +103,9 @@ if(request.getParameter("action") == null) {
 </head>
 
 <body bgcolor='white'>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
 <table border='0' width='521' border-collapse:collapse >
   <tr >
      <td width='150' align='right' valign='middle'>
@@ -204,5 +207,8 @@ if(request.getParameter("action") == null) {
   </table>
  <button onclick="window.location.href = '../main/main.jsp'"> 메인으로 가기 </button>
  <button onclick="window.location.href = '../reservation/reservationForm.jsp'"> 예약하러 가기 </button>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

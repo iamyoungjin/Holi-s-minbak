@@ -131,8 +131,11 @@
 
 
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
 <%
-	String sAdmin = (String)session.getAttribute("sAdmin");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
 		<script>
 			alert("권한이 없습니다.");
@@ -402,4 +405,7 @@ function select(){
 <body>
 
 </body>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </html>
