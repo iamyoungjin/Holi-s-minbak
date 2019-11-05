@@ -9,6 +9,7 @@ import test.web.project03.AccountingDAO;
 import test.web.calendar.ReservationVO;
 import test.web.calendar.ReservationDAO;
 public class AccountingVO {
+	 
 	public int room_totprice(String yearmonth,String roomname){
 		Calendar cc = Calendar.getInstance();
 		int rp=0;

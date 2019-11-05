@@ -9,19 +9,15 @@
 	String method = request.getParameter("method");
 	AccountingDAO dao =  new AccountingDAO();
 	List blacklist = new ArrayList();
-	List list = new ArrayList();
-	
-	
-	
-	if(method.equals("blacklistcancel")){
+	List list = new ArrayList();%>
+	<h2>블랙 리스트</h2><%
+	if(method.equals("cancelblacklist")){
 		list = dao.blacklist_c("cancel");
-		if(list.size()!= 0){
-			for(int i=0;i<list.size();i++){
-				AccountingVO avo = (AccountingVO)list.get(i);
-				if(avo.getCnt()>2){
-					blacklist.add(avo.getRe_id());%>
-					
-					<h2>블랙 리스트</h2>
+		if(list.size()!= 0){%>
+			<% for(int i=0;i<list.size();i++){
+				AccountingVO vo = (AccountingVO)list.get(i);
+				if(vo.getCnt()>=2){
+					blacklist.add(vo.getRe_id());%>
 					<table border="1">
 						<tr>
 							<td>id</td>
@@ -29,34 +25,33 @@
 						</tr>
 						
 						<tr>
-							<td><%=avo.getRe_id()%></td>
-							<td><%=avo.getCnt()%></td>
+							<td><%=vo.getRe_id()%></td>
+							<td><%=vo.getCnt()%></td>
 						</tr>
-					</table>
+					</tr>
+				</table>
 				<% }
-		}
-	}else{%>
-		<td>해당 정보가 없습니다 </td>
-<% 	}
-	}else if(method.equals("blacklistwaiting")){
+			}
+			}else{%>
+			<td>해당 정보가 없습니다 </td>
+<% 		}
+	}else if(method.equals("waitingblacklist")){
 		list = dao.blacklist_c("waiting");
 	
-		if(blacklist.size()!= 0){
-			for(int i=0;i<list.size();i++){
-				AccountingVO avo = (AccountingVO)list.get(i);
-				if(avo.getCnt()>2){
-					blacklist.add(avo.getRe_id());%>
-					
-					<h2>블랙 리스트</h2>
+		if(list.size()!= 0){%>
+
+			<% for(int i=0;i<list.size();i++){
+				AccountingVO vo = (AccountingVO)list.get(i);
+				if(vo.getCnt()>=2){
+					blacklist.add(vo.getRe_id());%>
 					<table border="1">
 						<tr>
 							<td>id</td>
 							<td>예약 대기 갯수</td>
 						</tr>
-						
 						<tr>
-							<td><%=avo.getRe_id()%></td>
-							<td><%=avo.getCnt()%></td>
+							<td><%=vo.getRe_id()%></td>
+							<td><%=vo.getCnt()%></td>
 						</tr>
 					</table>
 				<% }

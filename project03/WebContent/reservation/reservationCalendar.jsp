@@ -177,9 +177,10 @@ if(request.getParameter("action") == null) {
 					}  
 					String startday= (String)(year_t+"/"+month_t+"/"+date_t);
 					String endday= startday;
-					List roomtoday = dao.roomtoday(startday, endday);
-					for(int i=0; i<roomtoday.size();i++){
-						String roomname = (String)roomtoday.get(i);
+					List roomtodaycheck = dao.roomtodaycheck(startday, endday);
+					List roomtodaywaiting = dao.roomtodaywaiting(startday, endday);
+					for(int i=0; i<roomtodaycheck.size();i++){
+						String roomname = (String)roomtodaycheck.get(i);
 						RoomDAO roomdao = RoomDAO.getInstance();
 						List roomList = roomdao.showRoom();
 						for(int j=0; j<roomList.size(); j++){
@@ -189,8 +190,26 @@ if(request.getParameter("action") == null) {
 							<%}
 							
 						}%>
-						<%=roomtoday.get(i) %></a><br/>
+						<%=roomtodaycheck.get(i) %></a><br/>
+					<%}
+						//waiting 인 상태의 방도 달력에 보여지도록 추가 
+						for(int i=0; i<roomtodaywaiting.size();i++){
+						String roomname = (String)roomtodaywaiting.get(i);
+						RoomDAO roomdao = RoomDAO.getInstance();
+						List roomList = roomdao.showRoom();
+						for(int j=0; j<roomList.size(); j++){
+							RoomDTO roomdto = (RoomDTO)roomList.get(j);
+							if(roomname.equals(roomdto.getRname())){%>
+								<a href="../introduce/roomIntro.jsp?num=<%=roomdto.getNum()%>">
+							<%}
+							
+						}%>
+						<%=roomtodaywaiting.get(i) %></a><br/>
 					<%}%>
+					
+					
+					
+					
 					</td>  
 					 <% count+=1;
 	          			dispDay +=1;	         			  
@@ -207,8 +226,6 @@ if(request.getParameter("action") == null) {
   </table>
  <button onclick="window.location.href = '../main/main.jsp'"> 메인으로 가기 </button>
  <button onclick="window.location.href = '../reservation/reservationForm.jsp'"> 예약하러 가기 </button>
-<footer>
-	<%@ include file="../main/footer.jsp" %>
-</footer>
+
 </body>
 </html>

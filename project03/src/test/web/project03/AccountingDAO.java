@@ -30,7 +30,7 @@ public class AccountingDAO {
 		List list = new ArrayList();
 		try {
 			conn = getConnection();
-			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  IN (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? and chkpayment='check')";
+			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  IN (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? )and chkpayment='check'";
 			//String sql="select price from reservation_table where year=? and month =? and chkpayment='check'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, yearmonth);
@@ -55,7 +55,7 @@ public class AccountingDAO {
 		List list = new ArrayList();
 		try {
 			conn = getConnection();
-			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  IN (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? and roomname=? and chkpayment='check')";
+			String sql= "select * from reservation_table where to_char(reg_date, 'yyyy/MM/dd')  IN (select to_char(reg_date, 'yyyy/MM/dd') day from reservation_table where to_char(reg_date,'yyyy/MM') = ? )and roomname=? and chkpayment='check'";
 			//String sql="select price from reservation_table where year=? and month =? and roomname=? and chkpayment='check'";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, yearmonth);
@@ -63,7 +63,7 @@ public class AccountingDAO {
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
-				ReservationVO vo = new ReservationVO();
+				//ReservationVO vo = new ReservationVO();
 				list.add(rs.getInt("price"));
 			}
 		}catch(Exception e) {

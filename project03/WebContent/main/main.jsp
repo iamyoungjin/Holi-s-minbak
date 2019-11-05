@@ -5,8 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8
-">
+<meta charset="UTF-8">
 <title>펜션에 오신걸 환영합니다.</title>
 <jsp:include page="header.jsp"/>
 <section id="content">

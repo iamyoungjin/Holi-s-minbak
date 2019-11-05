@@ -135,10 +135,6 @@
 	  </script>
 	  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 	  
-	
 
-<footer>
-	<%@ include file="../main/footer.jsp" %>
-</footer>
 </body>
 </html>

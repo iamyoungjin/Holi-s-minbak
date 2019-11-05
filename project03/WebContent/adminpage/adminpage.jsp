@@ -28,9 +28,6 @@
 			<li><a href="accounting.jsp">수입 관리 페이지</a></li>
 			<li><a href="../main/main.jsp">메인으로</a></li>
 		</ul>
-<footer>
-	<%@ include file="../main/footer.jsp" %>
-</footer>
 		
 	<%}
 

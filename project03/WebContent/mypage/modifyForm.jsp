@@ -87,8 +87,6 @@
  	<%	}
 	}
 %>
-<footer>
-	<%@ include file="../main/footer.jsp" %>
-</footer>
+
 </body>
 </html>

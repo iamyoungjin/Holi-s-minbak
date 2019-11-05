@@ -107,15 +107,15 @@ public class ReservationDAO {
 				return list;
 		}
 		
-		//  당일 해당하는 방 가져오기  
+		//  당일 해당하는 방 가져오기(check만 )
 		// 19/10/31 18:30 메서드 변경(list에 DTO를 담지 않고, 그냥 String 변수 담는다)
-		public List roomtoday(String startday, String endday) {
+		public List roomtodaycheck(String startday, String endday) {
 			List list = new ArrayList();
 			try {
 				conn = getConnection();
 				
 				//체크아웃 고려 마지막날은 지움 
-				String sql="select roomname from reservation_table where startday<=? AND endday>? AND chkpayment='check'";
+				String sql="select roomname from reservation_table where startday<=? AND endday>? AND chkpayment='check'" ;
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, startday);
 				pstmt.setString(2, endday);
@@ -133,6 +133,41 @@ public class ReservationDAO {
 			}
 			return list;
 		}
+		
+		//당일 해당하는방 가져오기 ('waiting'만) 위 함수와 같이 쓰면 에러나서 따로 뺌 
+		public List roomtodaywaiting(String startday, String endday) {
+			List list = new ArrayList();
+			try {
+				conn = getConnection();
+				
+				//체크아웃 고려 마지막날은 지움 
+				String sql="select roomname from reservation_table where startday<=? AND endday>? AND chkpayment='waiting'" ;
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, startday);
+				pstmt.setString(2, endday);
+				rs = pstmt.executeQuery();
+				//달을 넘기면 rs 에 들어오는 값이 왜 없는가 
+				while(rs.next()) {
+					list.add(rs.getString("roomname"));
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				if(rs != null) try {rs.close();}catch(SQLException e) {}
+				if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+				if(conn != null) try {conn.close();}catch(SQLException e) {}
+			}
+			return list;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		// 평일 방 가격 가져오기 
 		public int roomprice_weekday(String rname) {

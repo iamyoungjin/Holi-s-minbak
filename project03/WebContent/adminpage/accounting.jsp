@@ -10,6 +10,8 @@
 <%@page import="test.web.project03.AccountingDAO"%>
 <%@page import="test.web.calendar.ReservationVO"%>
 <%@page import="test.web.calendar.ReservationDAO"%>
+<%@page import="test.web.project03.RoomDAO"%>
+<%@page import="test.web.project03.RoomDTO"%>
 <script src= https://code.jquery.com/jquery-3.4.1.min.js></script>    
 <!DOCTYPE html>
 <html>
@@ -112,10 +114,7 @@ if(request.getParameter("action") == null) {
 			AccountingDAO dao = new AccountingDAO();
 			List lst = new ArrayList();
 			String yearmonth= currYear+"/"+(currMonth+1);
-			System.out.println(yearmonth);
 			int tot=0;
-			//lst = dao.month_income(currYear,currMonth+1);
-			//lst = dao.month_income(cc.get(Calendar.YEAR),(cc.get(Calendar.MONTH)+1));
 			lst = dao.month_income(yearmonth);
 			for(int i=0;i<lst.size();i++){
 				tot+=Integer.parseInt(lst.get(i).toString());
@@ -130,26 +129,26 @@ if(request.getParameter("action") == null) {
 			</tr>
 			<tr>
 				<td>총 수입 </td>
-				<td>산들방</td>
-				<td>매화방</td>
-				<td>들꽃방</td>
-				<td>소나무방</td>
-				<td>해뜰방</td>
-				<td>민들레방</td>
+				<%
+					RoomDAO dao1 = RoomDAO.getInstance();
+					RoomDTO dto1 = new RoomDTO();	
+					List roomlist = dao1.showRoom();
+					for(int i=0;i<roomlist.size();i++){
+						dto1 = (RoomDTO)roomlist.get(i);%>
+					<td><%= dto1.getRname()%></td>
+			    <%}%>
 			</tr>
+
 			<tr>
 				<td><%= tot %>원</td>
-				<td><%= dto.room_totprice(yearmonth,"산들방")%>원</td>
-				<td><%= dto.room_totprice(yearmonth,"매화방")%>원</td>
-				<td><%= dto.room_totprice(yearmonth,"들꽃방")%>원</td>
-				<td><%= dto.room_totprice(yearmonth,"소나무방")%>원</td>
-				<td><%= dto.room_totprice(yearmonth,"해뜰방")%>원</td>
-				<td><%= dto.room_totprice(yearmonth,"민들레방")%>원</td>
-				
-			</tr>
+				<%
+					roomlist = dao1.showRoom();
+					for(int i=0;i<roomlist.size();i++){
+						dto1 = (RoomDTO)roomlist.get(i);%>
+					<td><%= dto.room_totprice(yearmonth,dto1.getRname())%>원</td>
+			    <%}%>
+			   </tr>
 		</table>
-	
-	<br/>
 	<br/>
 
 
@@ -165,9 +164,8 @@ function search(){
 		data : {method:x},
 		success:function(data){
 			data = data.trim();
-			$("#tester").html(data);
 			data = data.trim();
-			
+			$("#tester").html(data);			
 		},
 	});
 }
@@ -181,8 +179,8 @@ function search(){
 			<td>
 				<select id="searchacc" onchange="search()" name="selectmethod" value="search()">
 					<option value=""> 블랙 리스트 검색 </option>
-					<option value="blacklistcancel">취소 3회이상 </option>
-					<option value="blacklistwaiting">미입금 3회이상 </option>
+					<option value="cancelblacklist">취소 3회이상 </option>
+					<option value="waitingblacklist">미입금 3회이상 </option>
 				</select>
 			</td>
 			</tr>
@@ -195,10 +193,4 @@ function search(){
 	<input type="button" value="돌아가기" onclick="window.location.href='adminpage.jsp'"/>			
 	<%}%>
 		
-<body>
-
-</body>
-<footer>
-	<%@ include file="../main/footer.jsp" %>
-</footer>
 </html>

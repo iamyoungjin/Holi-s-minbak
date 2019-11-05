@@ -203,7 +203,4 @@
 <body>
 
 </body>
-<footer>
-	<%@ include file="../main/footer.jsp" %>
-</footer>
 </html>
