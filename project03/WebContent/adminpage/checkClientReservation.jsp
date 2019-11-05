@@ -127,6 +127,29 @@
 			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
 		userinput.submit();
 	}
+	function chkRefund(userinput, i){
+		if(!confirm("환불이 완료 되었습니까?") ){
+			return;
+		}
+		userinput.action="checkClientReservationPro.jsp?type=refund"
+			+"&re_name="+document.getElementById("re_name"+roomnumber).value
+			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
+			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
+		userinput.submit();
+		
+	}
+	function cancelReservation(userinput, i){
+		if(!confirm("예약을 취소하시겠습니까?") ){
+			return;
+		}
+		userinput.action="checkClientReservationPro.jsp?type=cancel"
+			+"&re_name="+document.getElementById("re_name"+roomnumber).value
+			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
+			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
+		userinput.submit();
+	}
 </script>
 
 
@@ -337,6 +360,8 @@
 				<td>예약신청 날짜</td>
 				<td>결제 방식</td>
 				<td>결제 유무</td>
+				<td>상태 변경</td>
+				<td>예약 삭제</td>
 			</tr>
 			<%for(int i=0; i<list.size(); i++ ){
 				ReservationVO vo = (ReservationVO)list.get(i);
@@ -360,9 +385,16 @@
 					<%if(vo.getCancel_date()!=null){ %>
 					<td><input type="text" id="cancel_date<%=i%>" name="cancel_date<%=i%>" value="<%=vo.getCancel_date()%>"/></td>
 					<%} %>
-					
 					<td>
+				<%	int res = dao.getChkpayment(vo.getRoomnumber());
+					if(res == 2){%>
 						<input type="button" value="결제 확인" onclick="updateReservation(this.form,<%=i%>)"/>
+						<input type="button" value="예약 취소" onclick="cancelReservation(this.form,<%=i %>)"/>
+				<%	}else if(res == 3){%>
+						<input type="button" value="환불 확인" onclick="chkRefund(this.form,<%=i %>)" />
+				<%	}%>
+					</td>
+					<td>
 						<input type="button" value="예약 강제 삭제" onclick="deleteReservation(this.form,<%=i%>)"/>
 					</td>
 				</tr>
