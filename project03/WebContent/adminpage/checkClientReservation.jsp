@@ -30,7 +30,25 @@
 	}
 	String today =year+"/"+month+"/"+day;
 %>
+<script>
+function select(){
+	var x = document.getElementById("selectmethod").value;
+	var y = document.getElementById("keyword").value;
 
+	$.ajax({
+		type: "post",
+		url : "searchReservation.jsp",
+		//data : {method:$("#sel").val(), val:$("#key").val()},
+		data : {method:x, val:y},
+		success:function(data){
+			data = data.trim();
+			$("#tester").html(data);
+			data = data.trim();
+			
+		},
+	});
+}
+</script>
 
 
 <title>예약 정보</title>
@@ -131,11 +149,9 @@
 
 
 </head>
-<header>
-	<%@ include file="../main/header.jsp" %>
-</header>
+
 <%
-	sAdmin = (String)session.getAttribute("sAdmin");
+	String sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
 		<script>
 			alert("권한이 없습니다.");
@@ -185,8 +201,8 @@
 				</select>
 			</td>
 			
-		<td><input type="text" id="keyword" name="keyword" value=""/></td>
-		<td><button onclick="select()" >search</button></td>
+				<td><input type="text" id="keyword" name="keyword" value=""/></td>
+				<td><button onclick="select()" >search</button></td>
 			</tr>
 		</table>
 	</div>
@@ -374,30 +390,7 @@
 	<br/>
 	<br/>
 
-<script>
-function select(){
-	var x = document.getElementById("selectmethod").value;
-	//document.getElementById("sel").value = x;
-	//document.getElementById("show").innerHTML = x;
-	
-	var y = document.getElementById("keyword").value;
-	//document.getElementById("key").value = y;
-	//document.getElementById("key").innerHTML = y;
 
-	$.ajax({
-		type: "post",
-		url : "searchReservation.jsp",
-		//data : {method:$("#sel").val(), val:$("#key").val()},
-		data : {method:x, val:y},
-		success:function(data){
-			data = data.trim();
-			$("#tester").html(data);
-			data = data.trim();
-			
-		},
-	});
-}
-</script>
 
 	<input type="button" value="돌아가기" onclick="window.location.href='adminpage.jsp'"/>			
 	<%}%>

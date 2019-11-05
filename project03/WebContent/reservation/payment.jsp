@@ -62,13 +62,19 @@
 <%	
 	//오늘 기준으로 이전 날짜방 예약 못하게 하기 
 	Calendar c = Calendar.getInstance();
-	int now_day = c.get(Calendar.DAY_OF_MONTH);  //1일날 01인지 1인지 다시 확인할것 
+	int nowday = c.get(Calendar.DAY_OF_MONTH);  //1일날 01인지 1인지 다시 확인할것 
+	String now_day = null;
+	if(nowday<10){
+		 now_day="0"+nowday;
+	}
 	int now_month = c.get(Calendar.MONTH)+1;
 	int now_year = c.get(Calendar.YEAR);
-	String dday = (String)(now_year+"/"+now_month+"/"+now_day
-			); //string 대소 비교 안됨 
+	String dday = (String)(now_year+"/"+now_month+"/"+now_day); //string 대소 비교 안됨 
 	int start =Integer.parseInt(startday.replace("/",""));
 	int d =Integer.parseInt(dday.replace("/",""));
+	System.out.println(dday);
+	System.out.println(start);
+	System.out.println(d);
 	if(d>start){%>
 	<script>
 		alert("이전 날짜에 예약불가");
@@ -81,9 +87,6 @@
 	//중복 체크 
 	//방 이름이 같고 지정한 날짜 범위에서 하루라도 겹치면 예약 불가 
 	ReservationDAO dao = new ReservationDAO();
-	System.out.println(startday);
-	System.out.println(endday);
-	System.out.println(roomname);
 		if(dao.roomchk(startday, endday,roomname)){
 %>
 	<script>

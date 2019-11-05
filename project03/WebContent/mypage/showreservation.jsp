@@ -70,10 +70,4 @@
 		<input type="button" value="돌아가기" onclick="window.location.href='mypage.jsp'"/>
 	<%}
 %>
-<body>
-<footer>
-	<%@ include file="../main/footer.jsp" %>
-</footer>
-
-</body>
 </html>

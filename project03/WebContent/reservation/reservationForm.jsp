@@ -134,7 +134,7 @@ $("document").ready(function(){
 	<td align="center">핸드폰 :<input type="text" id="re_phone" name="re_phone" value=<%=phone %> readonly></td>
 	</tr>
 	<tr>
-	<td align="center">E-mail:<input type="text" id="re_email" name="re_email" value=<%= e_mail%> readonly></td>
+	<td align="center">E-mail:<input type="email"" id="re_email" name="re_email" value=<%= e_mail%> readonly></td>
 	</tr>
 	<tr>
 	<td align="center">예약할 방 선택 :<select id="mySel" onchange="sel()" name="roomname" value="sel()">
