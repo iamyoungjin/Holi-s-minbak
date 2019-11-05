@@ -352,9 +352,12 @@ public class BoardDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				String dbid = rs.getString("id");
-				if(id.equals("admin")) { chk = true; }
-				
-				if(dbid.equals(id)) {
+				if(id.equals("admin")){
+					pstmt = conn.prepareStatement("delete from board_table where boardnum=?");
+					pstmt.setInt(1, boardnum);
+					pstmt.executeUpdate();
+					chk = true; 
+				}else if(dbid.equals(id)){
 					pstmt = conn.prepareStatement("delete from board_table where boardnum=?");
 					pstmt.setInt(1, boardnum);
 					pstmt.executeUpdate();
