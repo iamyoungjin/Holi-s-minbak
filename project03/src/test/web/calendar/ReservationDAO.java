@@ -761,4 +761,92 @@ public class ReservationDAO {
 			}
 			return x;
 		}
+		
+		// chkpayment을 받아오는 함수. chkpayment의 값에 따라 int 값 리턴 한다
+				public int getChkpayment(int roomnumber) {
+					int x=0;
+					try {
+						conn = getConnection();
+						pstmt = conn.prepareStatement("select chkpayment from reservation_table where roomnumber=?");
+						pstmt.setInt(1, roomnumber);
+						rs = pstmt.executeQuery();
+						if(rs.next()) {
+							String chkpayment = rs.getString("chkpayment");
+							if(chkpayment.equals("check")) {
+								x = 1;
+							}else if(chkpayment.equals("waiting")) {
+								x = 2;
+							}else if(chkpayment.equals("refund")) {
+								x = 3;
+							}else if(chkpayment.equals("cancle")) {
+								x = 4;
+							}
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						if(rs != null) try {rs.close();}catch(SQLException e) {}
+						if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+						if(conn != null) try {conn.close();}catch(SQLException e) {}
+					}
+					
+					return x;
+				}
+				
+				// admin이 취소(삭제말고 취소)
+				public int cancelRsv(int roomnumber, String re_name) {
+					int x = 0;
+					try {
+						conn = getConnection();
+						pstmt = conn.prepareStatement("select * from reservation_table where roomnumber=? and re_name=?");
+						pstmt.setInt(1, roomnumber);
+						pstmt.setString(2, re_name);
+						rs = pstmt.executeQuery();
+						if(rs.next()){
+							pstmt = conn.prepareStatement("update reservation_table set chkpayment='cancel' where roomnumber=? and re_name=? and chkpayment='waiting'");
+							pstmt.setInt(1, roomnumber);
+							pstmt.setString(2, re_name);
+							int res = pstmt.executeUpdate();
+							if(res>0) {
+								x=1;
+							}
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						if(rs != null) try {rs.close();}catch(SQLException e) {}
+						if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+						if(conn != null) try {conn.close();}catch(SQLException e) {}
+					}
+					return x;
+					
+				}
+				
+				// admin이 refund상태에서 확인하고 취소할수있게함
+				public int refundRsv(int roomnumber, String re_name) {
+					int x =0;
+					try {
+						conn = getConnection();
+						pstmt = conn.prepareStatement("select * from reservation_table where roomnumber=? and re_name=?");
+						pstmt.setInt(1, roomnumber);
+						pstmt.setString(2, re_name);
+						rs = pstmt.executeQuery();
+						if(rs.next()){
+							pstmt = conn.prepareStatement("update reservation_table set chkpayment='cancel' where roomnumber=? and re_name=? and chkpayment='refund'");
+							pstmt.setInt(1, roomnumber);
+							pstmt.setString(2, re_name);
+							int res = pstmt.executeUpdate();
+							if(res>0) {
+								x=1;
+							}
+						}			
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						if(rs != null) try {rs.close();}catch(SQLException e) {}
+						if(pstmt != null) try {pstmt.close();}catch(SQLException e) {}
+						if(conn != null) try {conn.close();}catch(SQLException e) {}
+					}
+					return x;
+				}
 }

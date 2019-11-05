@@ -1,3 +1,4 @@
+<%@page import="java.nio.charset.Charset"%>
 <%@page import="java.util.List"%>
 <%@page import="test.web.project03.RoomDTO"%>
 <%@page import="test.web.project03.RoomDAO"%>
@@ -8,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>방 소개</title>
+
 </head>
 <body>
 <!-- 방 소개 페이지 -->
@@ -77,8 +79,11 @@
 				</table>
 			</td>
 			<td>예약 안내<br/>
-				<input type="button" value="예약하기" onclick="window.location.href='../reservation/reservationForm.jsp?roomname=<%=dto.getRname()%>'"/>
-				<% //window.location.href='../reservation/reservationForm.jsp' %>	
+				<%
+					byte[] stringBuffer = dto.getRname().getBytes(Charset.forName("UTF-8"));
+					String roomname = new String(stringBuffer, "UTF-8");
+				%>
+				<input type="button" value="예약하기" onclick="window.location.href='../reservation/reservationForm.jsp?roomname=<%=roomname%>'"/>
 			</td>
 		</tr>
 	</table>

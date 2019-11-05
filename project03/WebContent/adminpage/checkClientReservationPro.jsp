@@ -10,6 +10,7 @@
 
 
 <%
+	int res = 0; 
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
 		<script>
@@ -27,6 +28,32 @@
 		}else if(type.equals("delete")){
 			dao.remove(vo.getRoomnumber(),vo.getRe_name());
 			response.sendRedirect("checkClientReservation.jsp");
+		}else if(type.equals("refund")){
+			res = dao.cancelRsv(vo.getRoomnumber(), vo.getRe_name());
+			if(res==1){%>
+				<script>
+					alert("환불이 완료되었습니다.");
+					window.location.href="checkclientReservation.jsp";
+				</script>
+			<%}else{%>
+				<script>
+					alert("에러가 발생했습니다. 다시 시도해주세요.");
+					window.location.href="checkclientReservation.jsp";
+				</script>
+			<%}
+		}else if(type.equals("cancel")){
+			res = dao.refundRsv(vo.getRoomnumber(), vo.getRe_name());
+			if(res==1){%>
+				<script>
+					alert("취소가 완료되었습니다.");
+					window.location.href="checkclientReservation.jsp";
+				</script>
+			<%}else{%>
+				<script>
+					alert("에러가 발생했습니다. 다시 시도해주세요.");
+					window.location.href="checkclientReservation.jsp";
+				</script>
+			<%}
 		}else{%>
 			<script>
 				alert("에러가 발생했습니다. 다시 시도해주세요.");

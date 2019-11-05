@@ -209,6 +209,35 @@ public class RoomDAO {
 		}
 		return list;
 	}
+	public RoomDTO getRoomData(String rname) {
+		RoomDTO dto = null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("select * from room_table where rname=?");
+			pstmt.setString(1, rname);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new RoomDTO();
+				dto.setNum(rs.getInt("num"));
+				dto.setRname(rs.getString("rname"));
+				dto.setDpeople(rs.getInt("dpeople"));
+				dto.setMaxpeople(rs.getInt("maxpeople"));
+				dto.setAddtionalcost(rs.getInt("addtionalcost"));
+				dto.setWeekday_price(rs.getInt("weekday_price"));
+				dto.setWeekend_price(rs.getInt("weekend_price"));
+				dto.setPeakseason_price(rs.getInt("peakseason_price"));
+				dto.setRoom_img(rs.getString("room_img"));
+				dto.setIntro(rs.getString("intro"));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			if(rs!=null){try {rs.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(pstmt!=null){try {pstmt.close();}catch(SQLException s) {s.printStackTrace();}}
+			if(conn!=null){try {conn.close();}catch(SQLException s) {s.printStackTrace();}}
+		}
+		return dto;
+	}
 	
 
 }
