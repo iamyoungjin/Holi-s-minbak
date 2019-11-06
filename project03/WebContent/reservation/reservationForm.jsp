@@ -189,6 +189,7 @@ $("document").ready(function(){
 	<h3><div id = "rprice"></div><br/></h3> 
 	<h3><div id = "dr"></div><br/></h3>
 	<input type="submit" id="reservationSubmit" value=" 결제하러가기" >
+	<input type="button" value="돌아가기" onclick="window.location.href='../main/main.jsp'"/>
 	
 </form>
 </center>

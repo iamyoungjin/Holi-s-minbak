@@ -52,20 +52,28 @@
 			alert("핸드폰 번호를 입력하지 않았습니다")
 			return false;
 		}
+		if(document.signUpForm.phonenum.value.length>11 || document.signUpForm.phonenum.value.length<9){
+			alert("휴대폰 번호 길이를 재확인해주세요");
+			return false;
+		}
+		if(document.signUpForm.phonenum.value.indexOf("-")>=0){
+			alert("전화번호에 -를 뺀 상태로 입력해주세요");
+			return false;
+		}
 		if(!ui.birthdate.value){
 			alert("생년월일을 입력하지 않았습니다")
 			return false;
 		}
-		if(document.signUpForm.phonenum.value.length>11 && document.signUpForm.phonenum.value.length<9){
-			alert("휴대폰 번호 길이를 재확인해주세요");
-			return false;
-		}
-		if(document.signUpForm.phonenum.value.includes('-')){
-			alert("전화번호에 -를 뺀 상태로 입력해주세요");
-			return false;
-		}
-		if(!document.signUpForm.birthdate.value.length==6){
+		if(document.signUpForm.birthdate.value.length!=6){
 			alert("생년월일 입력 양식이 잘못되었습니다. 950101과 같은 양식으로 작성해주세요");
+			return false;
+		}
+		if(parseInt(document.signUpForm.birthdate.value.substring(2,4))>12 || parseInt(document.signUpForm.birthdate.value.substring(2,4))<=0 ){
+			alert("생년월일 양식이 잘못되었습니다.");
+			return false;
+		}
+		if(parseInt(document.signUpForm.birthdate.value.substring(4,6))>31 || parseInt(document.signUpForm.birthdate.value.substring(2,4))<=0 ){
+			alert("생년월일 양식이 잘못되었습니다.");
 			return false;
 		}
 
@@ -108,10 +116,10 @@
 			<td>이름 : <input type="text" name="name"/></td>
 		</tr>
 		<tr>
-			<td>휴대폰번호 : <input type="text" name="phonenum" placeholder="휴대폰 번호를 -없이 입력해주세요."/></td>
+			<td>휴대폰번호 : <input type="text" name="phonenum" maxlength="12" placeholder="휴대전화 번호를 숫자로만 입력"/></td>
 		</tr>
 		<tr>
-			<td>생년월일 : <input type="text" name="birthdate" placeholder="생년월일을 입력해주세요."/></td>
+			<td>생년월일 : <input type="text" name="birthdate" maxlength="6" placeholder="예시)910101"/></td>
 		</tr>
 		<tr>
 		<td>

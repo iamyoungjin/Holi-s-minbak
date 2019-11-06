@@ -109,7 +109,7 @@
 		<tr>
 			<td>글내용</td>
 			<td colspan="3">
-			<%if(dto.getFileroot()!=null){ %><img src="/project03/image/<%=dto.getFileroot()%>"/><br> <%} %>
+			<%if(dto.getFileroot()!=null){ %><img src="/project01/image/<%=dto.getFileroot()%>"/><br> <%} %>
 			<pre><%=dto.getContent() %></pre></td>
 		</tr>
 		<tr>
@@ -154,7 +154,7 @@
 			<input type="hidden" name="newpw" value="<%= mdto.getPw() %>"/>
 			<tr>
 				<td><%=mdto.getName()%><input type="hidden" name="newname" value="<%=mdao.searchName(sId)%>"/></td>
-				<td><textarea name="newcomment_content" rows="1" cols="20"></textarea></td>
+				<td><textarea name="newcomment_content" rows="2" cols="20"></textarea></td>
 				<td><input type="button" value="덧글작성" onclick="insertComment(this.form)"/></td>
 			</tr>
 		<%}%>

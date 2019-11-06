@@ -34,10 +34,34 @@
 			alert("핸드폰 번호를 입력하지 않았습니다")
 			return false;
 		}
+		if(document.modifyForm.phonenum.value.length>11 || document.modifyForm.phonenum.value.length<9){
+			alert("휴대폰 번호 길이를 재확인해주세요");
+			return false;
+		}
+		if(document.modifyForm.phonenum.value.indexOf("-")>=0){
+			alert("전화번호에 -를 뺀 상태로 입력해주세요");
+			return false;
+		}
 		if(!ui.birthdate.value){
 			alert("생년월일을 입력하지 않았습니다")
 			return false;
 		}
+		console.log("1");
+		if(document.modifyForm.birthdate.value.length!=6){
+			alert("생년월일 입력 양식이 잘못되었습니다. 950101과 같은 양식으로 작성해주세요");
+			return false;
+		}
+		console.log("2");
+		if(parseInt(document.modifyForm.birthdate.value.substring(2,4))>12 || parseInt(document.modifyForm.birthdate.value.substring(2,4))<=0){
+			alert("생년월일 양식이 잘못되었습니다.");
+			return false;
+		}
+		console.log("3");
+		if(parseInt(document.modifyForm.birthdate.value.substring(4,6))>31 || parseInt(document.modifyForm.birthdate.value.substring(2,4))<=0){
+			alert("생년월일 양식이 잘못되었습니다.");
+			return false;
+		}
+		console.log("4");
 	}
 
 </script>
@@ -66,8 +90,8 @@
 			비밀번호 : <input type="password" name="pw" value="<%=dto.getPw()%>"/> <br/>
 			비밀번호 확인 : <input type="password" name="pw2" value="<%=dto.getPw()%>"/> <br/> 
 			이름 : <input type="text" name="name" value="<%=dto.getName()%>"/> <br/>
-			핸드폰번호 : <input type="text" name="phonenum" value="<%=dto.getPhonenum()%>"/> <br/>
-			생년월일 : <input type="text" name="birthdate" value="<%=dto.getBirthdate()%>"/> <br/>
+			핸드폰번호 : <input type="text" maxlength="12" name="phonenum" value="<%=dto.getPhonenum()%>"/> <br/>
+			생년월일 : <input type="text" maxlength="6" name="birthdate" value="<%=dto.getBirthdate()%>"/> <br/>
 			<input type="submit" value="수정하기"/>
 			<input type="button" value="돌아가기" onclick="window.location.href='mypage.jsp'"/>
 		</form>
@@ -78,8 +102,8 @@
 			아이디 : <input type="text" name="id" value="<%=dto.getId() %>" readonly/><br/>
 			이메일 : <input type="text" name="email" value="<%=dto.getEmail()%>"/>
 			이름 : <input type="text" name="name" value="<%=dto.getName()%>"/> <br/>
-			핸드폰번호 : <input type="text" name="phonenum" value="<%=dto.getPhonenum()%>"/> <br/>
-			생년월일 : <input type="text" name="birthdate" value="<%=dto.getBirthdate()%>"/> <br/>
+			핸드폰번호 : <input type="text" maxlength="12" name="phonenum" value="<%=dto.getPhonenum()%>"/> <br/>
+			생년월일 : <input type="text" maxlength="6" name="birthdate" value="<%=dto.getBirthdate()%>"/> <br/>
 			<input type="submit" value="수정하기"/>
 			<input type="button" value="돌아가기" onclick="window.location.href='mypage.jsp'"/>
 		</form>

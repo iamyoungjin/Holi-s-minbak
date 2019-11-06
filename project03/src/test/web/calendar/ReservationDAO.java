@@ -113,7 +113,6 @@ public class ReservationDAO {
 			List list = new ArrayList();
 			try {
 				conn = getConnection();
-				
 				//체크아웃 고려 마지막날은 지움 
 				String sql="select roomname from reservation_table where startday<=? AND endday>? AND chkpayment='check'" ;
 				pstmt = conn.prepareStatement(sql);
@@ -139,7 +138,6 @@ public class ReservationDAO {
 			List list = new ArrayList();
 			try {
 				conn = getConnection();
-				
 				//체크아웃 고려 마지막날은 지움 
 				String sql="select roomname from reservation_table where startday<=? AND endday>? AND chkpayment='waiting'" ;
 				pstmt = conn.prepareStatement(sql);
@@ -159,15 +157,6 @@ public class ReservationDAO {
 			}
 			return list;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		// 평일 방 가격 가져오기 
 		public int roomprice_weekday(String rname) {
@@ -252,7 +241,7 @@ public class ReservationDAO {
 				conn = getConnection();
 				arr = vo.middate(startday,endday);
 				for(int i=0;i<arr.size();i++) {
-					sql = "select roomname from reservation_table where startday<=? and endday>?";
+					sql = "select roomname from reservation_table where startday<=? and endday>? and chkpayment!='cancel' ";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1,arr.get(i));
 					pstmt.setString(2,arr.get(i));

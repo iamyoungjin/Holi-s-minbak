@@ -151,16 +151,14 @@ if(request.getParameter("action") == null) {
             		//현재 월 요일에 맞게 시작점(1) 계산%>		
        			   <td class="empty"></td>
 					<%count+=1;			
-					}	
-            	else{ 
-	            	if(dto.isDate(currYear, currMonth,dispDay)){
-	               		if(dispDay == c.get(Calendar.DAY_OF_MONTH) && c.get(Calendar.MONTH) == cal.get(Calendar.MONTH) && c.get(Calendar.YEAR) == cal.get(Calendar.YEAR) ){  
+				}else{ 
+					if(dto.isDate(currYear, currMonth,dispDay)){
+						if(dispDay == c.get(Calendar.DAY_OF_MONTH) && c.get(Calendar.MONTH) == cal.get(Calendar.MONTH) && c.get(Calendar.YEAR) == cal.get(Calendar.YEAR) ){  
 	                     	todayColor = "class='toDayColor'";
-	                       	}   
-	                  	else{   
+						}else{   
 	                        todayColor = "";
-	                        }%>		
-	        	   <td <%=todayColor%>><%=dispDay%><br>
+	                    }%>		
+	        	   	<td <%=todayColor%>><%=dispDay%><br>
 	        	   
 					<%ReservationDAO dao = new ReservationDAO(); 
 					List list = dao.list();
@@ -179,6 +177,7 @@ if(request.getParameter("action") == null) {
 					String endday= startday;
 					List roomtodaycheck = dao.roomtodaycheck(startday, endday);
 					List roomtodaywaiting = dao.roomtodaywaiting(startday, endday);
+					if(roomtodaycheck!= null){
 					for(int i=0; i<roomtodaycheck.size();i++){
 						String roomname = (String)roomtodaycheck.get(i);
 						RoomDAO roomdao = RoomDAO.getInstance();
@@ -192,7 +191,9 @@ if(request.getParameter("action") == null) {
 						}%>
 						<%=roomtodaycheck.get(i) %></a><br/>
 					<%}
-						//waiting 인 상태의 방도 달력에 보여지도록 추가 
+					}
+						//waiting 인 상태의 방도 달력에 보여지도록 추가
+					if(roomtodaywaiting!=null){
 						for(int i=0; i<roomtodaywaiting.size();i++){
 						String roomname = (String)roomtodaywaiting.get(i);
 						RoomDAO roomdao = RoomDAO.getInstance();
@@ -205,8 +206,8 @@ if(request.getParameter("action") == null) {
 							
 						}%>
 						<%=roomtodaywaiting.get(i) %></a><br/>
-					<%}%>
-					
+					<%	}
+					}%>
 					
 					
 					
