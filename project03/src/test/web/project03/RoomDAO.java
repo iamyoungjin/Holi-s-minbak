@@ -33,7 +33,7 @@ public class RoomDAO {
 		List list = null;
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select * from room_table");
+			pstmt = conn.prepareStatement("select * from room_table order by num");
 			rs = pstmt.executeQuery();
 			list = new ArrayList();
 			while(rs.next()) {
@@ -62,22 +62,20 @@ public class RoomDAO {
 		boolean chk = true;
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select * from room_table where num=? or rname=?");
-			pstmt.setInt(1, dto.getNum());
-			pstmt.setString(2, dto.getRname());
+			pstmt = conn.prepareStatement("select * from room_table where rname=?");
+			pstmt.setString(1, dto.getRname());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				chk=false;
 			}else{	
-				pstmt = conn.prepareStatement("insert into room_table values(?,?,?,?,?,?,?,?,'','없음')");
-				pstmt.setInt(1, dto.getNum());
-				pstmt.setString(2, dto.getRname());
-				pstmt.setInt(3, dto.getDpeople());
-				pstmt.setInt(4, dto.getMaxpeople());
-				pstmt.setInt(5, dto.getAddtionalcost());
-				pstmt.setInt(6, dto.getWeekday_price());
-				pstmt.setInt(7, dto.getWeekend_price());
-				pstmt.setInt(8, dto.getPeakseason_price());
+				pstmt = conn.prepareStatement("insert into room_table values(ROOM_TABLE_SEQ.NEXTVAL,?,?,?,?,?,?,?,'','없음')");
+				pstmt.setString(1, dto.getRname());
+				pstmt.setInt(2, dto.getDpeople());
+				pstmt.setInt(3, dto.getMaxpeople());
+				pstmt.setInt(4, dto.getAddtionalcost());
+				pstmt.setInt(5, dto.getWeekday_price());
+				pstmt.setInt(6, dto.getWeekend_price());
+				pstmt.setInt(7, dto.getPeakseason_price());
 				pstmt.executeUpdate();
 			}
 		}catch(Exception e){
