@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>로그아웃</title>
 </head>
-<%	
+<%
 	String boardType = request.getParameter("boardType");
 	session.invalidate();
 	Cookie[] coo = request.getCookies();
@@ -19,16 +19,8 @@
 			response.addCookie(c);
 		}
 	}
-	
-	if(boardType.equals("board")){
-		response.sendRedirect("../board/boardList.jsp");
-	}else if(boardType.equals("main")){
-		response.sendRedirect("../main/main.jsp");
-	}else if(boardType.equals("reservation")){
-		response.sendRedirect("../reservation/reservationMain.jsp");
-	}else{
-		response.sendRedirect("../main/main.jsp");
-	}
+
+	response.sendRedirect("../main/main.jsp");
 %>
 <body>
 

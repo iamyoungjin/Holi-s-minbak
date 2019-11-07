@@ -1,6 +1,8 @@
 package test.web.project03;
 
 public class RoomDTO {
+	// room_table에서 데이터를 쓰기위한 빈즈
+	
 	private int num;
 	private String rname;
 	private int dpeople;

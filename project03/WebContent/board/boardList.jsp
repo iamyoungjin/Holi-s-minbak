@@ -116,12 +116,12 @@
 	}
 %>
 	</table>
+	
+<%}%>
+	<br/>
 	<input type="button" value="돌아가기" onclick="window.location.href='../main/main.jsp'"/>
 	<input type="button" value="글쓰기" onclick="window.location.href='writeForm.jsp'"/>
 	<br/>
-	
-<%}%>
-
 
 <%
 	if(count >0){

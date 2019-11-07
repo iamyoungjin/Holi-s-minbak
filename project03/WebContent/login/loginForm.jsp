@@ -113,10 +113,8 @@
 			console.log("ID: " + profile.getId()); // Don't send this directly to your server!
 			var googleId = "google_" + profile.getId();
 			var googleEmail = profile.getEmail();
-			/*
-	        var loginURL = "http://localhost:8080/project03/login/googleLoginPro.jsp?id="+encodeURI(googleId)+"&boardType="+boardType;
+	        var loginURL = "http://localhost:8080/project01/login/googleLoginPro.jsp?id="+encodeURI(googleId)+"&boardType="+boardType;
 			window.location.replace(loginURL);
-			*/
 	    }
 	    function onFailure(error){
 			console.log(error);

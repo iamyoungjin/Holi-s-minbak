@@ -3,6 +3,7 @@ package test.web.project03;
 import java.sql.Timestamp;
 
 public class BoardDTO {
+	//board_table 을 사용하기 위한 빈즈
 	private int boardnum;
 	private String name;
 	private String id;

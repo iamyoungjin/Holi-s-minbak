@@ -34,6 +34,7 @@
 		</script>
 	<%}else{
 		String path = request.getRealPath("/image");
+		System.out.println(path);
 		int size = 1024*1024*10;
 		String enc = "UTF-8";
 		DefaultFileRenamePolicy dp = new DefaultFileRenamePolicy();
@@ -79,6 +80,10 @@
 		String pw = mr.getParameter("pw");
 		String subject = mr.getParameter("subject");
 		String content = mr.getParameter("content");
+		
+		if(content==null){
+			response.sendRedirect("boardList.jsp");
+		}
 		
 		dto.setBoardnum(boardnum);
 		dto.setRef(ref);

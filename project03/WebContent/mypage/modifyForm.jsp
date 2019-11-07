@@ -65,13 +65,11 @@
 	}
 
 </script>
-<header>
-	<%@ include file="../main/header.jsp" %>
-</header>
+
 
 </head>
 <%
-	sId = (String)session.getAttribute("sId");
+	String sId = (String)session.getAttribute("sId");
 	MemberDAO dao = MemberDAO.getInstance();
  	if(sId == null){%>
  		<script>
@@ -100,7 +98,7 @@
 			<input type="hidden" name="pw" value="<%=dto.getPw()%>" readonly/>
 			<input type="hidden" name="pw2" value="<%=dto.getPw()%>" readonly/> <br/> 
 			아이디 : <input type="text" name="id" value="<%=dto.getId() %>" readonly/><br/>
-			이메일 : <input type="text" name="email" value="<%=dto.getEmail()%>"/>
+			이메일 : <input type="text" name="email" value="<%=dto.getEmail()%>"/> <br/>
 			이름 : <input type="text" name="name" value="<%=dto.getName()%>"/> <br/>
 			핸드폰번호 : <input type="text" maxlength="12" name="phonenum" value="<%=dto.getPhonenum()%>"/> <br/>
 			생년월일 : <input type="text" maxlength="6" name="birthdate" value="<%=dto.getBirthdate()%>"/> <br/>
