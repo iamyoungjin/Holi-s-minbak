@@ -50,6 +50,9 @@
 	vo.setStartday(startday);
 	vo.setEndday(endday);
 	dao.reservation(vo);
+	int res = dao.getReservationNum(vo);
+	
+	
 %>	
 	
 <h2><%=roomname%></h2>
@@ -61,6 +64,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
+
 <body>
     <script>
     $(function(){
@@ -105,7 +109,7 @@
                     }
                 });
                 //성공시 이동할 페이지
-        		window.location = "success.jsp";
+        		window.location = "success.jsp?num=<%=res%>";
             } else {
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
@@ -121,4 +125,5 @@
 </body>
 <a href="reservationPro.jsp" > 예약확인 </a>
 </html>
+
 

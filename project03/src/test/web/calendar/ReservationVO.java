@@ -103,9 +103,17 @@ public class ReservationVO {
 	private int usingday;
 	private String startday;
 	private String endday;
+	private Timestamp cancel_date;
 	
 	
-	
+	public Timestamp getCancel_date() {
+		return cancel_date;
+	}
+
+	public void setCancel_date(Timestamp cancel_date) {
+		this.cancel_date = cancel_date;
+	}
+
 	public String getStartday() {
 		return startday;
 	}

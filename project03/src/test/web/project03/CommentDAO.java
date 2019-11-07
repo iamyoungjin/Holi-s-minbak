@@ -84,7 +84,7 @@ public class CommentDAO {
 		CommentDTO dto = null;
 		try {
 			conn = getConnection();
-			pstmt = conn.prepareStatement("select * from comment_table where postnum=?");
+			pstmt = conn.prepareStatement("select * from comment_table where postnum=? order by commentnum");
 			pstmt.setInt(1, boardnum);
 			rs = pstmt.executeQuery();
 			list = new ArrayList();

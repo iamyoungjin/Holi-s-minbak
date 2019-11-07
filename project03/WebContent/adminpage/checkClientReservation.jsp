@@ -29,9 +29,26 @@
 		day = String.valueOf(c.get(Calendar.DAY_OF_MONTH));	
 	}
 	String today =year+"/"+month+"/"+day;
-	System.out.println(today);
 %>
+<script>
+function select(){
+	var x = document.getElementById("selectmethod").value;
+	var y = document.getElementById("keyword").value;
 
+	$.ajax({
+		type: "post",
+		url : "searchReservation.jsp",
+		//data : {method:$("#sel").val(), val:$("#key").val()},
+		data : {method:x, val:y},
+		success:function(data){
+			data = data.trim();
+			$("#tester").html(data);
+			data = data.trim();
+			
+		},
+	});
+}
+</script>
 
 
 <title>예약 정보</title>
@@ -98,10 +115,10 @@
 		userinput.action="checkClientReservationPro.jsp?type=update"
 			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
 			+"&re_id="+document.getElementById("re_id"+roomnumber).value
-			+"&re_name="+document.getElementById("re_name"+roomnumber).value
+			+"&re_name="+encodeURI(document.getElementById("re_name"+roomnumber).value)
 			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
 			+"&usepeople="+document.getElementById("usepeople"+roomnumber).value
-			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&roomname="+encodeURI(document.getElementById("roomname"+roomnumber).value)
 			+"&price="+document.getElementById("price"+roomnumber).value
 			+"&daterange="+document.getElementById("daterange"+roomnumber).value
 			+"&usingday="+document.getElementById("usingday"+roomnumber).value
@@ -125,12 +142,14 @@
 			+"&re_name="+document.getElementById("re_name"+roomnumber).value
 			+"&re_phone="+document.getElementById("re_phone"+roomnumber).value
 			+"&roomname="+document.getElementById("roomname"+roomnumber).value
+			+"&roomnumber="+document.getElementById("roomnumber"+roomnumber).value
 		userinput.submit();
 	}
 </script>
 
 
 </head>
+
 <%
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
@@ -143,9 +162,61 @@
 		List list = dao.reservation_list();
 		List cometoday_list = dao.cometoday_list(today);
 		List leavetoday_list = dao.leavetoday_list(today);
+		
+		//이번달 예약 /취소 건수 계산 
+		String yearmonth = year.toString()+"/"+month.toString();
+		int m_count_cancel = dao.countchkmonth(yearmonth,"cancel").size();
+		int m_count_check = dao.countchkmonth(yearmonth,"check").size();
+		
+		//오늘 예약 /취소 건수 계산 
+		int d_count_cancel = dao.countcanceltoday(today,"cancel").size();
+		int d_count_check = dao.countchktoday(today,"check").size();
+		
+		//미입금자 수 건수 계산
+		int count_waiting= dao.reservation_search("chkpayment","'waiting'").size();
 		%>
+		<table border="1">
+		<tr>
+			<td text-align="center"><h5>이번 달 예약 건수 <br><%=m_count_check %></h5></td>
+			<td text-align="center"><h5>이번 달 예약 취소 <br><%=m_count_cancel%></h5></td>
+			<td text-align="center"><a href="../adminpage/checktodayreservation.jsp"><h5>오늘 예약 건수<br><%=d_count_check %></h5></a></td>
+			<td text-align="center"><a href="../adminpage/checktodaycancel.jsp"><h5>오늘 예약 취소<br><%=d_count_cancel %></h5></a></td>
+			<td text-align="center"><a href="../adminpage/checkWaitingCheckpayment.jsp"><h5>입금 대기자 수 <br><%=count_waiting %></h5></a></td>
+			
+	<td>	
+	<div id="searchForm">
+		<table border="1">
+			<tr>
+			<td colspan="9" text-align="center"><b>예약 검색</b></td>
+			<td>
+				<select id="selectmethod" onchange="select()" name="selectmethod" value="select()">
+					<option value=""> 탐색 기준 </option>
+					<option value="startday">입실 날짜로 검색</option>
+					<option value="endday">퇴실 날짜로 검색</option>
+					<option value="re_id">아이디로 검색 </option>
+					<option value="re_name">예약자로 검색</option>
+					<option value="roomname">방 이름으로 검색</option>
+					<option value="re_phone">핸드폰으로 검색</option>
+					<option value="chkpayment">결제 검색</option>
+				</select>
+			</td>
+			
+				<td><input type="text" id="keyword" name="keyword" value=""/></td>
+				<td><button onclick="select()" >search</button></td>
+			</tr>
+		</table>
+	</div>
+	</td>	
+				
+		</tr>
+		</table>
+		<br/>
 
-
+	
+		
+	<div id = "tester"></div>
+========================================================================================================================
+		<form name="roomForm" method="post">
 		<table border="1">
 			<tr>
 				<td colspan="15" text-align="center"><b>오늘 입실 리스트</b></td>
@@ -167,7 +238,10 @@
 				<td>결제 방식</td>
 				<td>결제 유무</td>
 			</tr>
-			<%for(int i=0; i<cometoday_list.size(); i++ ){
+			
+			<%
+			if(cometoday_list.size()!=0){
+				for(int i=0; i<cometoday_list.size(); i++ ){
 				ReservationVO vo = (ReservationVO)cometoday_list.get(i);
 			%>
 				<tr>
@@ -192,7 +266,10 @@
 						<input type="button" value="예약 강제 삭제" onclick="deleteReservation(this.form,<%=i%>)"/>
 					</td>
 				</tr>
-			<%}%>
+			<%}
+				}else{%>
+				<td colspan="15">오늘 입실자 없습니다.</td>
+				<%} %>
 		</table>
 	</form>
 
@@ -220,7 +297,9 @@
 				<td>결제 방식</td>
 				<td>결제 유무</td>
 			</tr>
-			<%for(int i=0; i<leavetoday_list.size(); i++ ){
+			
+			<%if(cometoday_list.size()!=0){
+				for(int i=0; i<leavetoday_list.size(); i++ ){
 				ReservationVO vo = (ReservationVO)leavetoday_list.get(i);
 			%>
 				<tr>
@@ -245,7 +324,10 @@
 						<input type="button" value="예약 강제 삭제" onclick="deleteReservation(this.form,<%=i%>)"/>
 					</td>
 				</tr>
-			<%}%>
+			<%}
+			}else{%>
+				<td colspan="15">오늘 퇴실자 없습니다</td>
+			<% }%>
 		</table>
 	</form>
 ---------------------------------------------------------------------------------------
@@ -291,6 +373,9 @@
 					<td><input type="text" id="reg_date<%=i%>" name="reg_date<%=i%>" value="<%=vo.getReg_date()%>" readolny/></td>
 					<td><input type="text" id="paymentmethod<%=i%>" name="paymentmethod<%=i%>" value="<%=vo.getPaymentmethod()%>" readonly/></td>
 					<td><input type="text" id="chkpayment<%=i%>" name="chkpayment<%=i%>" value="<%=vo.getChkpayment()%>"/></td>
+					<%if(vo.getCancel_date()!=null){ %>
+					<td><input type="text" id="cancel_date<%=i%>" name="cancel_date<%=i%>" value="<%=vo.getCancel_date()%>"/></td>
+					<%} %>
 					
 					<td>
 						<input type="button" value="결제 확인" onclick="updateReservation(this.form,<%=i%>)"/>
@@ -305,58 +390,8 @@
 	<br/>
 	<br/>
 
-<script>
-function select(){
-	var x = document.getElementById("selectmethod").value;
-	//document.getElementById("sel").value = x;
-	//document.getElementById("show").innerHTML = x;
-	
-	var y = document.getElementById("keyword").value;
-	//document.getElementById("key").value = y;
-	//document.getElementById("key").innerHTML = y;
 
-	$.ajax({
-		type: "post",
-		url : "searchReservation.jsp",
-		//data : {method:$("#sel").val(), val:$("#key").val()},
-		data : {method:x, val:y},
-		success:function(data){
-			data = data.trim();
-			$("#tester").html(data);
-			data = data.trim();
-			
-		},
-	});
-}
-</script>
 
-------------------------------------------------------------------------------
-	<div id="searchForm">
-		<table border="1">
-			<tr>
-			<td colspan="9" text-align="center"><b>예약 검색</b></td>
-			<td>
-				<select id="selectmethod" onchange="select()" name="selectmethod" value="select()">
-					<option value=""> 탐색 기준 </option>
-					<option value="startday">입실 날짜로 검색</option>
-					<option value="endday">종료 날짜로 검색</option>
-					<option value="re_id">아이디로 검색 </option>
-					<option value="re_name">예약자로 검색</option>
-					<option value="roomname">방 이름으로 검색</option>
-					<option value="re_phone">핸드폰으로 검색</option>
-					<option value="chkpayment">결제 검색</option>
-				</select>
-			</td>
-			
-		<td><input type="text" id="keyword" name="keyword" value=""/></td>
-		<td><button onclick="select()" >search</button></td>
-			</tr>
-		</table>
-		
-	</div>
-<br/>
-<br/>
-	<div id = "tester"></div>
 	<input type="button" value="돌아가기" onclick="window.location.href='adminpage.jsp'"/>			
 	<%}%>
 		

@@ -1,11 +1,12 @@
-
-
+<%@page import="java.util.List"%>
+<%@page import="test.web.project03.RoomDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "test.web.calendar.ReservationVO" %>
 <%@ page import = "test.web.calendar.ReservationDAO" %>  
 <%@ page import = "test.web.project03.MemberDAO" %> 
 <%@ page import = "test.web.project03.MemberDTO" %> 
+<% request.setCharacterEncoding("UTF-8"); %>
 <script src= https://code.jquery.com/jquery-3.4.1.min.js></script>    
 
 <%//jQuery datepicker UI를 사용하여 날짜 입력 받기 %>
@@ -17,10 +18,12 @@
 <!-- <input type="text" name="daterange" value="11/01/2019 - 11/15/2019" />-->
 <script>
 url="reservationCalendar.jsp";
-window.open(url, "reservationCalendar", "toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizeable=no, width=300, height=200");
+window.open(url, "reservationCalendar", "toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizeable=no, width=50, height=50");
 // url = 주소, confirm 타이틀, resizeable 사이즈조절, scrollbars 스크롤
 </script>
-
+<%
+	String roomname = request.getParameter("roomname");
+%>
 
 <script>
 $(function() {
@@ -33,10 +36,17 @@ $(function() {
   });
 });
 
+// 룸인트로에서 예약하기 누를시 방이름을 가지고 온다.
+$("document").ready(function(){
+    //say you have got 555 from the JSP as selcted value
+    var selValue = "<%=roomname%>";
+    $("#mySel").val(selValue).attr("selected","selected")   
+});
+
 </script>
 
 <script>
-function formcheck(){
+	function formcheck(){
 		if(!document.getElementById("re_id").value){
 			alert("아이디를 입력해주세요");
 			return false;
@@ -66,23 +76,34 @@ function formcheck(){
 			return false;
 		}
 		
-		if(!document.getElementById("paymentmethod"+roomnumber).value){
-			alert("결제 방식을 선택해주세요");
-			return false;
-		}
-}
-	</script>
-
+	}
+	// radio 타입 유효성 검사 
+	$(function(){
+		$('#reservationSubmit').click(function() {
+			if($(':radio[name="paymentmethod"]:checked').length < 1){
+				alert("결제 방식을 선택해주세요.");
+				return false;
+			}
+		});
+	});
+		
+</script>
 
 
 <% 
 	String sId = (String)session.getAttribute("sId");
-	if(sId == null){%>
+	String sAdmin = (String)session.getAttribute("sAdmin");
+	if(sId == null && sAdmin == null){%>
 		<script>
 			alert("로그인을 먼저 해주세요");
 			window.location= '../login/loginForm.jsp';
 		</script>
-<% }else{%>
+<% }else if(sAdmin != null){%>
+		<script>
+		window.location= '../adminpage/checkClientReservation.jsp';
+		</script>
+<%
+	}else{%>
 
 <% String id = (String)session.getAttribute("sId");
    String name = (String)session.getAttribute("sName");
@@ -92,6 +113,9 @@ function formcheck(){
    MemberDTO getInformation = dao.getMember(id);
    String phone = getInformation.getPhonenum();
    String e_mail = getInformation.getEmail();
+   
+   RoomDAO roomdao = RoomDAO.getInstance();
+   List roomList = roomdao.getRoomList();
 %> 
 
 
@@ -110,17 +134,15 @@ function formcheck(){
 	<td align="center">핸드폰 :<input type="text" id="re_phone" name="re_phone" value=<%=phone %> readonly></td>
 	</tr>
 	<tr>
-	<td align="center">E-mail:<input type="text" id="re_email" name="re_email" value=<%= e_mail%> readonly></td>
+	<td align="center">E-mail:<input type="email"" id="re_email" name="re_email" value=<%= e_mail%> readonly></td>
 	</tr>
 	<tr>
 	<td align="center">예약할 방 선택 :<select id="mySel" onchange="sel()" name="roomname" value="sel()">
-		<option value="">선택</option>
-		<option value="산들방">산들방</option>
-		<option value="매화방">매화방</option>
-		<option value="들꽃방">들꽃방</option>
-		<option value="소나무방">소나무방</option>
-		<option value="해뜰방">해뜰방</option>
-		<option value="민들레방">민들레방</option>
+		<option value="">선택</option><%
+		for(int i=0; i<roomList.size(); i++){%>
+			<option value="<%=roomList.get(i)%>"><%=roomList.get(i)%></option>
+		<%}
+		%>
 	</select></td>
 	</tr>
 	<tr>
@@ -166,9 +188,14 @@ function formcheck(){
 	<h3><div id="show"></div></h3>
 	<h3><div id = "rprice"></div><br/></h3> 
 	<h3><div id = "dr"></div><br/></h3>
-	<input type="submit" value=" 결제하러가기" >
+	<input type="submit" id="reservationSubmit" value=" 결제하러가기" >
+	<input type="button" value="돌아가기" onclick="window.location.href='../main/main.jsp'"/>
 	
 </form>
 </center>
-<%} %>
+<%	}
+	%>
 
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>

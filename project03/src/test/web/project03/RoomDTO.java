@@ -9,6 +9,21 @@ public class RoomDTO {
 	private int weekday_price;
 	private int weekend_price;
 	private int peakseason_price;
+	private String room_img;
+	private String intro;
+	
+	public String getRoom_img() {
+		return room_img;
+	}
+	public void setRoom_img(String room_img) {
+		this.room_img = room_img;
+	}
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
 	public int getNum() {
 		return num;
 	}

@@ -20,7 +20,7 @@
 	var idChk =false;
 	var idStr ="";
 	function chkId(){
-		if(document.signupform.id.value!=idStr){
+		if(document.signUpForm.id.value != idStr){
 			idChk=false;
 		}
 		if(idChk==false){
@@ -28,6 +28,7 @@
 			return false;
 		}
 	}
+	
 
 	function chkForm(){
 		var ui = eval("document.signUpForm");
@@ -51,10 +52,32 @@
 			alert("핸드폰 번호를 입력하지 않았습니다")
 			return false;
 		}
+		if(document.signUpForm.phonenum.value.length>11 || document.signUpForm.phonenum.value.length<9){
+			alert("휴대폰 번호 길이를 재확인해주세요");
+			return false;
+		}
+		if(document.signUpForm.phonenum.value.indexOf("-")>=0){
+			alert("전화번호에 -를 뺀 상태로 입력해주세요");
+			return false;
+		}
 		if(!ui.birthdate.value){
 			alert("생년월일을 입력하지 않았습니다")
 			return false;
 		}
+		if(document.signUpForm.birthdate.value.length!=6){
+			alert("생년월일 입력 양식이 잘못되었습니다. 950101과 같은 양식으로 작성해주세요");
+			return false;
+		}
+		if(parseInt(document.signUpForm.birthdate.value.substring(2,4))>12 || parseInt(document.signUpForm.birthdate.value.substring(2,4))<=0 ){
+			alert("생년월일 양식이 잘못되었습니다.");
+			return false;
+		}
+		if(parseInt(document.signUpForm.birthdate.value.substring(4,6))>31 || parseInt(document.signUpForm.birthdate.value.substring(2,4))<=0 ){
+			alert("생년월일 양식이 잘못되었습니다.");
+			return false;
+		}
+
+		
 		return chkId();
 	}
 	
@@ -63,6 +86,18 @@
 </script>
 </head>
 <body>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+<%
+	sId = (String)session.getAttribute("sId"); 
+	sAdmin = (String)session.getAttribute("sAdmin");
+	if(sId!=null || sAdmin!=null){
+		response.sendRedirect("../main/main.jsp");
+	}else{
+	
+%>
+
 <form name="signUpForm" action="signUpPro.jsp" method="post" onsubmit="return chkForm()">
 	<table>
 		<tr>
@@ -81,15 +116,19 @@
 			<td>이름 : <input type="text" name="name"/></td>
 		</tr>
 		<tr>
-			<td>휴대폰번호 : <input type="text" name="phonenum"/></td>
+			<td>휴대폰번호 : <input type="text" name="phonenum" maxlength="12" placeholder="휴대전화 번호를 숫자로만 입력"/></td>
 		</tr>
 		<tr>
-			<td>생년월일 : <input type="text" name="birthdate"/></td>
+			<td>생년월일 : <input type="text" name="birthdate" maxlength="6" placeholder="예시)910101"/></td>
+		</tr>
+		<tr>
+		<td>
+			<input type="submit" value="제출하기"/>
+			<button type="button" onclick="window.location.href='signUpMain.jsp'">돌아가기</button>
+		</td>
 		</tr>
 	</table>
-	<input type="submit" value="제출하기"/>
-	<button type="button" onclick="window.location.href='signUpMain.jsp'">돌아가기</button>
 </form>
-
+<%} %>
 </body>
 </html>

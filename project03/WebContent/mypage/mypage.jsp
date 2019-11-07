@@ -7,8 +7,12 @@
 <meta charset="UTF-8">
 <title>마이 페이지</title>
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String sId = (String)session.getAttribute("sId");
+	sId = (String)session.getAttribute("sId");
 	if(sId == null){%>
 		<script>
 			alert("잘못된 접근입니다.");
@@ -20,14 +24,22 @@
 	%>
 <body>
 	<table>
-		<tr><td colspan="4"><%=name %>님의 마이페이지	</tr>
+		<tr>
+		<td colspan="4"><%=name %>님의 마이페이지</td></tr>
 		<tr>
 			<td><a href="showreservation.jsp">예약 확인</a></td>
+		</tr>
+		<tr>
 			<td><a href="modifyForm.jsp">회원 정보 수정</a></td>
+		</tr>
+		<tr>
 			<td><a href="deleteForm.jsp">회원 탈퇴</a></td>
+		</tr>
+		<tr>
 			<td><a href="../main/main.jsp">메인으로</a></td>
 		</tr>
 	</table>
+
 </body>
 	<%}
 %>

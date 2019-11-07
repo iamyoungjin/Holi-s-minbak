@@ -1,3 +1,5 @@
+<%@page import="test.web.calendar.SetDTO"%>
+<%@page import="test.web.calendar.SetDAO"%>
 <%@page import="test.web.project03.BoardDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="test.web.project03.BoardDAO"%>
@@ -17,16 +19,23 @@
 </script>
 
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String sId = (String)session.getAttribute("sId");
-	String sAdmin = (String)session.getAttribute("sAdmin");
+	sId = (String)session.getAttribute("sId");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	String sName = (String)session.getAttribute("sName"); 
-	String boardType = "board";
-	
+	boardType = "board";
+		
 	String search = request.getParameter("search");
 	String keyword = request.getParameter("keyword");
 	
-	int pageSize = 10;
+	SetDAO stdao = SetDAO.getInstance();
+	SetDTO stdto = stdao.getSetting();
+	
+	int pageSize = stdto.getPagesize();
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
 	
 	String pageNum = request.getParameter("pageNum");
@@ -53,18 +62,7 @@
 %>
 <body>
 <center><b>글 목록 (전체 글 : <%=count %>)</b></center>
-<table>
-	<tr align="right">
-		<%if((String)session.getAttribute("sId") == null && (String)session.getAttribute("sAdmin") == null){ %>
-		<td><a href="../login/loginForm.jsp?boardType=<%=boardType%>">로그인</a>
-		<%}else{ %>
-		<td><%if( sName != null){out.print(sName);}%>님 안녕하세요
-			<a href="../login/logout.jsp?boardType=<%=boardType%>">로그아웃</a>
-		<%}%>
-		<td><a href="../main/main.jsp">돌아가기</a></td>
-		<td><a href="writeForm.jsp">글쓰기</a></td>
-	</tr>
-</table>
+
 <%
 	if(count == 0){
 %>
@@ -108,7 +106,7 @@
 					wid = 10 * (dto.getRe_level());%>
 				<b>└</b>
 			<%}
-			if(dto.getFileroot()!=null){%><img src="/project03/image/thum_<%=dto.getFileroot()%>"/><%}%>
+			if(dto.getFileroot()!=null){%><img src="/project01/image/thum_<%=dto.getFileroot()%>"/><%}%>
 			<a href ="content.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=currentPage%>"><%=dto.getSubject() %></a>
 			</td>
 			<td><%=dto.getName() %></td>
@@ -118,6 +116,9 @@
 	}
 %>
 	</table>
+	<input type="button" value="돌아가기" onclick="window.location.href='../main/main.jsp'"/>
+	<input type="button" value="글쓰기" onclick="window.location.href='writeForm.jsp'"/>
+	<br/>
 	
 <%}%>
 
@@ -160,5 +161,8 @@
 </table>
 </form>
 
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

@@ -1,3 +1,5 @@
+<%@page import="test.web.project03.RoomDTO"%>
+<%@page import="test.web.project03.RoomDAO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
@@ -30,7 +32,6 @@ if(request.getParameter("action") == null) {
    	//액션 이 있을 때 날짜 파라미터로 초기화 
      if(request.getParameter("action") != null){
           currMonth = Integer.parseInt(request.getParameter("month"));
-          System.out.println(currMonth);
           currYear = Integer.parseInt(request.getParameter("year"));
          //액션(1) 다음달로 넘어갈 때 다음달 파라미터로 변경 
           if(Integer.parseInt(request.getParameter("action"))==1) {
@@ -38,7 +39,7 @@ if(request.getParameter("action") == null) {
                //cal.add(Calendar.MONTH, 1); // 달 하나 증가 
                currMonth = cal.get(Calendar.MONTH); //증가한 값으로 현재 달 설정 
                currYear = cal.get(Calendar.YEAR); //현재 년 설정
-               System.out.println(cal.get(Calendar.MONTH));
+               
           //액션(-1) 전달로 넘어갈 때    
           } else {              
                cal.set(currYear, currMonth, 1); //현재 년 현재 월에 1일 로 셋팅 
@@ -102,6 +103,9 @@ if(request.getParameter("action") == null) {
 </head>
 
 <body bgcolor='white'>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
 <table border='0' width='521' border-collapse:collapse >
   <tr >
      <td width='150' align='right' valign='middle'>
@@ -147,16 +151,14 @@ if(request.getParameter("action") == null) {
             		//현재 월 요일에 맞게 시작점(1) 계산%>		
        			   <td class="empty"></td>
 					<%count+=1;			
-					}	
-            	else{ 
-	            	if(dto.isDate(currYear, currMonth,dispDay)){
-	               		if(dispDay == c.get(Calendar.DAY_OF_MONTH) && c.get(Calendar.MONTH) == cal.get(Calendar.MONTH) && c.get(Calendar.YEAR) == cal.get(Calendar.YEAR) ){  
+				}else{ 
+					if(dto.isDate(currYear, currMonth,dispDay)){
+						if(dispDay == c.get(Calendar.DAY_OF_MONTH) && c.get(Calendar.MONTH) == cal.get(Calendar.MONTH) && c.get(Calendar.YEAR) == cal.get(Calendar.YEAR) ){  
 	                     	todayColor = "class='toDayColor'";
-	                       	}   
-	                  	else{   
+						}else{   
 	                        todayColor = "";
-	                        }%>		
-	        	   <td <%=todayColor%>><%=dispDay%><br>
+	                    }%>		
+	        	   	<td <%=todayColor%>><%=dispDay%><br>
 	        	   
 					<%ReservationDAO dao = new ReservationDAO(); 
 					List list = dao.list();
@@ -173,28 +175,46 @@ if(request.getParameter("action") == null) {
 					}  
 					String startday= (String)(year_t+"/"+month_t+"/"+date_t);
 					String endday= startday;
-					List roomtoday = dao.roomtoday(startday, endday);
+					List roomtodaycheck = dao.roomtodaycheck(startday, endday);
+					List roomtodaywaiting = dao.roomtodaywaiting(startday, endday);
+					if(roomtodaycheck!= null){
+					for(int i=0; i<roomtodaycheck.size();i++){
+						String roomname = (String)roomtodaycheck.get(i);
+						RoomDAO roomdao = RoomDAO.getInstance();
+						List roomList = roomdao.showRoom();
+						for(int j=0; j<roomList.size(); j++){
+							RoomDTO roomdto = (RoomDTO)roomList.get(j);
+							if(roomname.equals(roomdto.getRname())){%>
+								<a href="../introduce/roomIntro.jsp?num=<%=roomdto.getNum()%>">
+							<%}
+							
+						}%>
+						<%=roomtodaycheck.get(i) %></a><br/>
+					<%}
+					}
+						//waiting 인 상태의 방도 달력에 보여지도록 추가
+					if(roomtodaywaiting!=null){
+						for(int i=0; i<roomtodaywaiting.size();i++){
+						String roomname = (String)roomtodaywaiting.get(i);
+						RoomDAO roomdao = RoomDAO.getInstance();
+						List roomList = roomdao.showRoom();
+						for(int j=0; j<roomList.size(); j++){
+							RoomDTO roomdto = (RoomDTO)roomList.get(j);
+							if(roomname.equals(roomdto.getRname())){%>
+								<a href="../introduce/roomIntro.jsp?num=<%=roomdto.getNum()%>">
+							<%}
+							
+						}%>
+						<%=roomtodaywaiting.get(i) %></a><br/>
+					<%	}
+					}%>
 					
-					for(int i=0;i<roomtoday.size();i++){  
-						ReservationVO vooo=(ReservationVO)roomtoday.get(i);//
-						if(vooo.getRoomname().toString().equals("소나무방")){%>
-							<a href="../introduce/soo.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("산들방")){%>
-							<a href="../introduce/san.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("매화방")){%>
-							<a href="../introduce/mae.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("들꽃방")){%>
-							<a href="../introduce/wild.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("해뜰방")){%>
-							<a href="../introduce/hae.jsp"><%} %>
-						<%if(vooo.getRoomname().toString().equals("민들레방")){%>
-							<a href="../introduce/min.jsp"><%} %>
-						<%=vooo.getRoomname() %></a><br/>
-					  <%}%></td>  
-					  <% count+=1;
-	          			 dispDay +=1;	         			  
-	                }
-	            	else{%>  
+					
+					
+					</td>  
+					 <% count+=1;
+	          			dispDay +=1;	         			  
+	                }else{%>  
 	   					<td class="empty"></td>
 					<%}  
 	               }
@@ -207,5 +227,6 @@ if(request.getParameter("action") == null) {
   </table>
  <button onclick="window.location.href = '../main/main.jsp'"> 메인으로 가기 </button>
  <button onclick="window.location.href = '../reservation/reservationForm.jsp'"> 예약하러 가기 </button>
+
 </body>
 </html>

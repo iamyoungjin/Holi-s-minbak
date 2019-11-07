@@ -36,7 +36,7 @@
 		alert("잘못된 접근입니다.");
 		history.go(-1);
 	</script>
-	<%}else if(!(id.equals(sId) || id.equals(sAdmin))){%>
+	<%}else if(!id.equals(sId) && sAdmin == null){%>
 		<script>
 		alert("작성자만 수정 할 수 있습니다.");
 		history.go(-1);
@@ -65,6 +65,7 @@
 			}
 			String sys = mr.getFilesystemName("save");
 			dto.setFileroot(sys);
+			// 여기서부터 썸네일
 			ParameterBlock pb = new ParameterBlock();
 			pb.add(path+"/"+sys);
 			RenderedOp rOp =  JAI.create("fileload", pb);

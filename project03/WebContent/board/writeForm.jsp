@@ -22,9 +22,13 @@
 	 }   
 </script>
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String sId = (String)session.getAttribute("sId");
-	String sAdmin = (String)session.getAttribute("sAdmin");
+	sId = (String)session.getAttribute("sId");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	if(session.getAttribute("sId") == null && session.getAttribute("sAdmin") == null){%>
 		<script>
 			alert("글쓰기는 로그인 후 사용할 수 있습니다.");
@@ -93,5 +97,8 @@
 	</form>
 	<%}
 %>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

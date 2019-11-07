@@ -15,28 +15,27 @@
 
 </head>
 
-<!-- test -->
-<!-- yj -->
+<!-- 헤더페이지 -->
 <%	//test develop 
 	String boardType = "main";
-	MemberDAO dao = MemberDAO.getInstance();
+	MemberDAO memdao = MemberDAO.getInstance();
 	String sId = (String)session.getAttribute("sId");
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	if(session.getAttribute("sId") == null && session.getAttribute("sAdmin") == null ){
 		String id = null, pw = null, auto = null;
 		Cookie [] coo = request.getCookies();
 		if(coo!=null){
-			for(Cookie c : coo){
-				if(c.getName().equals("cId")) id= c.getValue();
-				if(c.getName().equals("cPw")) pw= c.getValue();
-				if(c.getName().equals("cAuto")) auto= c.getValue();
+			for(Cookie ck : coo){
+				if(ck.getName().equals("cId")) id= ck.getValue();
+				if(ck.getName().equals("cPw")) pw= ck.getValue();
+				if(ck.getName().equals("cAuto")) auto= ck.getValue();
 			}
 		}
 		if(id!=null && pw!=null && auto!=null){
 			response.sendRedirect("../login/loginPro/jsp");
 		}
 	}else if(session.getAttribute("sId")!=null){
-		if(dao.chkInfoSnsLogin(sId)){%>
+		if(memdao.chkInfoSnsLogin(sId)){%>
 			<script>
 				alert("개인 정보를 입력해주세요!");
 				window.location.href="../mypage/modifyForm.jsp";
@@ -47,7 +46,7 @@
 %>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">TEST</a>
+  <a class="navbar-brand" href="#">T</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -103,7 +102,7 @@
          About호리네민박
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="../etc/introRoom.jsp">방 소개</a>
+          <a class="dropdown-item" href="../introduce/roomIntro.jsp">방 소개</a>
           <a class="dropdown-item" href="../etc/directions.jsp">찾아오시는 길</a>
         </div>
       </li>
@@ -114,25 +113,15 @@
       
       if(sId != null){%>
       <li class="nav-item">
-      		<%= dao.searchName(sId) %>님 환영합니다.
+      		<a class="nav-link"><%= memdao.searchName(sId) %>님 환영합니다.</a>
       </li>
       <%} %>
 
       
     </ul>
-    
-    
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+
   </div>
 </nav>
-
-
-
-
-	
 
 </body>
 </html>

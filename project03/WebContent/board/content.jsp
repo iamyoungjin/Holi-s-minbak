@@ -11,8 +11,6 @@
 <!DOCTYPE html>
 <html>
 <%
-	String sId = (String)session.getAttribute("sId");
-	String sAdmin = (String)session.getAttribute("sAdmin");
 	int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 	String pageNum = request.getParameter("pageNum");
 %>
@@ -35,30 +33,44 @@
 				+"&comment_content="+userinput.newcomment_content.value;
 		userinput.submit();
 	}
-	function deleteComment(userinput){
+	function deleteComment(userinput, num){
 		if(!confirm("덧글을 삭제하시겠습니까?")){
 			return;
 		}
 		userinput.action="commentPro.jsp?type=delete"
-				+"&pageNum"+pageNum
+				+"&pageNum="+pageNum
 				+"&boardnum="+boardnum
-				+"&commentnum"+document.getElementById("commentnum"+num).value;
+				+"&commentnum="+document.getElementById("commentnum"+num).value;
 		userinput.submit();
 		
 	}
 	
+
 	function chkDelete(userinput){
-		if(!confirm("게시물을 지우시겠습니까?")){
+		if(!confirm("게시글을 삭제하시겠습니까?")){
 			return;
 		}
+		console.log(document.getElementById("boardnum").value);
+		console.log(document.getElementById("id").value);
+		console.log(pageNum);
+		userinput.action="deletePro.jsp?boardnum="+document.getElementById("boardnum").value
+				+"&pageNum="+pageNum
+				+"&id="+document.getElementById("id").value
+		userinput.submit();
 	}
 	
 </script>
 
 
 <head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <meta charset="UTF-8">
 <%
+	sId = (String)session.getAttribute("sId");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	MemberDAO mdao = MemberDAO.getInstance();
 	try{	
@@ -72,12 +84,12 @@
 <title><%=dto.getSubject() %></title>
 </head>
 <body>
-<form>
+<form method="post">
 	<table>
 		<tr>
 			<td>글번호</td>
 			<%if(dto.getCategory()==1){ %>
-			<td><%=dto.getBoardnum() %></td>
+			<td><%=dto.getBoardnum() %><input type="hidden" name="boardnum" id="boardnum" value="<%=dto.getBoardnum() %>"/></td>
 			<%}else if(dto.getCategory() == 2){ %>
 			<td>공지</td>
 			<%}%>
@@ -86,7 +98,7 @@
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><%=dto.getName() %></td>
+			<td><%=dto.getName() %><input type="hidden" name="id" id="id" value="<%=dto.getId() %>"/></td>
 			<td>작성일</td>
 			<td><%= sdf.format(dto.getReg_date()) %></td>
 		</tr>
@@ -97,13 +109,13 @@
 		<tr>
 			<td>글내용</td>
 			<td colspan="3">
-			<%if(dto.getFileroot()!=null){ %><img src="/project03/image/<%=dto.getFileroot()%>"/><br> <%} %>
+			<%if(dto.getFileroot()!=null){ %><img src="/project01/image/<%=dto.getFileroot()%>"/><br> <%} %>
 			<pre><%=dto.getContent() %></pre></td>
 		</tr>
 		<tr>
 			<td colspan="4"><input type="button" value="글수정" onclick="window.location.href='updateForm.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=pageNum%>&id=<%=dto.getId()%>'"/>
 		  	&nbsp;
-			<input type="button" value="글삭제" onclick="chkDelete(); window.location.href='deletePro.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=pageNum%>&id=<%=dto.getId()%>'"/>
+			<input type="button" value="글삭제" onclick="chkDelete(this.form);"/>
 			&nbsp;
 			<input type="button" value="답글" onclick="window.location.href='writeForm.jsp?boardnum=<%=boardnum%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%> '"/>
 			&nbsp;
@@ -122,12 +134,12 @@
 				CommentDTO cdto = (CommentDTO)commentList.get(i);
 			%>
 			<tr>
-				<input type="hidden" id="commentnum<%=i%>" name="commentnum<%=i%>" value="cdto.getCommentnum()"/>
+				<input type="hidden" id="commentnum<%=i%>" name="commentnum<%=i%>" value="<%=cdto.getCommentnum()%>"/>
 				<td><%=cdto.getName() %></td>
 				<td><%=cdto.getComment_content() %></td>
 				<td><%= sdf.format(cdto.getReg()) %></td>
 				<!-- 덧글 삭제 -->
-				<td><%if(cdto.getId().equals(sId) || session.getAttribute("sAdmin") != null){%><input type="button" value="x" onclick="deleteComment(this.form)"/></td><%} %>
+				<td><%if(cdto.getId().equals(sId) || session.getAttribute("sAdmin") != null){%><input type="button" value="x" onclick="deleteComment(this.form, <%=i%>)"/></td><%} %>
 			</tr>
 			<%	}
 		}
@@ -142,13 +154,16 @@
 			<input type="hidden" name="newpw" value="<%= mdto.getPw() %>"/>
 			<tr>
 				<td><%=mdto.getName()%><input type="hidden" name="newname" value="<%=mdao.searchName(sId)%>"/></td>
-				<td><textarea name="newcomment_content" rows="1" cols="20"></textarea></td>
+				<td><textarea name="newcomment_content" rows="2" cols="20"></textarea></td>
 				<td><input type="button" value="덧글작성" onclick="insertComment(this.form)"/></td>
 			</tr>
 		<%}%>
 	</table>
 </form>
 </body>
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 		<%
 	}catch(Exception e){}
 %>

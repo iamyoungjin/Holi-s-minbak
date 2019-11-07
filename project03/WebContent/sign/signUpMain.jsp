@@ -17,10 +17,21 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="320557608369-9srdo4fso2icfd704v837fql0jnh10cl.apps.googleusercontent.com">
 
-
-
 </head>
 <body>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
+<%
+	sId = (String)session.getAttribute("sId"); 
+	sAdmin = (String)session.getAttribute("sAdmin");
+	if(sId!=null || sAdmin!=null){
+		response.sendRedirect("../main/main.jsp");
+	}else{
+	
+%>
+
 	<input type="button" value="회원가입" onclick="window.location.href='signUpForm.jsp'">
 	<input type="button" value="메인으로" onclick="window.location.href='../main/main.jsp'"><br/>
 	
@@ -41,7 +52,7 @@
 					success: function(res) {
 						console.log(res);
 						var userID = "kakao_" + res.id;
-						var loginURL = "http://127.0.0.1:8080/project01/sign/kakaoSignUpPro.jsp?id="+encodeURI(userID);
+						var loginURL = "http://localhost:8080/project01/sign/kakaoSignUpPro.jsp?id="+encodeURI(userID);
 						window.location.replace(loginURL);
 					},
 					fail: function(error) {
@@ -63,7 +74,7 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "MOf0l_qoj5M7p4rLoe4B",
-				callbackUrl: "http://127.0.0.1/project01/sign/naverSignUp.jsp",
+				callbackUrl: "http://localhost:8080/project01/sign/naverSignUp.jsp",
 				isPopup: false, /* 팝업을 통한 연동처리 여부 */
 				loginButton: {color: "green", type: 3, height: 48} /* 로그인 버튼의 타입을 지정 */
 			}
@@ -76,26 +87,35 @@
 	
 	
 	<!-- 구글 -->
-	<div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        var googleId = "google_" + profile.getId();
-        var googleEmail = profile.getEmail();
-        
-        /*
-        var loginURL = "http://127.0.0.1:8080/project01/sign/googleSignUpPro.jsp?id="+encodeURI(googleId)+"&email="+encodeURI(googleEmail);
-		window.location.replace(loginURL);
-		*/
-        
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
-      
-      }
-    </script>
+	<div id="my-signin2"></div>
+		<script>
+	    function onSuccess(googleUser){
+	    	console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+	    	var profile = googleUser.getBasicProfile();
+			console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+			var googleId = "google_" + profile.getId();
+			var googleEmail = profile.getEmail();
+			/*
+			var loginURL = "http://127.0.0.1:8080/project03/sign/googleSignUpPro.jsp?id="+encodeURI(googleId)+"&email="+encodeURI(googleEmail);
+			window.location.replace(loginURL);
+			*/
+	    }
+	    function onFailure(error){
+			console.log(error);
+		}
+	    function renderButton() {
+			gapi.signin2.render('my-signin2', {
+	        'scope': 'profile email',
+	        'width': 222,
+	        'height': 48,
+	        'longtitle': true,
+	        'theme': 'dark',
+	        'onsuccess': onSuccess,
+	        'onfailure': onFailure
+	      });
+	    }
+	  </script>
+	  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+	<%} %>
 </body>
 </html>

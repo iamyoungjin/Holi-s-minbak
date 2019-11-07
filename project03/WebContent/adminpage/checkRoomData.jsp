@@ -56,6 +56,11 @@
 		userinput.submit();
 	}
 	
+	function insertIntro(userinput,num){
+		userinput.action="insertRoomIntro.jsp?num="+document.getElementById("num"+num).value;
+		userinput.submit();
+	}
+	
 	function deleteRoom(userinput,num){
 		if(!confirm("객실을 삭제 하겠습니까?") ){
 			return;
@@ -69,10 +74,6 @@
 	}
 
 	function insertRoom(userinput){
-		if(!userinput.newnum.value){
-			alert("방 번호를 입력해주세요");
-			return false;
-		}
 		if(!userinput.newrname.value){
 			alert("방 이름을 입력해주세요");
 			return false;
@@ -102,7 +103,6 @@
 			return false;
 		}
 		userinput.action="checkRoomPro.jsp?type=insert"
-						+"&num="+userinput.newnum.value
 						+"&rname="+encodeURI(userinput.newrname.value)
 						+"&dpeople="+userinput.newdpeople.value
 						+"&maxpeople="+userinput.newmaxpeople.value
@@ -117,8 +117,11 @@
 </script>
 
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
 <%
-	String sAdmin = (String)session.getAttribute("sAdmin");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
 		<script>
 			alert("권한이 없습니다.");
@@ -139,6 +142,7 @@
 				<td>주중 가격</td>
 				<td>주말 가격</td>
 				<td>성수기 가격</td>
+				<td>세부사항</td>
 				<td>수정/삭제</td>
 			</tr>
 			<%for(int i=0; i<list.size(); i++ ){
@@ -153,6 +157,7 @@
 					<td><input type="text" id="weekday_price<%=i%>" name="weekday_price<%=i%>" value="<%=dto.getWeekday_price()%>"/></td>
 					<td><input type="text" id="weekend_price<%=i%>" name="weekend_price<%=i%>" value="<%=dto.getWeekend_price()%>"/></td>
 					<td><input type="text" id="peakseason_price<%=i%>" name="peakseason_price<%=i%>" value="<%=dto.getPeakseason_price()%>"/></td>
+					<td><input type="button" value="방 소개 추가/수정" onclick="insertIntro(this.form,<%=i%>)" /></td>
 					<td>
 						<input type="button" value="객실 수정" onclick="updateRoom(this.form,<%=i%>)"/>
 						<input type="button" value="객실 삭제" onclick="deleteRoom(this.form,<%=i%>)"/>
@@ -160,10 +165,9 @@
 				</tr>
 			<%}%>
 			<tr>
-				<td colspan="9" text-align="center"><b>객실 추가</b></td>
+				<td colspan="10" style="text-align: center"><b>객실 추가</b></td>
 			</tr>
 			<tr>
-				<td>객실 번호</td>
 				<td>객실 이름</td>
 				<td>기준 인원수</td>
 				<td>최대 인원수</td>
@@ -171,10 +175,9 @@
 				<td>주중 가격</td>
 				<td>주말 가격</td>
 				<td>성수기 가격</td>
-				<td>추가</td>
+				<td colspan="2">추가 및 취소</td>
 			</tr>
 			<tr>
-				<td><input type="text" name="newnum"/></td>
 				<td><input type="text" name="newrname"/></td>
 				<td><input type="text" name="newdpeople"/></td>
 				<td><input type="text" name="newmaxpeople"/></td>
@@ -183,6 +186,7 @@
 				<td><input type="text" name="newweekend_price"/></td>
 				<td><input type="text" name="newpeakseason_price"/></td>
 				<td><input type="button" value="객실 추가" onclick="insertRoom(this.form)" /></td>
+				<td><input type="reset" value="작성 취소"/></td>
 			</tr>
 		</table>
 	</form>

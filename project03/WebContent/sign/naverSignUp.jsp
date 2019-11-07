@@ -47,7 +47,7 @@
 					}
 					var id = naverLogin.user.getId();
 					var name = naverLogin.user.getName();
-					var url = "http://127.0.0.1:8080/project01/sign/naverSignUpPro.jsp?email="+encodeURI(email)+"&name="+encodeURI(name)+"&id="
+					var url = "http://localhost:8080/project01/sign/naverSignUpPro.jsp?email="+encodeURI(email)+"&name="+encodeURI(name)+"&id="
 							+encodeURI(id);
 					window.location.replace(url);
 				} else {

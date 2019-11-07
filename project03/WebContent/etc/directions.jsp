@@ -7,6 +7,10 @@
 <title>찾아 오시는 길</title>
 </head>
 <body>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 	<div id="map" style="width:500px;height:400px;"></div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b607f149ec3e12abaff481e0ec56f3bb"></script>
 	<script>
@@ -37,5 +41,8 @@
 	</script>
 	<input type="button" value="메인으로" onclick="window.location.href='../main/main.jsp'"/>
 
+<footer>
+	<%@ include file="../main/footer.jsp" %>
+</footer>
 </body>
 </html>

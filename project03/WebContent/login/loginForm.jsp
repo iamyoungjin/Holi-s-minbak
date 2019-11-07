@@ -19,8 +19,12 @@
 
 
 <body>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String boardType = request.getParameter("boardType");
+	boardType = request.getParameter("boardType");
 	if(session.getAttribute("sId") != null || session.getAttribute("sAdmin") != null){%>
 		<script>
 			alert("이미 로그인 한 상태입니다.");
@@ -58,7 +62,7 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "MOf0l_qoj5M7p4rLoe4B",
-				callbackUrl: "http://127.0.0.1:8080/project01/login/naverLogin.jsp?boardType="+boardType,
+				callbackUrl: "http://localhost:8080/project01/login/naverLogin.jsp?boardType="+boardType,
 				isPopup: false, /* 팝업을 통한 연동처리 여부 */
 				loginButton: {color: "green", type: 3, height: 48} /* 로그인 버튼의 타입을 지정 */
 			}
@@ -100,27 +104,37 @@
 	</script>
 	
 	<!-- 구글 -->
-	<div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        var googleId = "google_" + profile.getId();
-        var googleEmail = profile.getEmail();
-        
-        /*
-        var loginURL = "http://localhost:8080/project03/login/googleLoginPro.jsp?id="+encodeURI(googleId)+"&boardType="+boardType;
-		window.location.replace(loginURL);
-		*/
-        
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
-      
-      }
-    </script>
+	
+	<div id="my-signin2"></div>
+		<script>
+	    function onSuccess(googleUser){
+	    	console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+	    	var profile = googleUser.getBasicProfile();
+			console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+			var googleId = "google_" + profile.getId();
+			var googleEmail = profile.getEmail();
+			/*
+	        var loginURL = "http://localhost:8080/project03/login/googleLoginPro.jsp?id="+encodeURI(googleId)+"&boardType="+boardType;
+			window.location.replace(loginURL);
+			*/
+	    }
+	    function onFailure(error){
+			console.log(error);
+		}
+	    function renderButton() {
+			gapi.signin2.render('my-signin2', {
+	        'scope': 'profile email',
+	        'width': 222,
+	        'height': 48,
+	        'longtitle': true,
+	        'theme': 'dark',
+	        'onsuccess': onSuccess,
+	        'onfailure': onFailure
+	      });
+	    }
+	  </script>
+	  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+	  
 
 </body>
 </html>

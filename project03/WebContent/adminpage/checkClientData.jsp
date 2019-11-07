@@ -1,3 +1,4 @@
+<%@page import="test.web.usertype.UsertypeDAO"%>
 <%@page import="test.web.project03.MemberDTO"%>
 <%@page import="test.web.project03.MemberDAO"%>
 <%@page import="java.util.List"%>
@@ -52,8 +53,13 @@
 
 </script>
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
+
 <%
-	String sAdmin = (String)session.getAttribute("sAdmin");
+	sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
 		<script>
 			alert("권한이 없습니다.");
@@ -61,7 +67,12 @@
 		</script>
 <%	}else{
 		MemberDAO dao = MemberDAO.getInstance();
-		List list = dao.showMember();
+		String search = request.getParameter("search");
+		String keyword = request.getParameter("keyword");
+		if(search == null){
+			search = "0";
+		}
+		List list = dao.showMember(search, keyword);
 		if(list==null){
 		%> <h1>가입한 사용자가 없습니다.</h1> <%			
 		}else{
@@ -76,10 +87,12 @@
 				<td>이름</td>
 				<td>휴대폰번호</td>
 				<td>생년월일</td>
+				<td>유저타입</td>
 				<td>가입일</td>
 			</tr>
 			<%for(int i=0; i<list.size(); i++){
 				MemberDTO dto = (MemberDTO)list.get(i);
+				UsertypeDAO userdao = UsertypeDAO.getInstance();
 			%>
 			<tr>
 				<input type="hidden" id="pw<%=i%>" name="pw<%=i%>" value="<%=dto.getPw() %>" readonly/>
@@ -89,6 +102,7 @@
 				<td><input type="text" id="name<%=i%>" name="name<%=i%>" value="<%=dto.getName() %>"/></td>
 				<td><input type="text" id="phonenum<%=i%>" name="phonenum<%=i%>" value="<%=dto.getPhonenum() %>"/></td>
 				<td><input type="text" id="birthdate<%=i%>" name="birthdate<%=i%>" value="<%=dto.getBirthdate() %>"/></td>
+				<td><p style="font-size:12px"><%=userdao.getType(dto.getUser_type())%></p></td>
 				<td><input type="text" id="reg<%=i%>" name="reg<%=i%>" value="<%=dto.getReg() %>" readonly/></td>
 				<td>
 				<%if(dto.getUser_type() == 3){%>
@@ -102,11 +116,29 @@
 			<%} %>
 		</table>
 	</form>
+	<form name="searchForm">
+	<table>
+		<tr>
+			<td>
+			<select name = "search">
+				<option value="0">전체 </option>
+				<option value="1">아이디</option>
+				<option value="2">이름</option>
+			</select>
+			</td>
+			<td><input type="text" name="keyword" value=""/></td>
+			<td><input type="submit" value="검색" /></td>
+		</tr>
+	</table>
+	</form>
+	
 			<input type="button" value="돌아가기" onclick="window.location.href='adminpage.jsp'"/>
+			
 <%
 		}
 	}
 %>
+
 
 </body>
 </html>

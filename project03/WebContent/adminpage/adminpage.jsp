@@ -6,8 +6,13 @@
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
 </head>
+<header>
+	<%@ include file="../main/header.jsp" %>
+</header>
+
 <%
-	String sAdmin = (String)session.getAttribute("sAdmin");
+	boardType="admin";
+	sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
 		<script>
 			alert("권한이 없습니다.");
@@ -20,6 +25,7 @@
 			<li><a href="checkBoard.jsp">게시판 관리 페이지</a></li>
 			<li><a href="checkRoomData.jsp">객실 관리 페이지</a></li>
 			<li><a href="checkClientReservation.jsp">예약 관리 페이지</a></li>
+			<li><a href="accounting.jsp">수입 관리 페이지</a></li>
 			<li><a href="../main/main.jsp">메인으로</a></li>
 		</ul>
 		
