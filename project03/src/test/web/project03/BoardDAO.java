@@ -65,11 +65,7 @@ public class BoardDAO {
 		return count;
 	}
 	
-	/**
-	 * @param start
-	 * @param end
-	 * @return
-	 */
+
 	public List getPosts(int start, int end, String search, String keyword) {
 		List list = null;
 		try {

@@ -4,6 +4,12 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String re_id = (String)session.getAttribute("s_re_id");
+	if(re_id == null){%>
+		<script>
+		alert("잘못된 접근입니다.");
+		window.location.href="../main/main.jsp";
+		</script>
+<%	}else{
 	String re_name = (String)(session.getAttribute("s_re_name"));
 	String re_phone= (String)session.getAttribute("s_re_phone");
 	String re_email = (String)(session.getAttribute("s_re_email"));
@@ -19,6 +25,7 @@
 	int usingday = (Integer)session.getAttribute("s_usingday");
 	String startday = (String)session.getAttribute("s_startday");
 	String endday = (String)session.getAttribute("s_endday");
+	
 %>
 
 	<jsp:useBean id = "vo" class="test.web.calendar.ReservationVO"/> 
@@ -50,3 +57,6 @@
 <%= roomname%>
 <%= price%> 으로 예약 되었습니다. 
  <input type="button" value="메인으로 돌아가기" OnClick="window.location='../main/main.jsp'">
+ 
+ <%}
+ %>

@@ -74,10 +74,6 @@
 	}
 
 	function insertRoom(userinput){
-		if(!userinput.newnum.value){
-			alert("방 번호를 입력해주세요");
-			return false;
-		}
 		if(!userinput.newrname.value){
 			alert("방 이름을 입력해주세요");
 			return false;
@@ -107,7 +103,6 @@
 			return false;
 		}
 		userinput.action="checkRoomPro.jsp?type=insert"
-						+"&num="+userinput.newnum.value
 						+"&rname="+encodeURI(userinput.newrname.value)
 						+"&dpeople="+userinput.newdpeople.value
 						+"&maxpeople="+userinput.newmaxpeople.value
@@ -173,7 +168,6 @@
 				<td colspan="10" style="text-align: center"><b>객실 추가</b></td>
 			</tr>
 			<tr>
-				<td>객실 번호</td>
 				<td>객실 이름</td>
 				<td>기준 인원수</td>
 				<td>최대 인원수</td>
@@ -184,7 +178,6 @@
 				<td colspan="2">추가 및 취소</td>
 			</tr>
 			<tr>
-				<td><input type="text" name="newnum"/></td>
 				<td><input type="text" name="newrname"/></td>
 				<td><input type="text" name="newdpeople"/></td>
 				<td><input type="text" name="newmaxpeople"/></td>

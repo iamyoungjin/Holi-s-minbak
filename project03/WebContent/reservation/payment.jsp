@@ -1,3 +1,5 @@
+<%@page import="test.web.project03.RoomDTO"%>
+<%@page import="test.web.project03.RoomDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "test.web.calendar.ReservationVO" %>
@@ -18,6 +20,16 @@
 	String paymentmethod = request.getParameter("paymentmethod");
 	//String chkpayment =request.getParameter("chkpayment");
 	String chkpayment= "waiting";
+	
+	
+	RoomDAO roomdao = RoomDAO.getInstance();
+	RoomDTO roomdto = roomdao.getRoomData(roomname);
+	if(usepeople>roomdto.getMaxpeople()){%>
+		<script>
+			alert("방의 최대 인원을 초과하였습니다. 다른 방을 알아보시거나 재확인해주세요");
+			history.go(-1);
+		</script>
+	<%}	
 %>	
 
 <%

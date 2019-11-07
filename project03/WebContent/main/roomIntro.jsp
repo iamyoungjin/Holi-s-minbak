@@ -43,10 +43,20 @@
 %>
 	<table border="1">
 		<tr>
-			<td colspan="3"><img src="../image/<%=dto.getRoom_img()%>"/>  </td>
+			<td colspan="3">
+			<%if(dto.getRoom_img()!= null){ %>
+			<img src="../image/<%=dto.getRoom_img()%>"/>
+			<%} %>  
+			</td>
 		</tr>
 		<tr>
-			<td colspan="3"><pre><%=dto.getIntro() %></pre></td>
+			<td colspan="3">
+			<%if(dto.getIntro() == null){ %>
+				<h3>아직 방 설명을 입력하지 않았습니다.</h3>
+			<%}else{ %>
+				<pre><%=dto.getIntro() %></pre>
+			<%} %>
+			</td>
 		</tr>
 	</table>
 	<table>

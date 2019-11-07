@@ -1,3 +1,4 @@
+<%@page import="test.web.usertype.UsertypeDAO"%>
 <%@page import="test.web.project03.MemberDTO"%>
 <%@page import="test.web.project03.MemberDAO"%>
 <%@page import="java.util.List"%>
@@ -86,10 +87,12 @@
 				<td>이름</td>
 				<td>휴대폰번호</td>
 				<td>생년월일</td>
+				<td>유저타입</td>
 				<td>가입일</td>
 			</tr>
 			<%for(int i=0; i<list.size(); i++){
 				MemberDTO dto = (MemberDTO)list.get(i);
+				UsertypeDAO userdao = UsertypeDAO.getInstance();
 			%>
 			<tr>
 				<input type="hidden" id="pw<%=i%>" name="pw<%=i%>" value="<%=dto.getPw() %>" readonly/>
@@ -99,6 +102,7 @@
 				<td><input type="text" id="name<%=i%>" name="name<%=i%>" value="<%=dto.getName() %>"/></td>
 				<td><input type="text" id="phonenum<%=i%>" name="phonenum<%=i%>" value="<%=dto.getPhonenum() %>"/></td>
 				<td><input type="text" id="birthdate<%=i%>" name="birthdate<%=i%>" value="<%=dto.getBirthdate() %>"/></td>
+				<td><p style="font-size:12px"><%=userdao.getType(dto.getUser_type())%></p></td>
 				<td><input type="text" id="reg<%=i%>" name="reg<%=i%>" value="<%=dto.getReg() %>" readonly/></td>
 				<td>
 				<%if(dto.getUser_type() == 3){%>
