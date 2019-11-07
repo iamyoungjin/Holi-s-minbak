@@ -10,7 +10,8 @@
 </head>
 <jsp:useBean id="dto" class="test.web.project03.MemberDTO"/>
 <jsp:setProperty property="*" name="dto" />
-<%
+<%	
+	// form 페이지에서 넘어온 정보를 바탕으로 dao메서드를 사용하고 가입시킨다.
 	MemberDAO dao = MemberDAO.getInstance();
 	if(dao.insert(dto)){%>
 	<script>
