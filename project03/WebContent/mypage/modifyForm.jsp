@@ -77,9 +77,10 @@
  			history.go(-1);
  		</script>
 	<%}else{
+		// id 세션값을 이용하여 정보를 가져온다
 		MemberDTO dto = dao.getMember(sId);
 		int user_type = dto.getUser_type();
-		
+		// 유저 타입을 확인해서 일반 유저일시 비밀번호를 수정할 수 있게 한다
 		if(user_type!=1 && user_type!=4){%>
 <body>
 		<form name="modifyForm" action="modifyPro.jsp" method="post" onsubmit="return chkForm()">
@@ -93,7 +94,9 @@
 			<input type="submit" value="수정하기"/>
 			<input type="button" value="돌아가기" onclick="window.location.href='mypage.jsp'"/>
 		</form>
-	<%	}else{%>
+	<%	}else{
+		// SNS 소셜 로그인 유저는 비밀번호가 없으므로, 폼에서 비밀번호를 제외한다.
+	%>
 		<form name="modifyForm" action="modifyPro.jsp" method="post" onsubmit="return chkForm()">
 			<input type="hidden" name="pw" value="<%=dto.getPw()%>" readonly/>
 			<input type="hidden" name="pw2" value="<%=dto.getPw()%>" readonly/> <br/> 

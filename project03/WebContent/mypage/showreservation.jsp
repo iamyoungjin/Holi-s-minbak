@@ -24,9 +24,14 @@
 		</script>	
 	<%}else{
 		ReservationDAO dao = new ReservationDAO();
+		
 		List list = dao.reservation_user(sId);
+		// 해당 유저의 예약정보를 받아온다.
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		String currentTime = sdf.format(new Date());
+		//현재 시간을 String 타입으로 담아둔다
+		
 		if(list.size()==0){
 			out.print("예약 내역이 없습니다.");
 		}else if(list.size()>0){%>
@@ -53,12 +58,18 @@
 					<td><%= vo.getReg_date() %></td>
 					<td><%= vo.getPaymentmethod() %></td>
 					<td><%= vo.getChkpayment() %></td>
-					<%if(dao.checkCanclePossible(vo) == 1 ){%>
+					<%if(dao.checkCanclePossible(vo) == 1 ){
+					//dao의 메서드로, 현재시간과 비교해 취소가 가능한 시간일때 button 이 생성되게 한다 
+					%>
 					<td><input type="button" value="예약취소" onclick="location.href=
 					'showReservationPro.jsp?roomnumber=<%=vo.getRoomnumber()%>&re_id=<%=vo.getRe_id()%>&currentTime=<%=currentTime%>'"/></td>
-					<%} %>
+					<%
+					// 취소가 가능할 경우, onclick을 통해 Pro페이지로 넘어간다.
+					} %>
 				</tr>
-					<%if(vo.getChkpayment().equals("waiting") && vo.getPaymentmethod().equals("bank")){%>
+					<%
+					// 입금대기+무통장입금으로 예약 진행시 입금정보를 띄워준다.
+					if(vo.getChkpayment().equals("waiting") && vo.getPaymentmethod().equals("bank")){%>
 					<tr>
 						<td colspan="7" text-align="center"> (신한)110-351-111123 으로 입금 바랍니다. </td>
 					</tr>

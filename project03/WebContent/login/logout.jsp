@@ -9,6 +9,7 @@
 <title>로그아웃</title>
 </head>
 <%
+	// 세션을 지우고, 쿠키가 존재할시 쿠키도 삭제한다.
 	String boardType = request.getParameter("boardType");
 	session.invalidate();
 	Cookie[] coo = request.getCookies();

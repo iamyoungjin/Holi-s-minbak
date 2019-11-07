@@ -14,6 +14,7 @@
 	String auto = request.getParameter("auto");
 	String boardType = request.getParameter("boardType");
 	
+	// 쿠키 생성. 쿠키값이 이미 있을시 id,pw,auto에 값을 넣어준다.
 	Cookie[] coo = request.getCookies();
 	if(coo!= null){
 		for(Cookie c : coo){
@@ -23,9 +24,13 @@
 		}
 	}
 	MemberDAO dao = MemberDAO.getInstance();
+	// 로그인 메서드
 	boolean loginChk = dao.login(id,pw);
 	
+	// 로그인이 성공했을시
 	if(loginChk){
+		
+		//자동 로그인이 생성되어있으면 쿠키생성
 		if(auto!=null){
 			Cookie c1 = new Cookie("cId", id);
 			Cookie c2 = new Cookie("cPw", pw);
@@ -40,7 +45,7 @@
 			response.addCookie(c3);
 		}
 		
-		
+		// 관리자일시 sAdmin으로 세션부여, 일반유저일시 sId로 세션 부여.
 		if(id.equals("admin")){ session.setAttribute("sAdmin", id); }
 		else{ session.setAttribute("sId", id); }
 		String name = dao.searchName(id);
@@ -48,6 +53,7 @@
 		<script>
 		alert("로그인 하셨습니다.")
 		</script><%
+		// 로그인시 있던 위치에 따라서 boardType 값에 맞게 로그인을 시도한 곳으로 보낸다.
 		if(boardType.equals("board")){
 			response.sendRedirect("../board/boardList.jsp");
 		}else if(boardType.equals("main")){
@@ -57,7 +63,9 @@
 		}else{
 			response.sendRedirect("../main/main.jsp");
 		}
-	}else{%>
+	}else{
+	// 로그인 실패시 else문 작동
+	%>
 		<script>alert("해당하는 회원 정보가 없습니다."); history.go(-1);</script>
 		
 	<%}

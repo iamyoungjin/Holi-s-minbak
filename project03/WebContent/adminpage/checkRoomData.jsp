@@ -11,6 +11,8 @@
 <script>
 
 	function updateRoom(userinput,num){
+		// for문의 변수 i를 num으로 받는다.
+		
 		if(!document.getElementById("num"+num).value){
 			alert("방번호를 입력해주세요");
 			return false;
@@ -44,9 +46,13 @@
 			return false;
 		}
 		
+		// 수정/삭제 테이블에서 필요한 행만을 뽑아오기 위해, 아래 테이블의 id,name 속성에 변수 i를 붙였다.
+		// 이를 이용해 "속성값"+num 을 통해 원하는 행을 뽑아서 checkRoomPro.jsp에 전송한다.
+		
 		userinput.action="checkRoomPro.jsp?type=update"
 			+"&num="+document.getElementById("num"+num).value
 			+"&rname="+encodeURI(document.getElementById("rname"+num).value)
+			// endodeURI("문자열")을 통해 한글이 들어갈 수 있는 영역에 추가적으로 인코딩처리를 해준다.
 			+"&dpeople="+document.getElementById("dpeople"+num).value
 			+"&maxpeople="+document.getElementById("maxpeople"+num).value
 			+"&addtionalcost="+document.getElementById("addtionalcost"+num).value
@@ -54,6 +60,8 @@
 			+"&weekend_price="+document.getElementById("weekend_price"+num).value
 			+"&peakseason_price="+document.getElementById("peakseason_price"+num).value ;
 		userinput.submit();
+		// 자바스크립트를 이용하여 action의 경로 지정후 submit 해준다.
+		
 	}
 	
 	function insertIntro(userinput,num){
@@ -145,9 +153,14 @@
 				<td>세부사항</td>
 				<td>수정/삭제</td>
 			</tr>
-			<%for(int i=0; i<list.size(); i++ ){
+			<%
+			// dao의 showRoom 메서드로 가져온 list를 for문에 넣는다
+			for(int i=0; i<list.size(); i++ ){
 				RoomDTO dto = (RoomDTO)list.get(i);
+				// for문의 안에서 list의 원소를 빼낸다
 			%>
+				<!-- 가져온 데이터의 id,name에 for문의 변수 i를 붙여서, 각 방을 구분 할 수 있게 한다 -->
+				<!-- 1번방의 데이터는 num0, rname0, dpeople0 ... 2번째는 num1, rname1 .. 이런식으로 명명된다 -->
 				<tr>
 					<td><input type="text" id="num<%=i%>" name="num<%=i%>" value="<%=dto.getNum()%>" readonly/></td>
 					<td><input type="text" id="rname<%=i%>" name="rname<%=i%>" value="<%=dto.getRname()%>"/></td>
@@ -158,6 +171,7 @@
 					<td><input type="text" id="weekend_price<%=i%>" name="weekend_price<%=i%>" value="<%=dto.getWeekend_price()%>"/></td>
 					<td><input type="text" id="peakseason_price<%=i%>" name="peakseason_price<%=i%>" value="<%=dto.getPeakseason_price()%>"/></td>
 					<td><input type="button" value="방 소개 추가/수정" onclick="insertIntro(this.form,<%=i%>)" /></td>
+					<!-- button 형식에 onclick으로 this.form과 변수i를 가지고 updateRoom, deleteRoom 함수를 실행한다. -->
 					<td>
 						<input type="button" value="객실 수정" onclick="updateRoom(this.form,<%=i%>)"/>
 						<input type="button" value="객실 삭제" onclick="deleteRoom(this.form,<%=i%>)"/>
@@ -177,6 +191,7 @@
 				<td>성수기 가격</td>
 				<td colspan="2">추가 및 취소</td>
 			</tr>
+			<!-- 객실 추가를 위한 입력폼. 위의 수정/삭제와 같은 table을 쓰기때문에 변수에 new를 붙여서 구분해준다. -->
 			<tr>
 				<td><input type="text" name="newrname"/></td>
 				<td><input type="text" name="newdpeople"/></td>

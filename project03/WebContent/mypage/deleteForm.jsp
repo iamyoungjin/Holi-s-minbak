@@ -16,10 +16,12 @@
 			alert("비밀번호를 입력하지 않았습니다.");
 			return false;
 		}
+		// 체크박스가 체크되어있는지 유효성 검사
 		if(!ui.agree.checked){
 			alert("계정 탈퇴에 동의해주세요.");
 			return false;
 		}
+		
 	}
 </script>
 <header>
@@ -28,6 +30,7 @@
 
 </head>
 <%
+	// 세션 을 통한 유효성검사
 	sId = (String)session.getAttribute("sId");
 	if(sId == null){%>
 		<script>
@@ -37,6 +40,7 @@
 		
 	<%}else{%>
 <body>
+	<!-- deleteForm 작성 양식 -->
 	<form name="deleteChk" action="deletePro.jsp" method="post" onsubmit="return chkForm()">
 		아이디 : <input type="text" name="id"/> <br/> 
 		비밀번호 : <input type="password" name="pw"/><br/>

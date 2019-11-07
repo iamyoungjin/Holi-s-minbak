@@ -683,11 +683,11 @@ public class ReservationDAO {
 			int chk = 0;
 			try {
 				String type = vo.getChkpayment();
-				String endday = vo.getEndday();
+				String startday = vo.getStartday();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 				Date currentday = new Date();
-				Date eday = sdf.parse(endday);
-				int compare = currentday.compareTo(eday);
+				Date sday = sdf.parse(startday);
+				int compare = currentday.compareTo(sday);
 				if(type.equals("waiting")) {
 					chk = 1;
 				}else if(type.equals("check")) {
