@@ -28,17 +28,16 @@
 	</tr>
 	<tr>
 		<td>
-			업체면 : 호리네 민박 <br/>
-			대표자 : 나영진 <br/>
-			사업자번호 : 419-02-00517 <br/>
-			주소 : 경기 양평군 단월면 봉상리 281 <br/>
+			업체명 : 호리네 민박 <br/>
+			사업자번호 : 419-02-xx517 <br/>
+			주소 : 경기 양평군 단월면 봉상리 xxx <br/>
 		</td>
 		<td>
-			TEL : 031-792-8712<br/>
+			TEL : 031-792-xxxx<br/>
 			HP : 010-9999-9999<br/>
 			Email : EE@gmail.com<br/>
 		</td>
-		<td> (신한)110-351-111123 예금주 : xxx </td>
+		<td> (신한)110-351-111xxx 예금주 : xxx </td>
 		<td><input type="button" value="예약하기" onclick="window.location.href='../reservation/reservationCalendar.jsp'"/> </td>
 	</tr>
 </table>

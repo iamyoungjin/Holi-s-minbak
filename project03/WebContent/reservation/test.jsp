@@ -39,5 +39,32 @@
 	//Calendar c = Calendar.getInstance();
 	//int maxdate = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 	//for(int j= ; j<maxdate ; j++){
-
+	int currYear = 0;
+	int currMonth = 0;
+	
+	//Calendar c = Calendar.getInstance();
+	Calendar cal = Calendar.getInstance();	
+    //currMonth = c.get(Calendar.MONTH);
+    //currYear = c.get(Calendar.YEAR);
+    
+    //System.out.println(currMonth); //#10
+    //System.out.println(currYear); //#2019
+    //System.out.println(cal.get(Calendar.DAY_OF_MONTH)); //#7
+    //cal.set(currYear,currMonth,1);
+    
+    
+    //System.out.println(currMonth); //#10
+    //System.out.println(currYear); //#2019
+    //System.out.println(Calendar.MONTH); //#2
+    //System.out.println(c.get(Calendar.MONTH)); //#10
+    //System.out.println(cal.get(Calendar.DAY_OF_MONTH)); //#1
+	//System.out.println(cal.get(Calendar.DAY_OF_WEEK));	
+    ReservationVO vo = new ReservationVO();
+    //List lst = new ArrayList();
+    //lst = vo.middate("2019/10/31","2019/11/08");
+    //for(int i =0;i<lst.size();i++){
+    //	System.out.println(lst.get(i));
+    //}
+	String k = vo.getday("2019/02/07");
+	System.out.println(k);
 %>

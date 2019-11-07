@@ -18,12 +18,6 @@ public class ReservationVO {
 		c.set(y,m,d);
 		if(d<=c.get(Calendar.DAY_OF_MONTH))
 			t = c.isLenient();
-		//try {
-		//	c.set(y,m,d);
-		//	t = c.isLenient();
-		//}catch(Exception e) {
-		//e.printStackTrace();//return false;
-		//}
 		return t;
 	}
 	
@@ -36,51 +30,55 @@ public class ReservationVO {
 	
 	//특정 요일 가져오기 
 	public String getday(String dr) throws Exception{
-	SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-	 
-	 Date date = formatter.parse(dr);  // 날짜 입력하는곳 .
-	 date = new Date(date.getTime() + (1000*60*60*24*+1)-1);  // 날짜에 하루를 더한 값 
-	 // 하루를 뺄려면 (1000*60*60*24*-1)
-	 
-	 Calendar cal = Calendar.getInstance() ;
-	 cal.setTime(date);              // 하루더한 날자 값을 Calendar  넣는다.
-	 
-	 int dayNum = cal.get(Calendar.DAY_OF_WEEK);   // 요일을 구해온다. 
-	 
-	 String convertedString = "";
-	 
-	 switch (dayNum ) {
-	     case 1: convertedString = "일"; break;
-	     case 2: convertedString = "월"; break;
-	     case 3: convertedString = "화"; break;
-	     case 4: convertedString = "수"; break;
-	     case 5: convertedString = "목"; break;
-	     case 6: convertedString = "금"; break;
-	     case 7: convertedString = "토"; break;
-	 }
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+		 //SimpleDateFormat //특정형식으로 출력 
+		 System.out.println(dr);
+		 Date date = formatter.parse(dr);  // date 출력 형식 Thu Nov 07 00:00:00 KST 2019
+		 System.out.println(date);
+		 date = new Date(date.getTime());//+ (1000*60*60*24*+1)-1);  //하루를 더할때는 이처럼 
+
+		 Calendar cal = Calendar.getInstance() ;
+		 cal.setTime(date);          
+		 
+		 int dayNum = cal.get(Calendar.DAY_OF_WEEK);   // 요일을 일1 토7
+		 
+		 String convertedString = "";
+		 
+		 switch (dayNum ) {
+		     case 1: convertedString = "일"; break;
+		     case 2: convertedString = "월"; break;
+		     case 3: convertedString = "화"; break;
+		     case 4: convertedString = "수"; break;
+		     case 5: convertedString = "목"; break;
+		     case 6: convertedString = "금"; break;
+		     case 7: convertedString = "토"; break;
+		 }
 	 return convertedString;
 }
 		
-	//중간날짜 구해주는 함수 
+	//중간날짜들을 구해주는 함수 
 	public List<String> middate(String startday, String endday) throws ParseException {
-	    final String DATE_PATTERN = "yyyy/MM/dd";
+	    String DATE_PATTERN = "yyyy/MM/dd";
 	    String inputStartDate = startday;
 	    String inputEndDate = endday;
 	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+	    
 	    Date startDate = sdf.parse(inputStartDate);
 	    Date endDate = sdf.parse(inputEndDate);
+	    
 	    ArrayList<String> dates = new ArrayList<String>();
 	    Date currentDate = startDate;
+	    //시작날짜가 끝나는날짜보다 작거나 같을때까지 (Time이용)
 	    while (currentDate.compareTo(endDate) <= 0) {
 	        dates.add(sdf.format(currentDate));
 	        Calendar c = Calendar.getInstance();
-	        c.setTime(currentDate);
-	        c.add(Calendar.DAY_OF_MONTH, 1);
-	        currentDate = c.getTime();
+	        c.setTime(currentDate); //setTime();//currentDate 시간 출력 Thu Oct 31 00:00:00 KST 2019 형식 
+	        //System.out.println(currentDate);
+
+	        c.add(Calendar.DAY_OF_MONTH, 1); //DAY_OF_MONTH : 요일에 하루 추가
+	        currentDate = c.getTime(); 
 	    }
-	    //for (String date : dates) {
 	        return dates;
-	    //}
 	}
 	
 	

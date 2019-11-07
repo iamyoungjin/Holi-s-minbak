@@ -14,14 +14,13 @@
 <jsp:setProperty property="*" name="dto"/>
 
 <%
-
-int action = 0; 
-int currYear = 0;
-int currMonth = 0;
-String boxSize = "70";
-
-Calendar c = Calendar.getInstance();
-Calendar cal = Calendar.getInstance();
+	int action = 0; 
+	int currYear = 0;
+	int currMonth = 0;
+	String boxSize = "70";
+	
+	Calendar c = Calendar.getInstance();
+	Calendar cal = Calendar.getInstance();
 
 //액션이 null 지금년도, 지금월 ,1일로 세팅 
 if(request.getParameter("action") == null) {
@@ -33,27 +32,22 @@ if(request.getParameter("action") == null) {
      if(request.getParameter("action") != null){
           currMonth = Integer.parseInt(request.getParameter("month"));
           currYear = Integer.parseInt(request.getParameter("year"));
-         //액션(1) 다음달로 넘어갈 때 다음달 파라미터로 변경 
+         //액션(1) 다음달로 넘어갈 때 변경 
           if(Integer.parseInt(request.getParameter("action"))==1) {
                cal.set(currYear, currMonth, 1); //현재 년 현재 월에 1일 로 셋팅 
-               //cal.add(Calendar.MONTH, 1); // 달 하나 증가 
                currMonth = cal.get(Calendar.MONTH); //증가한 값으로 현재 달 설정 
                currYear = cal.get(Calendar.YEAR); //현재 년 설정
                
           //액션(-1) 전달로 넘어갈 때    
           } else {              
-               cal.set(currYear, currMonth, 1); //현재 년 현재 월에 1일 로 셋팅 
-               //cal.add(Calendar.MONTH, -1); //달 하나 감소 
-               currMonth = cal.get(Calendar.MONTH);//감소한 값으로 현재 달 설정 
-               currYear = cal.get(Calendar.YEAR);  //현재 년 설정 
+               cal.set(currYear, currMonth, 1);
+               currMonth = cal.get(Calendar.MONTH);
+               currYear = cal.get(Calendar.YEAR); 
           }
          
      }
 }
 
-//확인을 위해 저장 된 년 월 파라미터 출력 
-//System.out.println(currYear);
-//System.out.println(currMonth+1); //month를 0으로 설정했기 때문에 
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -143,12 +137,12 @@ if(request.getParameter("action") == null) {
      int count = 1;
      int dispDay = 1;
 	 currMonth+=1;
-     for(int w=1;w<7;w++){  //행 %>  
+     for(int w=1;w<7;w++){   %>  
     <tr>
-		<% for(int d=1;d<8;d++){	//
-        	  	//get : 현재 객체의 주어진 값의 필드에 해당하는 상수값 반환 
-        	  	if(!(count >= cal.get(Calendar.DAY_OF_WEEK))){	//DAY_OF_WEEK : 현재 요일 (1:일 7:) ##########
-            		//현재 월 요일에 맞게 시작점(1) 계산%>		
+		<% for(int d=1;d<8;d++){	
+			    //현재 월 요일에 맞게 시작점(1) 계산
+        	  	if(!(count >= cal.get(Calendar.DAY_OF_WEEK))){	//DAY_OF_WEEK : 현재 요일 (1:일 7:토) //get : 현재 객체의 주어진 값의 필드에 해당하는 상수값 반환 
+            		%>		
        			   <td class="empty"></td>
 					<%count+=1;			
 				}else{ 
@@ -192,7 +186,7 @@ if(request.getParameter("action") == null) {
 						<%=roomtodaycheck.get(i) %></a><br/>
 					<%}
 					}
-						//waiting 인 상태의 방도 달력에 보여지도록 추가
+					//waiting 인 상태의 방도 달력에 보여지도록 추가
 					if(roomtodaywaiting!=null){
 						for(int i=0; i<roomtodaywaiting.size();i++){
 						String roomname = (String)roomtodaywaiting.get(i);
