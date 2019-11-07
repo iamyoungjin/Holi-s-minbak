@@ -9,7 +9,8 @@
 <head>
 <title>게시판</title>
 
-<script language="JavaScript">      
+<script language="JavaScript">    
+<%// 비밀번호 입력하게 하는 유효성검사%>
 <!--      
   function deleteSave(){	
 	if(document.deleteForm.passwd.value==''){
@@ -32,6 +33,7 @@
      <td >
        <b>비밀번호를 입력해 주세요.</b></td>
   </tr>
+  <%//삭제를 할때 비회원일시 비밀번호를 입력해야된다 %>
   <tr>
      <td>비밀번호 :   
      	<%if(session.getAttribute("sId") != null || session.getAttribute("sAdmin") !=null ){ %>

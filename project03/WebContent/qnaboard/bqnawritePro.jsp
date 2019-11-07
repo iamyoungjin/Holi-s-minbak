@@ -31,16 +31,16 @@
 		String subject = request.getParameter("subject");
 		String content = request.getParameter("content");
 		
-		dto.setBoardnum(boardnum);
-		dto.setRef(ref);
-		dto.setRe_step(re_step);
-		dto.setRe_level(re_level);
-		dto.setName(name);
-		dto.setPw(pw);
-		dto.setSubject(subject);
-		dto.setContent(content);
-		dto.setReg_date(new Timestamp(System.currentTimeMillis()));
-		
+		dto.setBoardnum(boardnum);//글번호
+		dto.setRef(ref);//그룹넘버 같은것으로 num글의 댓글이 달릴 경우 같은 번호를 사용함
+		dto.setRe_step(re_step);//원글은 0, 댓글은 0+1 재 댓글은 ref가 같은 번호가 있다면 앞 번호 = 1 + 1
+		dto.setRe_level(re_level);//깊이(들여쓰기) 표시 순서 로 원글은 0, 댓글은 0+1, 댓글의 댓글은 0+1+1
+		dto.setName(name);//작성자
+		dto.setPw(pw);//비밀번호
+		dto.setSubject(subject);//제목
+		dto.setContent(content);//내용
+		dto.setReg_date(new Timestamp(System.currentTimeMillis()));//글쓴날
+		//게시물이 작성되었으면 리스트로 가게 만든다
 		boolean postChk = dao.insertPost(dto);
 		if(postChk){%>
 			<script>

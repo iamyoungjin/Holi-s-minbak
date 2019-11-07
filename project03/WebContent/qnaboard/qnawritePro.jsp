@@ -22,7 +22,7 @@
 		String enc = "UTF-8";
 		QNABoardDAO dao = QNABoardDAO.getInstance();
 		
-	
+		//폼에 작성한내용 가져온다
 		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 		int ref = Integer.parseInt(request.getParameter("ref"));
 		int re_step = Integer.parseInt(request.getParameter("re_step"));
@@ -34,18 +34,19 @@
 		String subject = request.getParameter("subject");
 		String content = request.getParameter("content");
 		
-		dto.setBoardnum(boardnum);
-		dto.setRef(ref);
-		dto.setRe_step(re_step);
-		dto.setRe_level(re_level);
-		dto.setCategory(category);
-		dto.setName(name);
-		dto.setId(id);
-		dto.setPw(pw);
-		dto.setSubject(subject);
-		dto.setContent(content);
-		dto.setReg_date(new Timestamp(System.currentTimeMillis()));
+		dto.setBoardnum(boardnum); //글번호
+		dto.setRef(ref);//그룹넘버 같은것으로 num글의 댓글이 달릴 경우 같은 번호를 사용함
+		dto.setRe_step(re_step);//원글은 0, 댓글은 0+1 재 댓글은 ref가 같은 번호가 있다면 앞 번호 = 1 + 1
+		dto.setRe_level(re_level);//깊이(들여쓰기) 표시 순서 로 원글은 0, 댓글은 0+1, 댓글의 댓글은 0+1+1
+		dto.setCategory(category);//회원 관리자 구분
+		dto.setName(name);//작성자
+		dto.setId(id);//아이디
+		dto.setPw(pw);//비밀번호
+		dto.setSubject(subject);//제목
+		dto.setContent(content);//내용
+		dto.setReg_date(new Timestamp(System.currentTimeMillis()));//날짜
 		
+		//게시물이 작성이 되면 리스트로 가게 만든다
 		boolean postChk = dao.insertPost(dto);
 		if(postChk){%>
 			<script>

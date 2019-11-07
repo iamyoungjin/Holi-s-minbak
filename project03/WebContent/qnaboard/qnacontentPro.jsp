@@ -18,7 +18,6 @@
 	String boardnum = request.getParameter("boardnum");
 	String pageNum = request.getParameter("pageNum");
 	String type = request.getParameter("type");
-	
 	if(session.getAttribute("sId") == null && session.getAttribute("sAdmin") == null ){%>
 	<script>
 		alert("권한이 없습니다.");

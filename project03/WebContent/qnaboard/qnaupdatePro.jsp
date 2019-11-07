@@ -7,7 +7,7 @@
 <%  
   QNABoardDAO dao = QNABoardDAO.getInstance(); 	
   boolean check = dao.updatePost(dto);
-  
+  //폼값이 일치하면 수정하기 비밀번호가 틀리면 다시 입력해야됨.
   if(check){%>
   <script>
   alert("수정되었습니다.");

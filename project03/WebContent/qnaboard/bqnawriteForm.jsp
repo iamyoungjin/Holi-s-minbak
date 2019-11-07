@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>비회원 작성</title>
 <script>
+	<%// 유효성 검사%>
 	function bwriteSave(){
 		if(!document.bqnawriteForm.bname.value){
 			alert("이름을 입력하세요");
@@ -31,6 +32,7 @@
 </script>
 </head>
 <%
+ 	//댓글 은 관리자만 작성 할수 있다
 	String sId = (String)session.getAttribute("sId");
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	int boardnum=0,ref=1,re_step=0,re_level=0;
