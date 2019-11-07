@@ -40,6 +40,7 @@
 		int re_step = dto.getRe_step();
 		int re_level = dto.getRe_level();
 %>
+<%//게시물 내용 불러와서 확인 할수있도록 출력문들을 입력함 %>
 <title><%=dto.getSubject() %></title>
 </head>
 <body>
@@ -67,7 +68,8 @@
 			<pre><%=dto.getContent() %></pre></td>
 		</tr>	
 	</table>
-	<tr>
+	<%//수정은 업데이트 삭제 딜리트 댓글은 로그인 비회원 구분해서 쓰며 목록은 리스트로 이동한다 %>
+	<tr>	
 			<td colspan="4">
 			<input type="button" value="글수정" onclick="window.location.href='qnaupdateForm.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=pageNum%>&id=<%=dto.getId()%>'"/>
 		  	&nbsp;

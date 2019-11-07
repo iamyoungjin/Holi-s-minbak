@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>글수정</title>
 <script>
+<%//제목 내용 유효성 검사%>
 	function writeSave(){
 		if(!document.writeForm.subject.value){
 		  alert("제목을 입력하십시요.");
@@ -26,7 +27,7 @@
 	String sId = (String)session.getAttribute("sId");
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	String id = request.getParameter("id");
-
+	//글번호 페이지 가져와서 맞춰서 수정할수있게끔하기
 	int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 	String pageNum = request.getParameter("pageNum");
 
@@ -52,7 +53,8 @@
 				<td>내용 <textarea rows="13" cols="40" name="content"><%=dto.getContent()%></textarea></td>
 			</tr>
 			<tr>
-				<td>비밀번호          
+				<td>비밀번호 
+					<%//비회원일시 패스워드 입력받기 %>         
 			       <%if(session.getAttribute("sId") == null && session.getAttribute("sAdmin") == null){%>
 			       <input type="password" name="pw" >
 				   <input type="hidden" name="boardnum" value="<%=boardnum%>">

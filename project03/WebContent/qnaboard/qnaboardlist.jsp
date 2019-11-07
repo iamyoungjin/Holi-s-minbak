@@ -12,15 +12,17 @@
 <title>게시판</title>
 </head>
 <%
+	//세션값 가져오기
 	String sId = (String)session.getAttribute("sId");
 	String sAdmin = (String)session.getAttribute("sAdmin");
 	String sName = (String)session.getAttribute("sName"); 
 	String boardType = "board";
-	
+	//키워드 생성
 	String search = request.getParameter("search");
 	String keyword = request.getParameter("keyword");
-	
+	//글개수가 10개일때 페이지 이동
 	int pageSize = 10;
+	//날짜
 	SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm");
 	
 	String pageNum = request.getParameter("pageNum");
@@ -30,6 +32,7 @@
 	if(search == null){
 		search = "0";
 	}
+	//페이지넘기기 만들며 글갯수 카운터로 설정하며 넘버로 글번호 순차적으로 만든다
 	int currentPage = Integer.parseInt(pageNum);
 	int startRow = (currentPage -1) * pageSize +1;
 	int endRow = currentPage * pageSize;
@@ -95,7 +98,7 @@
 		<%}%>
 	</table>
 <%}%>
-
+<%// 페이지 이동 %>
 <%if(count >0){
 		int pageCount = count / pageSize + (count % pageSize == 0? 0 : 1);
 		int startPage = (int)(currentPage/10)*10+1;
@@ -115,6 +118,7 @@
 		}
 	}
 %>
+<%//키워드 목록  %>
 <form name="searchForm">
 <table>
 	<tr>

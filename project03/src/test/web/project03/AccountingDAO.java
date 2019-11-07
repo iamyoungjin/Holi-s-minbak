@@ -15,7 +15,7 @@ import test.web.calendar.ReservationVO;
 
 public class AccountingDAO {
 	private Connection conn = null;
-	private PreparedStatement pstmt = null;
+	private PreparedStatement pstmt = null; 
 	private ResultSet rs = null;
 	
 	private Connection getConnection() throws Exception{
