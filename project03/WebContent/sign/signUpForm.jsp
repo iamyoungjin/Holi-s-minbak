@@ -56,6 +56,20 @@
 			alert("생년월일을 입력하지 않았습니다")
 			return false;
 		}
+		if(document.signUpForm.phonenum.value.length>11 && document.signUpForm.phonenum.value.length<9){
+			alert("휴대폰 번호 길이를 재확인해주세요");
+			return false;
+		}
+		if(document.signUpForm.phonenum.value.includes('-')){
+			alert("전화번호에 -를 뺀 상태로 입력해주세요");
+			return false;
+		}
+		if(!document.signUpForm.birthdate.value.length==6){
+			alert("생년월일 입력 양식이 잘못되었습니다. 950101과 같은 양식으로 작성해주세요");
+			return false;
+		}
+
+		
 		return chkId();
 	}
 	
@@ -67,6 +81,14 @@
 <header>
 	<%@ include file="../main/header.jsp" %>
 </header>
+<%
+	sId = (String)session.getAttribute("sId"); 
+	sAdmin = (String)session.getAttribute("sAdmin");
+	if(sId!=null || sAdmin!=null){
+		response.sendRedirect("../main/main.jsp");
+	}else{
+	
+%>
 
 <form name="signUpForm" action="signUpPro.jsp" method="post" onsubmit="return chkForm()">
 	<table>
@@ -86,10 +108,10 @@
 			<td>이름 : <input type="text" name="name"/></td>
 		</tr>
 		<tr>
-			<td>휴대폰번호 : <input type="text" name="phonenum"/></td>
+			<td>휴대폰번호 : <input type="text" name="phonenum" placeholder="휴대폰 번호를 -없이 입력해주세요."/></td>
 		</tr>
 		<tr>
-			<td>생년월일 : <input type="text" name="birthdate"/></td>
+			<td>생년월일 : <input type="text" name="birthdate" placeholder="생년월일을 입력해주세요."/></td>
 		</tr>
 		<tr>
 		<td>
@@ -99,6 +121,6 @@
 		</tr>
 	</table>
 </form>
-
+<%} %>
 </body>
 </html>

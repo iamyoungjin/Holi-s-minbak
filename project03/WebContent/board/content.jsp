@@ -45,10 +45,18 @@
 		
 	}
 	
+
 	function chkDelete(userinput){
-		if(!confirm("게시물을 지우시겠습니까?")){
+		if(!confirm("게시글을 삭제하시겠습니까?")){
 			return;
 		}
+		console.log(document.getElementById("boardnum").value);
+		console.log(document.getElementById("id").value);
+		console.log(pageNum);
+		userinput.action="deletePro.jsp?boardnum="+document.getElementById("boardnum").value
+				+"&pageNum="+pageNum
+				+"&id="+document.getElementById("id").value
+		userinput.submit();
 	}
 	
 </script>
@@ -76,12 +84,12 @@
 <title><%=dto.getSubject() %></title>
 </head>
 <body>
-<form>
+<form method="post">
 	<table>
 		<tr>
 			<td>글번호</td>
 			<%if(dto.getCategory()==1){ %>
-			<td><%=dto.getBoardnum() %></td>
+			<td><%=dto.getBoardnum() %><input type="hidden" name="boardnum" id="boardnum" value="<%=dto.getBoardnum() %>"/></td>
 			<%}else if(dto.getCategory() == 2){ %>
 			<td>공지</td>
 			<%}%>
@@ -90,7 +98,7 @@
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><%=dto.getName() %></td>
+			<td><%=dto.getName() %><input type="hidden" name="id" id="id" value="<%=dto.getId() %>"/></td>
 			<td>작성일</td>
 			<td><%= sdf.format(dto.getReg_date()) %></td>
 		</tr>
@@ -107,7 +115,7 @@
 		<tr>
 			<td colspan="4"><input type="button" value="글수정" onclick="window.location.href='updateForm.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=pageNum%>&id=<%=dto.getId()%>'"/>
 		  	&nbsp;
-			<input type="button" value="글삭제" onclick="chkDelete(); window.location.href='deletePro.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=pageNum%>&id=<%=dto.getId()%>'"/>
+			<input type="button" value="글삭제" onclick="chkDelete(this.form);"/>
 			&nbsp;
 			<input type="button" value="답글" onclick="window.location.href='writeForm.jsp?boardnum=<%=boardnum%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%> '"/>
 			&nbsp;

@@ -23,6 +23,15 @@
 	<%@ include file="../main/header.jsp" %>
 </header>
 
+<%
+	sId = (String)session.getAttribute("sId"); 
+	sAdmin = (String)session.getAttribute("sAdmin");
+	if(sId!=null || sAdmin!=null){
+		response.sendRedirect("../main/main.jsp");
+	}else{
+	
+%>
+
 	<input type="button" value="회원가입" onclick="window.location.href='signUpForm.jsp'">
 	<input type="button" value="메인으로" onclick="window.location.href='../main/main.jsp'"><br/>
 	
@@ -107,6 +116,6 @@
 	    }
 	  </script>
 	  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-	
+	<%} %>
 </body>
 </html>
