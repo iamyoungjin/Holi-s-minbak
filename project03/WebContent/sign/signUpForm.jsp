@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>회원 가입</title>
 <script>
+	// 아이디 중복검사를 실행시킬 자바스크립트 함수
 	function confirmId(userinput){
 		if(userinput.id.value == ""){
 			alert("아이디를 입력하세요");
@@ -17,19 +18,25 @@
 		// url = 주소, confirm 타이틀, resizeable 사이즈조절, scrollbars 스크롤바
 	}
 	
+	// 아이디 중복검사 체크를 위한 함수
+	// 자식창 (signUpConfirm)에서 부모창(현재창,form페이지)로 값을 전송시킨다
 	var idChk =false;
+	// 중복검사를 시행하고 올시에 true가 된다.
 	var idStr ="";
 	function chkId(){
+		// 자식창에서 검사한 아이디가 현재 입력된 아이디와 다를경우, false가 된다
 		if(document.signUpForm.id.value != idStr){
 			idChk=false;
 		}
+		// idChk가 false일시 return도 false출력
 		if(idChk==false){
 			alert("중복 검사를 하지 않았습니다");
 			return false;
 		}
+		
 	}
 	
-
+	// 양식 유효성 검사를 위한 함수
 	function chkForm(){
 		var ui = eval("document.signUpForm");
 		if(!ui.pw.value || !ui.pw2.value ){
@@ -56,6 +63,8 @@
 			alert("휴대폰 번호 길이를 재확인해주세요");
 			return false;
 		}
+		// 입력된 값에 -가 포함되어있지 않을 경우 -1의 값이다.
+		// 이를 통해 0보다 같거나 클시 ( 포함되어있는 경우) 메세지 출력과 false
 		if(document.signUpForm.phonenum.value.indexOf("-")>=0){
 			alert("전화번호에 -를 뺀 상태로 입력해주세요");
 			return false;
@@ -68,10 +77,12 @@
 			alert("생년월일 입력 양식이 잘못되었습니다. 950101과 같은 양식으로 작성해주세요");
 			return false;
 		}
+		// 생년월일 입력 양식(yyMMdd)에서, 월이 1~12 사이인지 파악
 		if(parseInt(document.signUpForm.birthdate.value.substring(2,4))>12 || parseInt(document.signUpForm.birthdate.value.substring(2,4))<=0 ){
 			alert("생년월일 양식이 잘못되었습니다.");
 			return false;
 		}
+		// 생년월일 입력 양식에서 일이 1~31 사이인지 파악
 		if(parseInt(document.signUpForm.birthdate.value.substring(4,6))>31 || parseInt(document.signUpForm.birthdate.value.substring(2,4))<=0 ){
 			alert("생년월일 양식이 잘못되었습니다.");
 			return false;

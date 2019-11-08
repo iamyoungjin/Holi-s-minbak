@@ -21,6 +21,7 @@
 			history.go(-1);
 		</script>
 	<%}else{
+		// 세션은 있으나, 세션값이 예약자와 일치하지 않을경우 if문으로 뒤로간다
 		if(!sId.equals(re_id)){%>
 			<script>
 				alert("예약 취소에 문제가 발생했습니다. 다시 접근해주세요.");
@@ -29,6 +30,9 @@
 		<%}else{
 			ReservationDAO dao = new ReservationDAO();
 			int res = dao.cancelReservation(re_id, roomnumber,currentTime);
+			// cancelReservation 메서드를 실행, 예약자, 예약번호, 현재 시간을 매개변수로 사용한다
+			
+			// 정상적으로 메서드가 작동시 res값은 1, currentTime이 예약일에서 하루 이내일 경우 res값이 2, 메서드가 정상적으로 작동안할시 0
 			if(res==1){%>
 				<script>
 					alert("예약이 취소되었습니다.");

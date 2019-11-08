@@ -15,7 +15,7 @@
 
 <body>
 
-	callback 처리중입니다. 이 페이지에서는 callback을 처리하고 바로 main으로 redirect하기때문에 이 메시지가 보이면 안됩니다.
+	<!-- 해당 페이지는 네이버에서 OAUTH 정보를 받고, 데이터를 얻어 pro페이지로 넘어가는 처리를 한다. -->
 
 	<!-- (1) LoginWithNaverId Javscript SDK -->
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
@@ -51,6 +51,7 @@
 					var id = naverLogin.user.getId();
 					var boardType = <%=boardType%>;
 					var url = "http://localhost:8080/project01/login/naverLoginPro.jsp?id="+encodeURI(id)+"&boardType="+boardType;
+					// 필요한 정보를 얻어서 url로 전송
 					window.location.replace(url);
 				} else {
 					console.log("callback 처리에 실패하였습니다.");

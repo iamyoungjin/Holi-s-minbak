@@ -19,21 +19,22 @@ public class MemberDAO {
 	private ResultSet rs = null;
 	// 주로 사용하는 커넥트, 프리페어스테이트먼트, 리설트셋 설정
 	
+	// DB연결 싱글톤
 	MemberDAO(){}
 	private static MemberDAO instance = new MemberDAO();
 	public static MemberDAO getInstance() {
 		return instance;
 	}
-	// DB연결 싱글톤
 	
+	// 연결 메서드
 	private Connection getConnection() throws Exception{
 		Context ctx = new InitialContext();
 		Context env = (Context)ctx.lookup("java:comp/env");
 		DataSource ds = (DataSource)env.lookup("jdbc/xe");
 		return ds.getConnection();
 	}
-	// 연결 메서드
 	
+	//  회원가입 메서드, DB에 insert 
 	public boolean insert(MemberDTO dto) {
 		boolean chk = false;
 		try {
@@ -55,9 +56,9 @@ public class MemberDAO {
 		}
 		return chk;
 	}
-	//  회원가입 메서드, DB에 insert 
 		
 	
+	// 아이디 중복 검사 메서드, DB에서 아이디를 조회후 값이 중복일 경우 true를 리턴
 	public boolean confirmId(String id) {
 		boolean chk = false;
 		try {
@@ -78,18 +79,20 @@ public class MemberDAO {
 	}
 		return chk;
 	}
-	// 아이디 중복 검사 메서드
 	
+	// 로그인 메서드
 	public boolean login(String id,String pw) {
 		boolean chk = false;
 		try {
 			conn = getConnection();
+			// 아이디와 비밀번호가 일치하면 chk값을 true로 설정한다
 			pstmt = conn.prepareStatement("select * from member_table where id=? and pw=?");
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				chk = true;
+				// 만약, 탈퇴유저일 경우 가입할수 없도록 한다.
 				if(rs.getInt("user_type") == 3) {
 					chk = false;
 				}
@@ -103,8 +106,7 @@ public class MemberDAO {
 		}
 		return chk;
 	}
-	// 로그인 메서드
-	
+	// id를 매개변수로 이름을 가져오는 메서드
 	public String searchName(String id) {
 		String name=null;
 		try {
@@ -124,8 +126,8 @@ public class MemberDAO {
 		}
 		return name;
 	}
-	// 이름 찾기 메서드
 	
+	// 회원 정보 수정에서 기존 정보 읽어오는 메서드
 	public MemberDTO getMember(String id) {
 		MemberDTO dto = null;
 		try {
@@ -153,8 +155,8 @@ public class MemberDAO {
 		
 		return dto;
 	}
-	// 회원 정보 수정에서 기존 정보 읽어오는 메서드
 	
+	// 회원 정보 수정하는 메서드
 	public boolean modifyMember(String id, MemberDTO dto) {
 		boolean chk = false;
 		try {
@@ -177,8 +179,8 @@ public class MemberDAO {
 		}
 		return chk;
 	}
-	// 회원 정보 수정하는 메서드
 	
+	// 회원 탈퇴 메서드
 	public int deleteMember(String id, String pw) {
 		int res = 0;
 		// res 기본값 0, try가 실행 되지 않을시 발생
@@ -208,10 +210,12 @@ public class MemberDAO {
 		}
 		return res;
 	}
+	// checkClientData에서 사람 검색을 하기 위한 메서드
 	public List showMember(String search, String keyword) {
 		List list = null;
 		try {
 			conn = getConnection();
+			// search(셀렉트박스)와 keyword값을 통해 해당되는 데이터를 추출한다 
 			if(search.equals("0")) {
 				pstmt = conn.prepareStatement("select * from member_table where num!=1 order by num");
 			}else if(search.equals("1")) {
@@ -222,6 +226,7 @@ public class MemberDAO {
 				pstmt.setString(1, "%"+keyword+"%");
 			}
 			rs = pstmt.executeQuery();
+			// 이를 list에 담는다 
 			list = new ArrayList();
 			while(rs.next()) {
 				MemberDTO dto = new MemberDTO();
@@ -246,6 +251,8 @@ public class MemberDAO {
 		return list;
 	}
 	
+	// sns 회원가입을 위한 메서드
+	// sns 인증으로 oauth에서 값을 가져오고, 이를 통해 자동가입 시킨다
 	public boolean insertNaver(String id, String email, String name) {
 		boolean chk= false;
 		try {
@@ -273,6 +280,9 @@ public class MemberDAO {
 		}
 		return chk;
 	}
+	// sns 로그인 유저는 자신의 아이디/비밀번호를 알 수 없기 때문에 sns인증으로 로그인시킨다
+	// sns 인증후 oauth를 통해 가져오는 값을 사용해 검사한다.
+	
 	public boolean loginNaver(String id) {
 		boolean chk = false;
 		try {
@@ -296,6 +306,8 @@ public class MemberDAO {
 		}
 		return chk;
 	}
+	// sns 회원가입을 위한 메서드
+	// sns 인증으로 oauth에서 값을 가져오고, 이를 통해 자동가입 시킨다
 	public boolean insertKakao(String id) {
 		boolean chk= false;
 		try {
@@ -321,6 +333,8 @@ public class MemberDAO {
 		}
 		return chk;
 	}
+	// sns 로그인 유저는 자신의 아이디/비밀번호를 알 수 없기 때문에 sns인증으로 로그인시킨다
+	// sns 인증후 oauth를 통해 가져오는 값을 사용해 검사한다.
 	public boolean loginKakao(String id) {
 		boolean chk = false;
 		try {
@@ -344,6 +358,8 @@ public class MemberDAO {
 		}
 		return chk;
 	}
+	// sns 회원가입을 위한 메서드
+	// sns 인증으로 oauth에서 값을 가져오고, 이를 통해 자동가입 시킨다
 	public boolean insertGoogle(String id, String email) {
 		boolean chk = false;
 		try {
@@ -372,6 +388,8 @@ public class MemberDAO {
 		
 		return chk;
 	}
+	// sns 로그인 유저는 자신의 아이디/비밀번호를 알 수 없기 때문에 sns인증으로 로그인시킨다
+	// sns 인증후 oauth를 통해 가져오는 값을 사용해 검사한다.
 	public boolean loginGoogle(String id) {
 		boolean chk = false;
 		try {
@@ -396,6 +414,8 @@ public class MemberDAO {
 		return chk;
 	}
 	
+	// 만일, sns 로그인 유저일시 oauth를 통해 넘어오는 정보의 양이 한정될 수 있다.
+	// 그렇기 때문에 남은 개인정보를 입력하기 위해서 sns를 통한 회원가입인지 확인한다. 이후 chk가 true일시 modifyForm으로 보내기 위해 사용한다
 	public boolean chkInfoSnsLogin(String sId) {
 		boolean chk = false;
 		try {

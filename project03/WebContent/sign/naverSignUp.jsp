@@ -12,7 +12,7 @@
 
 <body>
 
-	callback 처리중입니다. 이 페이지에서는 callback을 처리하고 바로 main으로 redirect하기때문에 이 메시지가 보이면 안됩니다.
+	<!-- 네이버는 콜백 페이지에서 oauth 데이터를 받아오기 때문에 해당 페이지는 oauth 데이터를 받는데 사용된다. -->
 
 	<!-- (1) LoginWithNaverId Javscript SDK -->
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
@@ -45,6 +45,7 @@
 						naverLogin.reprompt();
 						return;
 					}
+					// oauth를 통해 받은 데이터를 변수에 담고, URL에 써서 전송한다
 					var id = naverLogin.user.getId();
 					var name = naverLogin.user.getName();
 					var url = "http://localhost:8080/project01/sign/naverSignUpPro.jsp?email="+encodeURI(email)+"&name="+encodeURI(name)+"&id="

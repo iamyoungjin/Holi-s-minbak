@@ -24,6 +24,7 @@
 </header>
 
 <%
+	// 세션값을 통해 로그인 체크
 	sId = (String)session.getAttribute("sId"); 
 	sAdmin = (String)session.getAttribute("sAdmin");
 	if(sId!=null || sAdmin!=null){
@@ -35,8 +36,7 @@
 	<input type="button" value="회원가입" onclick="window.location.href='signUpForm.jsp'">
 	<input type="button" value="메인으로" onclick="window.location.href='../main/main.jsp'"><br/>
 	
-	
-	<!--  카카오 -->
+	<!--  카카오 로그인 API -->
 	<a id="kakao-login-btn"></a>
 	<a href="http://developers.kakao.com/logout"></a>
 	<script type='text/javascript'>
@@ -52,8 +52,10 @@
 					success: function(res) {
 						console.log(res);
 						var userID = "kakao_" + res.id;
+						// 유저 고유 id의 앞에 kakao_를 붙여서 카카오sns 유저로 구분
 						var loginURL = "http://localhost:8080/project01/sign/kakaoSignUpPro.jsp?id="+encodeURI(userID);
 						window.location.replace(loginURL);
+						// URL에 변수값을 더해 전송한다.
 					},
 					fail: function(error) {
 						alert(JSON.stringify(error));
@@ -73,6 +75,7 @@
 	<script type="text/javascript">
 		var naverLogin = new naver.LoginWithNaverId(
 			{
+				// oauth 정보를 callback 페이지에서 받게 한다.
 				clientId: "MOf0l_qoj5M7p4rLoe4B",
 				callbackUrl: "http://localhost:8080/project01/sign/naverSignUp.jsp",
 				isPopup: false, /* 팝업을 통한 연동처리 여부 */
@@ -95,10 +98,11 @@
 			console.log("ID: " + profile.getId()); // Don't send this directly to your server!
 			var googleId = "google_" + profile.getId();
 			var googleEmail = profile.getEmail();
-			/*
-			var loginURL = "http://127.0.0.1:8080/project03/sign/googleSignUpPro.jsp?id="+encodeURI(googleId)+"&email="+encodeURI(googleEmail);
-			window.location.replace(loginURL);
-			*/
+			
+			// oauth에서 받아온 값을 pro 페이지로 보낸다
+			var loginURL = "http://localhost:8080/project01/sign/googleSignUpPro.jsp?id="+encodeURI(googleId)+"&email="+encodeURI(googleEmail);
+			window.location.replace(loginURL);	
+			
 	    }
 	    function onFailure(error){
 			console.log(error);

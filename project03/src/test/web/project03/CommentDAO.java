@@ -29,7 +29,7 @@ public class CommentDAO {
 		return ds.getConnection();
 	}
 	
-	
+	// 덧글 작성
 	public boolean insertComment(CommentDTO dto) {
 		chk = false;
 		try {
@@ -52,14 +52,17 @@ public class CommentDAO {
 		
 		return chk;
 	}
+	// 덧글 삭제 메서드
 	public boolean deleteComment(int commentnum, String id) {
 		chk = false;
 		try {
 			conn = getConnection();
+			// 해당 덧글이 존재하는지 유효성검사를 위한 메서드
 			pstmt = conn.prepareStatement("select * from comment_table where commentnum=?");
 			pstmt.setInt(1, commentnum);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
+				// DB에서 덧글 작성자의 id값을 빼온다. 일치시 덧글삭제
 				String dbid = rs.getString("id");
 				if(id.equals(dbid)) {
 					pstmt = conn.prepareStatement("delete from comment_table where commentnum=?");
@@ -79,15 +82,18 @@ public class CommentDAO {
 		return chk;
 	}
 	
+	// 덧글 불러오기
 	public List getComment(int boardnum) {
 		List list = null;
 		CommentDTO dto = null;
 		try {
 			conn = getConnection();
+			// 게시글의 번호를 가지고와서 해당 게시글에 달린 덧글을 순서대로 정렬한다
 			pstmt = conn.prepareStatement("select * from comment_table where postnum=? order by commentnum");
 			pstmt.setInt(1, boardnum);
 			rs = pstmt.executeQuery();
 			list = new ArrayList();
+			// 이후 데이터를 빈즈에 담고, 빈즈를 list에 담아서 사용한다.
 			while(rs.next()) {
 				dto = new CommentDTO();
 				dto.setPostnum(rs.getInt("postnum"));

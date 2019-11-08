@@ -10,9 +10,12 @@
 <%
 	MemberDAO dao = MemberDAO.getInstance();
 	String id = request.getParameter("id");
+	// Form 페이지에서 request를 받아온다
 %>
 <script>
 	function setId(){
+		// 아이디 중복검사가 끝나고 창을 닫을때 작동하는 메서드
+		// 부모창 Form의 변수를 바꿔서 중복검사 시행 여부와 아이디 값을 넘긴다
 		opener.document.signUpForm.id.value = "<%=id%>";
 		opener.idChk = true;
 		opener.idStr = "<%=id%>";

@@ -27,6 +27,7 @@
 	
 <%	}else{
 		MemberDAO dao = MemberDAO.getInstance();
+		// 회원 정보 수정 메서드 실행 및 boolean 타입으로 실행여부 체크
 		boolean chk = dao.modifyMember(id, dto);
 		if(chk){%>
 			<script>

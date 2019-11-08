@@ -16,12 +16,14 @@ public class UsertypeDAO {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
+	// 싱글톤 패턴
 	UsertypeDAO(){}
 	private static UsertypeDAO instance = new UsertypeDAO();
 	public static UsertypeDAO getInstance() {
 		return instance;
 	}
 	
+	// DB접속을 위한 메서드
 	private Connection getConnection() throws Exception{
 		Context ctx = new InitialContext();
 		Context env = (Context)ctx.lookup("java:comp/env");
@@ -29,6 +31,8 @@ public class UsertypeDAO {
 		return ds.getConnection();
 	}
 	
+	
+	// member_table에서 user_type을 꺼내와서, 이에 맞는 status를 출력한다. checkClientData에서 회원 정보를 출력할때 사용
 	public String getType(int user_type) {
 		String str = "";
 		try {

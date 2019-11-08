@@ -9,6 +9,7 @@
 </head>
 <body>
 <%
+	// 구글 로그인 성공시 세션 부여
 	MemberDAO dao = MemberDAO.getInstance();
 	
 	String id = request.getParameter("id");

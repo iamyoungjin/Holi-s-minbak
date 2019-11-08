@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <%
+	// 카카오 로그인 성공시 세션부여
 	MemberDAO dao = MemberDAO.getInstance();
 	
 	String id = request.getParameter("id");

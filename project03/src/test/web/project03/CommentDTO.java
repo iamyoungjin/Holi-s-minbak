@@ -3,6 +3,7 @@ package test.web.project03;
 import java.sql.Timestamp;
 
 public class CommentDTO {
+	// comment_table 사용을 위한 빈즈
 	private int postnum;
 	private int commentnum;
 	private String name;

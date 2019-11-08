@@ -29,8 +29,8 @@
 				+"&postnum="+userinput.newpostnum.value
 				+"&id="+userinput.newid.value
 				+"&pw="+userinput.newpw.value
-				+"&name="+userinput.newname.value
-				+"&comment_content="+userinput.newcomment_content.value;
+				+"&name="+encodeURI(userinput.newname.value)
+				+"&comment_content="+encodeURI(userinput.newcomment_content.value);
 		userinput.submit();
 	}
 	function deleteComment(userinput, num){
@@ -50,9 +50,6 @@
 		if(!confirm("게시글을 삭제하시겠습니까?")){
 			return;
 		}
-		console.log(document.getElementById("boardnum").value);
-		console.log(document.getElementById("id").value);
-		console.log(pageNum);
 		userinput.action="deletePro.jsp?boardnum="+document.getElementById("boardnum").value
 				+"&pageNum="+pageNum
 				+"&id="+document.getElementById("id").value

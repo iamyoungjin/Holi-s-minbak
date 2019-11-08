@@ -3,6 +3,7 @@ package test.web.project03;
 import java.sql.Timestamp;
 
 public class MemberDTO {
+	// member_table 을 사용하기 위한 빈즈
 	private int num;
 	private String id;
 	private String email;
