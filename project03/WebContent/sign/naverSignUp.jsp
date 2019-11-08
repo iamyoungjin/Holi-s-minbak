@@ -48,7 +48,7 @@
 					// oauth를 통해 받은 데이터를 변수에 담고, URL에 써서 전송한다
 					var id = naverLogin.user.getId();
 					var name = naverLogin.user.getName();
-					var url = "http://localhost:8080/project01/sign/naverSignUpPro.jsp?email="+encodeURI(email)+"&name="+encodeURI(name)+"&id="
+					var url = "http://192.168.0.18:8080/project01/sign/naverSignUpPro.jsp?email="+encodeURI(email)+"&name="+encodeURI(name)+"&id="
 							+encodeURI(id);
 					window.location.replace(url);
 				} else {

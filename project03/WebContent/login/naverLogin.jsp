@@ -50,7 +50,7 @@
 					}
 					var id = naverLogin.user.getId();
 					var boardType = <%=boardType%>;
-					var url = "http://localhost:8080/project01/login/naverLoginPro.jsp?id="+encodeURI(id)+"&boardType="+boardType;
+					var url = "http://192.168.0.18:8080/project01/login/naverLoginPro.jsp?id="+encodeURI(id)+"&boardType="+boardType;
 					// 필요한 정보를 얻어서 url로 전송
 					window.location.replace(url);
 				} else {

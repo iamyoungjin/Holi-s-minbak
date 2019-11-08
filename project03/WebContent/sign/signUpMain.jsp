@@ -53,7 +53,7 @@
 						console.log(res);
 						var userID = "kakao_" + res.id;
 						// 유저 고유 id의 앞에 kakao_를 붙여서 카카오sns 유저로 구분
-						var loginURL = "http://localhost:8080/project01/sign/kakaoSignUpPro.jsp?id="+encodeURI(userID);
+						var loginURL = "http://192.168.0.18:8080/project01/sign/kakaoSignUpPro.jsp?id="+encodeURI(userID);
 						window.location.replace(loginURL);
 						// URL에 변수값을 더해 전송한다.
 					},
@@ -77,7 +77,7 @@
 			{
 				// oauth 정보를 callback 페이지에서 받게 한다.
 				clientId: "MOf0l_qoj5M7p4rLoe4B",
-				callbackUrl: "http://localhost:8080/project01/sign/naverSignUp.jsp",
+				callbackUrl: "http://192.168.0.18:8080/project01/sign/naverSignUp.jsp",
 				isPopup: false, /* 팝업을 통한 연동처리 여부 */
 				loginButton: {color: "green", type: 3, height: 48} /* 로그인 버튼의 타입을 지정 */
 			}
@@ -100,7 +100,7 @@
 			var googleEmail = profile.getEmail();
 			
 			// oauth에서 받아온 값을 pro 페이지로 보낸다
-			var loginURL = "http://localhost:8080/project01/sign/googleSignUpPro.jsp?id="+encodeURI(googleId)+"&email="+encodeURI(googleEmail);
+			var loginURL = "http://192.168.0.18:8080/project01/sign/googleSignUpPro.jsp?id="+encodeURI(googleId)+"&email="+encodeURI(googleEmail);
 			window.location.replace(loginURL);	
 			
 	    }

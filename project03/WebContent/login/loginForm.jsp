@@ -64,7 +64,7 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "MOf0l_qoj5M7p4rLoe4B",
-				callbackUrl: "http://localhost:8080/project01/login/naverLogin.jsp?boardType="+boardType,
+				callbackUrl: "http://192.168.0.18:8080/project01/login/naverLogin.jsp?boardType="+boardType,
 				// OAUTH 정보를 받을 콜백 URL을 지정해준다.
 				isPopup: false, /* 팝업을 통한 연동처리 여부 */
 				loginButton: {color: "green", type: 3, height: 48} /* 로그인 버튼의 타입을 지정 */
@@ -90,7 +90,7 @@
 					success: function(res) {
 						console.log(res);
 						var userID = "kakao_" + res.id;      //유저의 카카오톡 고유 id
-						var loginURL = "http://localhost:8080/project01/login/kakaoLoginPro.jsp?id="+encodeURI(userID)
+						var loginURL = "http://192.168.0.18:8080/project01/login/kakaoLoginPro.jsp?id="+encodeURI(userID)
 								+"&boardType="+boardType;
 						// OAUTH로 받은 정보를 해당 URL로 전송한다.
 						window.location.replace(loginURL);
@@ -117,7 +117,7 @@
 			console.log("ID: " + profile.getId()); // Don't send this directly to your server!
 			var googleId = "google_" + profile.getId();
 			var googleEmail = profile.getEmail();
-	        var loginURL = "http://localhost:8080/project01/login/googleLoginPro.jsp?id="+encodeURI(googleId)+"&boardType="+boardType;
+	        var loginURL = "http://192.168.0.18:8080/project01/login/googleLoginPro.jsp?id="+encodeURI(googleId)+"&boardType="+boardType;
 			// OAUTH로 받은 정보를 해당 URL로 전송한다.
 			window.location.replace(loginURL);
 	    }

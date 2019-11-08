@@ -51,10 +51,19 @@
 %>
 	<table border="1">
 		<tr>
+		<%if(dto.getRoom_img()!= null){ %>
 			<td colspan="3"><img src="../image/<%=dto.getRoom_img()%>"/>  </td>
+		<%}else{%>
+			<td colspan="3">등록된 사진이 없습니다.</td>
+		<%} %>
 		</tr>
+		
 		<tr>
+		<%if(dto.getIntro() != null){%>
 			<td colspan="3"><pre><%=dto.getIntro() %></pre></td>
+		<%}else{ %>
+			<td colspan="3">방 정보가 등록되지 않았습니다. </td>
+		<%} %>
 		</tr>
 	</table>
 	<table>

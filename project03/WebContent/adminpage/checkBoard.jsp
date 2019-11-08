@@ -184,7 +184,7 @@
 					wid = 10 * (dto.getRe_level());%>
 				<b>└</b>
 			<%}
-			if(dto.getFileroot()!=null){%><img src="/project03/image/thum_<%=dto.getFileroot()%>"/><%}%>
+			if(dto.getFileroot()!=null){%><img src="/project01/image/thum_<%=dto.getFileroot()%>"/><%}%>
 			<a href ="../board/content.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=currentPage%>"><%=dto.getSubject() %></a>
 			</td>
 			<td><%=dto.getName() %>(<%=dto.getId()%>)</td>
