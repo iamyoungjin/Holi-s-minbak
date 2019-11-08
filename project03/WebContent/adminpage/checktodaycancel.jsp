@@ -131,7 +131,7 @@
 	
 		ReservationDAO dao = new ReservationDAO();
 		//오늘 예약 /취소 건수 보여주기 
-		List list = dao.countcanceltoday(today,"cancel");%>
+		List list = dao.countcanceltoday(today,"refund");%>
 		<form name="roomForm" method="post">
 				<table border="1">
 				<tr>

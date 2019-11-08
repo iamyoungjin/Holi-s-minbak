@@ -169,7 +169,7 @@ function select(){
 		int m_count_check = dao.countchkmonth(yearmonth,"check").size();
 		
 		//오늘 예약 /취소 건수 계산 
-		int d_count_cancel = dao.countcanceltoday(today,"cancel").size();
+		int d_count_cancel = dao.countcanceltoday(today,"refund").size();
 		int d_count_check = dao.countchktoday(today,"check").size();
 		
 		//미입금자 수 건수 계산

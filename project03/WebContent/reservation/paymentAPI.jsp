@@ -76,7 +76,7 @@
             pg : 'kakaopay',
             pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
-            name : '(주)효리네 민박',
+            name : '(주)호리네 민박',
             buyer_email:'n@naver.com',
             buyer_tel:'010-1234-5678',
 			amount :<%=price%>,
