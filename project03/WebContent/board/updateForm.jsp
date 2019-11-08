@@ -50,12 +50,13 @@
 		try{
 			BoardDAO bdao = BoardDAO.getInstance();
 			BoardDTO dto = bdao.updateGetPost(boardnum);
+			// dto를 통해 기존 이미지 파일이 있을시, oldImage로 지정
 			String oldImage = dto.getFileroot();
 			
 %>
 <body>
 	<center> 게시글 수정
-	
+	<!-- enctype을 multipart로 선언 -->
 	<form name="updateForm" action="updatePro.jsp?pageNum=<%=pageNum%>&id=<%=id%>" method="post" onsubmit="return writeSave()" enctype="multipart/form-data">
 		<input type="hidden" name="boardnum" value="<%=boardnum %>"  />
 		<table border="1">
@@ -69,6 +70,7 @@
 				<td>내용 <textarea rows="13" cols="40" name="content"><%=dto.getContent()%></textarea></td>
 			</tr>
 			<tr>
+				<!-- oldImage가 있을시, 미리 기존에 파일이 있음을 띄워주고, 히든값을 지정 -->
 				<td>사진 업로드 : <% if(oldImage!=null)out.print(oldImage); %> <input type="file" name="save"/>
 					<input type="hidden" name="oldImage" value="<%=dto.getFileroot()%>"/><br/> </td>
 			</tr>

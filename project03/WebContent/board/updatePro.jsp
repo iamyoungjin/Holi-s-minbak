@@ -20,6 +20,7 @@
 <jsp:useBean id="dto" class="test.web.project03.BoardDTO"/>
 <body>
 <%
+	// 이미지 업로드를 위한 메서드.
 	String path=request.getRealPath("/image");
 	int size = 1024*1024*10;
 	String enc = "UTF-8";
@@ -44,12 +45,14 @@
 	<%}else{
 		BoardDAO bdao = BoardDAO.getInstance();
 		String oldImage = mr.getParameter("oldImage");
+			// 신규 파일이 없을때는 기존 이미지가 있을시에만 fileroot를 갱신한다
 		if(mr.getFilesystemName("save")==null){
-			// 신규 파일이 없을때
+			// null값이 아닐경우만 dto를 통해 지정.
 			if(!mr.getParameter("oldImage").equals("null")){
 				dto.setFileroot(oldImage);
 			}
 		}else if(mr.getFilesystemName("save") != null){
+			// 신규 파일이 있을경우, 새로 save에 담긴 파일을 저장후 DB에 담는다
 			String fileType = mr.getContentType("save");
 			String [] ft = fileType.split("/");
 			File imagefile = mr.getFile("save");
@@ -77,17 +80,18 @@
 			ImageIO.write(thumb, "jpg", file);
 		}
 		
-		
+		// multipart로 지정된 form 에서 넘어오는 데이터를 받기 위한 mr.getParameter()
 		int boardnum = Integer.parseInt(mr.getParameter("boardnum"));
 		String pageNum = request.getParameter("pageNum");
 		String subject = mr.getParameter("subject");
 		String content = mr.getParameter("content");
 		
+		// dto에 바뀔 값인 제목과 내용, 그리고 해당 글을 특정할 수 있는 기본키인 boardnum을 dto에 저장
 		dto.setBoardnum(boardnum);
 		dto.setSubject(subject);
 		dto.setContent(content);
 		
-		
+		// 메서드 실행
 		boolean chk = bdao.updatePost(dto);
 		
 		if(chk){%>

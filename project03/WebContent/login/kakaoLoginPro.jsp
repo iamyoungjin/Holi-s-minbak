@@ -15,31 +15,9 @@
 	String pw = id;
 	String auto = "1";
 	String boardType = request.getParameter("boardType");
-	/*
-	Cookie[] coo = request.getCookies();
-	if(coo!= null){
-		for(Cookie c : coo){
-			if(c.getName().equals("cId")) id = c.getValue();
-			if(c.getName().equals("cPw")) pw = c.getValue();
-			if(c.getName().equals("cAuto")) auto = c.getValue();
-		}
-	}
-	*/
 	boolean loginChk = dao.loginKakao(id);
 	if(loginChk){
-		/*
-		Cookie c1 = new Cookie("cId", id);
-		Cookie c2 = new Cookie("cPw", pw);
-		Cookie c3 = new Cookie("cAuto", auto);
-		
-		c1.setMaxAge(60*60*24);
-		c2.setMaxAge(60*60*24);
-		c3.setMaxAge(60*60*24);
-		
-		response.addCookie(c1);
-		response.addCookie(c2);
-		response.addCookie(c3);
-		*/
+
 		
 		session.setAttribute("sId", id);
 		String name = dao.searchName(id);

@@ -10,6 +10,7 @@
 <title>게시판 설정</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+	// jQuery를 사용해 숫자만 입력 받기 위한 정규식 및 파악 메서드
 	var regexp = /^[0-9]*$/
 	v = $(this).val();
 	if( !regexp.test(v) ) {
@@ -17,6 +18,7 @@
 		$(this).val(v.replace(regexp,''));
 	}
 	
+	// form 에도 적용할 함수를 추가로 만든다.
 	function chkSize(){
         if(!document.getElementById("pageSize").value.match(/^[0-9]*$/)){
         	alert("숫자만 입력해주세요");
@@ -46,6 +48,7 @@
 		<form name="settingForm" action="boardSettingPro.jsp" method="post" onsubmit="return chkSize()">
 		<table>
 			<tr>
+				<!-- board에 pageSize로 적용될 갯수를 number 타입으로 받는다. html5이상 부터 적용되는 number는 숫자만 받을수 있다. -->
 				<td>한 페이지에 보여줄 게시글 갯수 <input type="number" name="pageSize" id="pageSize" min="5" max="20" value="<%=dto.getPagesize()%>"/> </td>
 			</tr>
 			<tr>

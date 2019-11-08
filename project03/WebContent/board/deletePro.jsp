@@ -20,8 +20,9 @@
 		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 		String pageNum = request.getParameter("pageNum");
 		if(session.getAttribute("sId") == null && session.getAttribute("sAdmin")!= null){ sId = sAdmin; }
-	
+		
 		BoardDAO bdao = BoardDAO.getInstance();
+		// 글삭제를 위해 필요한 매개변수인 boardnum과 id를 가지고  메서드 실행
 		boolean chk = bdao.deletePost(boardnum, sId);
 	
 		if(chk){%>

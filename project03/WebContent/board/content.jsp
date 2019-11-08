@@ -11,13 +11,17 @@
 <!DOCTYPE html>
 <html>
 <%
+	// boardList에서 글을 보려고 누를시, 그 당시 페이지와 게시글 번호를 가지고온다.
 	int boardnum = Integer.parseInt(request.getParameter("boardnum"));
 	String pageNum = request.getParameter("pageNum");
 %>
 <script>
-
+	
+	
 	var pageNum = <%= pageNum %>;
 	var boardnum = <%= boardnum %>;
+	// 덧글 입력을 위한 함수
+	// submit 형식을 위해 action에 url을 만들고, 이를 submit한다
 	function insertComment(userinput){
 		if(userinput.newcomment_content.value.length == 0){
 			alert("덧글 내용을 입력해주세요");
@@ -33,6 +37,9 @@
 				+"&comment_content="+encodeURI(userinput.newcomment_content.value);
 		userinput.submit();
 	}
+	
+	// 덧글 삭제를 위한 함수
+	// delete와 insert 모두 type 값을 지정해서, 이를 이용해서 하나의 pro페이지에서 처리한다.
 	function deleteComment(userinput, num){
 		if(!confirm("덧글을 삭제하시겠습니까?")){
 			return;
@@ -72,8 +79,10 @@
 	MemberDAO mdao = MemberDAO.getInstance();
 	try{	
 		BoardDAO dao = BoardDAO.getInstance();
+		// DB에서 게시글을 글번호를 통해 가져온다.
 		BoardDTO dto = dao.getPost(boardnum);
 		
+		// 해당 글에서 답글달기를 사용할 경우 해당 글에서 답글의 단계를 지정해야 되기 때문에 ref, re_step, re_level 역시 받아온다.
 		int ref = dto.getRef();
 		int re_step = dto.getRe_step();
 		int re_level = dto.getRe_level();
@@ -106,16 +115,22 @@
 		<tr>
 			<td>글내용</td>
 			<td colspan="3">
-			<%if(dto.getFileroot()!=null){ %><img src="/project01/image/<%=dto.getFileroot()%>"/><br> <%} %>
+			<%
+			// 글에 사진이 있을시에만 노출한다. 글은 <pre>타입으로 설정해 엔터키 등이 적용된 글이 읽히도록 설정한다.
+			if(dto.getFileroot()!=null){ %><img src="/project01/image/<%=dto.getFileroot()%>"/><br> <%} %>
 			<pre><%=dto.getContent() %></pre></td>
 		</tr>
 		<tr>
+			<!-- 글수정은 게시글 작성자의 아이디값 등을 가져가서 Form페이지에서 유효성검사를 한다 -->
 			<td colspan="4"><input type="button" value="글수정" onclick="window.location.href='updateForm.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=pageNum%>&id=<%=dto.getId()%>'"/>
 		  	&nbsp;
+		  	<!-- 삭제는 해당 폼을 가지고 삭제 메서드를 실행한다. -->
 			<input type="button" value="글삭제" onclick="chkDelete(this.form);"/>
 			&nbsp;
+			<!-- 답글은 이 글의 ref/re_step/re_level 을 가지고 간다. 이를 통해 답글을 구현한다. -->
 			<input type="button" value="답글" onclick="window.location.href='writeForm.jsp?boardnum=<%=boardnum%>&ref=<%=ref%>&re_step=<%=re_step%>&re_level=<%=re_level%> '"/>
 			&nbsp;
+			<!-- 목록으로 돌아갈시 원래 보던 페이지로 돌리는 기능을 위해 pageNum을 사용 -->
 			<input type="button" value="글목록" onclick="window.location.href='boardList.jsp?pageNum=<%=pageNum%>'"/></td>
 		</tr>	
 	</table>
@@ -124,8 +139,11 @@
 
 	<table>
 		<%
+		// 덧글 기능
 		CommentDAO cdao = CommentDAO.getInstance();
+		// 해당 게시글의 덧글을 List타입으로 받아온다.
 		List commentList = cdao.getComment(boardnum);
+		// 해당글에 덧글이 있을 경우에만 출력
 		if(commentList != null){
 			for(int i=0; i<commentList.size(); i++){
 				CommentDTO cdto = (CommentDTO)commentList.get(i);
@@ -135,13 +153,14 @@
 				<td><%=cdto.getName() %></td>
 				<td><%=cdto.getComment_content() %></td>
 				<td><%= sdf.format(cdto.getReg()) %></td>
-				<!-- 덧글 삭제 -->
+				<!-- 세션으로 받는 아이디값이 덧글 작성자와 같거나, 관리자의 세션일경우 덧글 삭제 버튼 생성 -->
 				<td><%if(cdto.getId().equals(sId) || session.getAttribute("sAdmin") != null){%><input type="button" value="x" onclick="deleteComment(this.form, <%=i%>)"/></td><%} %>
 			</tr>
 			<%	}
 		}
 		%>
 		<%
+		// 로그인 한 상태(세션 존재)시, 덧글 작성탭 생성
 		if(session.getAttribute("sId") != null || session.getAttribute("sAdmin") != null){
 			if(session.getAttribute("sId") == null && session.getAttribute("sAdmin") != null){ sId = sAdmin; }
 			MemberDTO mdto = mdao.getMember(sId);

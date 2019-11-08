@@ -117,11 +117,13 @@
 			<td><%= number-- %></td>
 			<td>
 			<%
+				// dto.getRe_level로 답글의 단계를 파악후, 그 값에 10을 곱하는것으로 그만큼 간격을 두고, └를 통해 답글임을 표시해준다.
 				int wid=0;
 				if(dto.getRe_level()>0){
 					wid = 10 * (dto.getRe_level());%>
 				<b>└</b>
 			<%}
+			// 이미지가 잇을시, 생성해둔 썸네일을 불러온다
 			if(dto.getFileroot()!=null){%><img src="/project01/image/thum_<%=dto.getFileroot()%>"/><%}%>
 			<a href ="content.jsp?boardnum=<%=dto.getBoardnum()%>&pageNum=<%=currentPage%>"><%=dto.getSubject() %></a>
 			</td>
@@ -140,20 +142,30 @@
 	<br/>
 
 <%
+	//게시글이 존재할 경우(count>0), 페이징 처리
 	if(count >0){
+		// pageCount는 count를 pageSize로 나눈것에, 글 갯수가 페이지 사이즈와 딱 맞아떨어지지 않으면 여분의 페이지를 하나 더 만들어 페이징 처리한다
 		int pageCount = count / pageSize + (count % pageSize == 0? 0 : 1);
+		// startPage는 페이지를 1,11 단위로 끊기 위해 사용한다.
 		int startPage = (int)(currentPage/10)*10+1;
+		// pageBlock = 아래 목록을 최대 10페이지씩 노출
 		int pageBlock = 10;
+		// 마지막으로 노출될 페이지. 이 이후는 [다음]이 뜬다
 		int endPage = startPage + pageBlock-1;
+		
+		// 총 페이지 수가 endpage 기본값보다 적을시, endpage에 새값 대입
 		if(endPage>pageCount){
 			endPage = pageCount;
 		}
+		// if문을 통해 돌아가기 구현
 		if(startPage>10){%>
 		<a href="boardList.jsp?pageNum=<%=startPage-10 %>">[이전]</a>
 <%		}
+		// for문으로 각 페이지생성
 		for(int i=startPage; i<= endPage; i++){%>
 		<a href="boardList.jsp?pageNum=<%=i%>">[<%=i%>]</a>
 <%		}
+		// pageBlock에 지정된 수를 넘어가면 [다음] 으로 넘어가게 설정.
 		if(endPage<pageCount){%>
 		<a href="boardList.jsp?pageNum=<%=startPage+10 %>">[다음]</a>		
 <%
@@ -163,6 +175,7 @@
 <form name="searchForm">
 <table>
 	<tr>
+		<!-- 검색을 위한 value 값 -->
 		<td>
 		<select name = "search">
 			<option value="0">--선택-- </option>
@@ -171,6 +184,7 @@
 			<option value="3">작성자</option>
 		</select>
 		</td>
+		<!-- 검색 키워드를 입력 받기위한 text. 초기값으로 ""를 집어넣어둔다 -->
 		<td><input type="text" name="keyword" value=""/></td>
 		<td><input type="submit" value="검색" /></td>
 	</tr>

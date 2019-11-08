@@ -35,8 +35,10 @@
 			history.go(-1);
 		</script>
 	<%}else{
+		//  boardnum, ref, re_step, re_level을 선언+초기화
 		int boardnum=0,ref=1,re_step=0,re_level=0;
 		try{
+			// 만일, 해당 글 작성이 content에서 답글로 넘어왔을시, 해당 글에서 boardnum, ref, re_step, re_level을 전부 가져온다
 			if(request.getParameter("boardnum")!= null){
 				boardnum = Integer.parseInt(request.getParameter("boardnum"));
 				ref = Integer.parseInt(request.getParameter("ref"));
@@ -53,7 +55,7 @@
 	%>
 	<body>
 	<center>글쓰기
-	
+	<!-- 파일 업로드를 위해 form의 인코딩 타입을 multipart/form-data 로 인코딩 -->
 	<form name="writeForm" action="writePro.jsp" method="post" onsubmit="return writeSave()" enctype="multipart/form-data">
 		<input type="hidden" name="boardnum" value="<%=boardnum %>"  />
 		<input type="hidden" name="ref" value="<%=ref%>" />
@@ -69,6 +71,7 @@
 			</tr>
 			<tr>
 				<td>제목<%
+				// 답글이 아닐 경우 그냥 작성, 답글일 경우 기본값에 RE:를 달아준다.
 				if(request.getParameter("boardnum")==null){%>
 					<input type ="text" name="subject"/>
 				<%}else{ %>

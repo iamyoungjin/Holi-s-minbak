@@ -11,6 +11,7 @@
 </header>
 
 <%
+	// 기본 관리자 페이지
 	boardType="admin";
 	sAdmin = (String)session.getAttribute("sAdmin");
 	if(sAdmin == null){%>
